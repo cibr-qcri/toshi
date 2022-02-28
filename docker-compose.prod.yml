@@ -1,3 +1,9 @@
+#   Port mappings
+#
+#   service         local -> host
+#   ------------------------------
+#   proxy            80    -> 9090
+
 version: '3.3'
 services:
   proxy:
@@ -7,7 +13,7 @@ services:
     links:
       - web
     ports:
-      - '8080:80'
+      - '9090:80'
     restart: always
     stdin_open: true
     tty: true
@@ -34,7 +40,7 @@ services:
       RATE_LIMIT_WINDOW_MS: 60000
       RATE_LIMIT_MAX: 100
       RUN_JOBS_STARTUP: 'true'
-      MONGO_URI: 'mongodb://mongo:27017/dizzy'
+      MONGO_URI: 'mongodb://mongo:27017/toshi'
       ES_URI: 'http://es.cibr.qcri.org'
       ES_PING_TIMEOUT_MS: 20000
       ES_CRAWLER_INDEX: 'darkweb-tor-index'
@@ -46,16 +52,16 @@ services:
       JWT_COOKIE_EXPIRE_MS: 259200000
       LOGOUT_COOKIE_EXPIRE_MS: 10000
       RESET_PASSWORD_EXPIRE_MS: 600000
-      ACCOUNT_ACTIVIATION_URL: 'https://dizzy.cibr.qcri.org/activate'
+      ACCOUNT_ACTIVIATION_URL: 'https://toshi.cibr.qcri.org/activate'
       ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
-      SEARCH_ALERTS_URL: 'https://dizzy.cibr.qcri.org/alerts'
-      SEARCH_WEB_URL: 'https://dizzy.cibr.qcri.org/search/web'
+      SEARCH_ALERTS_URL: 'https://toshi.cibr.qcri.org/alerts'
+      SEARCH_WEB_URL: 'https://toshi.cibr.qcri.org/search/web'
       SMTP_HOST: 'smtp.office365.com'
       SMTP_PORT: 587
       SMTP_EMAIL: 'noreply@mail.cibr.qcri.org'
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       FROM_EMAIL: 'noreply@mail.cibr.qcri.org'
-      FROM_NAME: 'Dizzy'
+      FROM_NAME: 'Toshi'
     restart: always
     stdin_open: true
     tty: true
@@ -63,7 +69,6 @@ services:
     container_name: web
     depends_on:
       - api
-    stdin_open: true
     build:
       context: ./web
       dockerfile: Dockerfile.prod

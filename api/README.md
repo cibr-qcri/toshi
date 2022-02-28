@@ -1,4 +1,4 @@
-The backend API server for Dizzy.
+The backend API server for Toshi.
 
 ## Dependencies
 

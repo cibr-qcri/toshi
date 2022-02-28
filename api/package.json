@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "The backend API for Dizzy",
+  "description": "The backend API for Toshi",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server",

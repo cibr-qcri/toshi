@@ -1,6 +1,6 @@
-# Dizzy
+# Toshi
 
-Dizzy: A search engine for the visible Dark Web.
+Toshi: A Cryptocurrency Wallet Explorer.
 
 ## Starting
 
@@ -10,7 +10,7 @@ AMPLITUDE_DEV_API_KEY="REPLACE" docker-compose -f docker-compose.dev.yml up --bu
 
 # In production
 # Clone the repo in /usr/local directory if not found
-cd /usr/local/dizzy && git pull
+cd /usr/local/toshi && git pull
 SMTP_PASSWORD="REPLACE" AMPLITUDE_PROD_API_KEY="REPLACE" docker-compose -f docker-compose.prod.yml up --build --detach
 ```
 

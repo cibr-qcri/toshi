@@ -1,3 +1,13 @@
+#   Port mappings
+#
+#   service         local -> host
+#   ------------------------------
+#   proxy           80    -> 8080
+#   mongo           27017 -> 8081
+#   mongo-express   8081  -> 8082
+#   api             5000  -> 8083
+#   web             3000  -> 8084
+
 version: '3.3'
 services:
   proxy:
@@ -7,13 +17,13 @@ services:
     links:
       - web
     ports:
-      - '80:80'
+      - '8080:80'
     restart: 'no'
   mongo:
     container_name: 'mongo'
     image: mongo:5.0-focal
     ports:
-      - '27017:27017'
+      - '8081:27017'
     volumes:
       - mongo-data:/data/db
       - mongo-config:/data/configdb
@@ -22,7 +32,7 @@ services:
     container_name: 'mongo-express'
     image: mongo-express
     ports:
-      - '8081:8081'
+      - '8082:8081'
     depends_on:
       - mongo
     restart: 'no'
@@ -43,7 +53,7 @@ services:
       RATE_LIMIT_WINDOW_MS: 60000
       RATE_LIMIT_MAX: 100
       RUN_JOBS_STARTUP: 'true'
-      MONGO_URI: 'mongodb://mongo:27017/dizzy'
+      MONGO_URI: 'mongodb://mongo:27017/toshi'
       ES_URI: 'http://es.cibr.qcri.org'
       ES_PING_TIMEOUT_MS: 20000
       ES_CRAWLER_INDEX: 'darkweb-tor-index'
@@ -64,15 +74,14 @@ services:
       SMTP_EMAIL: '8258c23ad8ff6c'
       SMTP_PASSWORD: '1d76a9fb7b31ed'
       FROM_EMAIL: 'noreply@mail.cibr.qcri.org'
-      FROM_NAME: 'Dizzy'
+      FROM_NAME: 'Toshi'
     ports:
-      - '5000:5000'
+      - '8083:5000'
     restart: 'no'
   web:
     container_name: web
     depends_on:
       - api
-    stdin_open: true
     build:
       context: ./web
       dockerfile: Dockerfile.dev
@@ -84,8 +93,10 @@ services:
     environment:
       NODE_ENV: 'developement'
     ports:
-      - '3000:3000'
+      - '8084:3000'
     restart: 'no'
+    stdin_open: true
+
 
 volumes:
   mongo-data:

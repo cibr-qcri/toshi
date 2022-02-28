@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "Dizzy-API",
+      "name": "Toshi-API",
       "script": "server.js",
       "merge_logs": true,
       "max_restarts": 20,
