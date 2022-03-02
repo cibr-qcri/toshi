@@ -9,7 +9,7 @@ const gp = new Pool({
 })
 gp.query('SELECT NOW()', (err, res) => {
   if (err) {
-    console.log(`Error: ${error.message}`.red);
+    console.log(`Error: ${err.message}`.red);
   } else {
     console.log(
       `Server connected to greenplum on ${process.env.GP_HOST}`.green
