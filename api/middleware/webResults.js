@@ -28,8 +28,6 @@ const webResults = asyncHandler(async (request, response, next) => {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
-  const esQuery = `_exists_:data.info.domain_info.language AND (${query}`;
-
   const domainStatistic = await Statistic.findOne({ type: 'domain' });
   const results = await es.search({
     index: process.env.ES_CRAWLER_INDEX,
@@ -38,7 +36,7 @@ const webResults = asyncHandler(async (request, response, next) => {
     body: {
       query: {
         query_string: {
-          query: esQuery,
+          query: query,
         },
       },
       aggs: {
