@@ -1,31 +1,22 @@
 // Axios
 import axios from 'axios';
 
-// Lodash
-import _ from 'lodash';
-
 // QueryString
 import qs from 'qs';
 
 // Redux
 import { batch } from 'react-redux';
 
-// Constants
-import { SEARCH_FILTER_ANY } from '../../../constants/search';
-
 // Creators
 import * as creators from './creators';
 import { showAlert } from '../';
 
-export const getWebResults = (query, filter, isPaged = false) => {
+export const getWebResults = (query, isPaged = false) => {
   return (dispatch, getState) => {
     dispatch(creators.getResultsStart({ query, isPaged, source: 'web' }));
 
     let queryParams = {
       query,
-      filter: _.pickBy(filter, (value, _) => {
-        return value !== SEARCH_FILTER_ANY.type;
-      }),
     };
 
     if (isPaged) {

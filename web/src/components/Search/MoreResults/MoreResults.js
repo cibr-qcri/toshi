@@ -17,12 +17,12 @@ const SearchMoreResults = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { query, filter, source } = props;
+  const { query, source } = props;
 
   // Handlers
   const moreResultsHandler = () => {
     if (source === 'web') {
-      dispatch(getWebResults(query, filter, true));
+      dispatch(getWebResults(query, true));
     }
   };
 
