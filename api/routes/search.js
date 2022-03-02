@@ -1,4 +1,4 @@
-const webResults = require('../middleware/webResults');
+const webResults = require('../middleware/walletResults');
 const express = require('express');
 const { protect } = require('../middleware/auth');
 const { web } = require('../controllers/search');
