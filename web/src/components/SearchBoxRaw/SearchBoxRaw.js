@@ -23,7 +23,7 @@ const SearchBoxRaw = (props) => {
   // Variables
   const {
     classes,
-    placeholder = 'Search the darkweb',
+    placeholder = 'Search your wallet by address, transaction or label',
   } = props;
   const dispatch = useDispatch();
   const history = useHistory();

@@ -15,22 +15,18 @@ const MainAnalytics = () => {
   const view = (
     <div className={classes.root}>
       <Typography className={classes.title} color="primary" variant="h5">
-        Darkweb analytics
+        Cryptocurrency Wallet Explorer
       </Typography>
       <Typography className={classes.subtitle}>
         Get useful insights with your search results
       </Typography>
       <div className={classes.features}>
-        <Feature iconLigature="category" text="Website categorization" />
-        <Feature iconLigature="token" text="Crypto address attribution" />
-        <Feature iconLigature="security" text="Illicit website detection" />
-        <Feature iconLigature="lock" text="User tracking detection" />
-        <Feature
-          iconLigature="content_copy"
-          text="Mirrored website detection"
-        />
-        <Feature iconLigature="language" text="Website language detection" />
-        <Feature iconLigature="offline_bolt" text="Service status check" />
+        <Feature iconLigature="category" text="Heuristic based Clustering" />
+        <Feature iconLigature="token" text="Toshi Risk Scoring" />
+        <Feature iconLigature="security" text="Overview of money flows" />
+        <Feature iconLigature="lock" text="Top connected wallets with summary" />
+        <Feature iconLigature="content_copy" text="Wallet statistics with reported labels"/>
+        <Feature iconLigature="language" text="Wallet tagging" />
       </div>
     </div>
   );

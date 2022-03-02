@@ -2,7 +2,7 @@ export const stylesCreator = (theme) => ({
   Default: {
     root: {
       width: '100%',
-      maxWidth: 460,
+      maxWidth: 480,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
     },

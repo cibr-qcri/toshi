@@ -34,12 +34,12 @@ const MainStats = () => {
         Extended coverage
       </Typography>
       <Typography className={classes.subtitle}>
-        Find what you're looking for in the darkweb
+        Find what you're looking for in Toshi
       </Typography>
       <div className={classes.stats}>
-        <Stat value={stats.count.page} text="Pages" />
-        <Stat value={stats.count.domain} text="Domains" />
-        <Stat value={cryptosCount} text="Cryptos" />
+        <Stat value={stats.count.page} text="Wallets" />
+        <Stat value={stats.count.domain} text="Labels" />
+        <Stat value={cryptosCount} text="Risk Level" />
       </div>
     </div>
   );
