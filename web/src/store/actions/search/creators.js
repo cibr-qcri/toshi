@@ -17,17 +17,7 @@ export const getResultsFailure = (error) => ({
   payload: error,
 });
 
-// Set
-export const setFilter = (filter) => ({
-  type: types.SET_FILTER,
-  payload: filter,
-});
-
 // Reset
 export const reset = () => ({
   type: types.RESET,
-});
-
-export const resetFilter = () => ({
-  type: types.RESET_FILTER,
 });

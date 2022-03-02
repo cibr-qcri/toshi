@@ -11,10 +11,6 @@ const SearchSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    filter: {
-      type: Object,
-      default: {},
-    },
     source: {
       type: String,
       required: true,

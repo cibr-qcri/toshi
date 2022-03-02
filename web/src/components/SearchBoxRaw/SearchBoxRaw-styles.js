@@ -15,9 +15,5 @@ export const stylesCreator = (theme) => ({
       paddingLeft: theme.spacing(0.5),
       paddingRight: theme.spacing(0.5),
     },
-    divider: {
-      height: 40,
-      margin: theme.spacing(0.5),
-    },
   },
 });

@@ -8,7 +8,6 @@ import { updateObject } from '../../utils';
 const initialState = {
   data: {
     query: '',
-    filter: {},
     results: [],
     noResults: false,
     isPaged: false,
@@ -56,24 +55,9 @@ const reducer = (state = initialState, action) => {
         isBusy: false,
       });
     }
-    // Set
-    case types.SET_FILTER: {
-      return updateObject(state, {
-        data: updateObject(state.data, {
-          filter: action.payload,
-        }),
-      });
-    }
     // Reset
     case types.RESET: {
       return initialState;
-    }
-    case types.RESET_FILTER: {
-      return updateObject(state, {
-        data: updateObject(state.data, {
-          filter: initialState.data.filter,
-        }),
-      });
     }
     // Default
     default: {
