@@ -15,7 +15,6 @@ gp.query('SELECT NOW()', (err, res) => {
       `Server connected to greenplum on ${process.env.GP_HOST}`.green
     );
   }
-  gp.end()
 })
 
 module.exports = gp;

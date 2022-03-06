@@ -15,12 +15,13 @@ const MainAnalytics = () => {
   const view = (
     <div className={classes.root}>
       <Typography className={classes.title} color="primary" variant="h5">
-        Cryptocurrency Wallet Explorer
+        Blockchain Analysis
       </Typography>
       <Typography className={classes.subtitle}>
         Get useful insights with your search results
       </Typography>
       <div className={classes.features}>
+        <Feature iconLigature="offline_bolt" text="Wallet explorer" />
         <Feature iconLigature="category" text="Heuristic based Clustering" />
         <Feature iconLigature="token" text="Toshi Risk Scoring" />
         <Feature iconLigature="security" text="Overview of money flows" />

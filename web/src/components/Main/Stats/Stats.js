@@ -1,5 +1,5 @@
 // React
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,14 +18,22 @@ const MainStats = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const stats = useSelector((state) => state.stats.data.computed);
-  const cryptosCount = Object.values(stats.count.crypto).reduce(
-    (a, b) => a + b
-  );
+  const [riskLevel, setRiskLevel] = useState("N/A");
 
   // Hooks
   useEffect(() => {
     dispatch(getStats());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (stats.count.riskLevelScore >= 0.75) {
+        setRiskLevel("HIGH")
+    } else if (stats.count.riskLevelScore < 0.75 && stats.count.riskLevelScore >= 0.5) {
+        setRiskLevel("MEDIUM")
+    } else if (stats.count.riskLevelScore < 0.5 && stats.count.riskLevelScore >= 0) {
+        setRiskLevel("LOW")
+    }
+  }, [stats]);
 
   // JSX
   const view = (
@@ -37,9 +45,9 @@ const MainStats = () => {
         Find what you're looking for in Toshi
       </Typography>
       <div className={classes.stats}>
-        <Stat value={stats.count.page} text="Wallets" />
-        <Stat value={stats.count.domain} text="Labels" />
-        <Stat value={cryptosCount} text="Risk Level" />
+        <Stat value={stats.count.wallet} text="Wallets" />
+        <Stat value={stats.count.label} text="Labels" />
+        <Stat value={riskLevel} text="Risk Level" isText />
       </div>
     </div>
   );

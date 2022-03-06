@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 
 // PropTypes
-import PropTypes from 'prop-types';
+import PropTypes, {oneOfType} from 'prop-types';
 
 // Numeral
 import numeral from 'numeral';
@@ -12,7 +12,7 @@ import { Typography } from '@material-ui/core';
 
 const StatRaw = (props) => {
   // Variables
-  const { classes, value = 0, text } = props;
+  const { classes, value = 0, text, isText = false } = props;
   const [animatedValue, setAnimatedValue] = useState(value);
 
   // Hooks
@@ -23,11 +23,13 @@ const StatRaw = (props) => {
     return () => value && clearInterval(timer);
   }, [value]);
 
+  const renderNumericValue = () => animatedValue === 0 ? 'N/A' : numeral(animatedValue).format('0.0a')
+
   // JSX
   const view = (
     <div className={classes.root}>
       <Typography variant="h5" color="primary">
-        {animatedValue === 0 ? 'N/A' : numeral(animatedValue).format('0.0a')}
+        {isText ? value : renderNumericValue()}
       </Typography>
       <Typography variant="body1">{text}</Typography>
     </div>
@@ -41,7 +43,7 @@ StatRaw.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string.isRequired,
   }),
-  value: PropTypes.number,
+  value: oneOfType([PropTypes.number, PropTypes.string]),
   text: PropTypes.string.isRequired,
 };
 
