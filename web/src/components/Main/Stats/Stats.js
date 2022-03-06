@@ -42,12 +42,11 @@ const MainStats = () => {
         Extended coverage
       </Typography>
       <Typography className={classes.subtitle}>
-        Find what you're looking for in Toshi
+        Find what you're looking for on Bitcoin
       </Typography>
       <div className={classes.stats}>
         <Stat value={stats.count.wallet} text="Wallets" />
         <Stat value={stats.count.label} text="Labels" />
-        <Stat value={riskLevel} text="Risk Level" isText />
       </div>
     </div>
   );

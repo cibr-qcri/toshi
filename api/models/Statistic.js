@@ -6,14 +6,6 @@ const StatisticSchema = new mongoose.Schema(
       type: Object,
       required: true,
     },
-    type: {
-      type: String,
-      required: true,
-      enum: ['index', 'domain'],
-    },
-  },
-  {
-    timestamps: true,
   }
 );
 
