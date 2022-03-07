@@ -4,6 +4,9 @@ import React from 'react';
 // PropTypes
 import PropTypes from 'prop-types';
 
+// Assets
+import logo from '../../assets/images/toshi-logo.png';
+
 // Router
 import { NavLink } from 'react-router-dom';
 
@@ -18,7 +21,7 @@ const LogoRaw = (props) => {
   const view = (
     <div className={classes.root}>
       <Link className={classes.link} component={NavLink} to="/main">
-        <h1 className="MuiTypography-root MuiTypography-h1">Toshi</h1>
+        <img src={logo} alt="Toshi" height={height} />
       </Link>
     </div>
   );

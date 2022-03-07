@@ -6,6 +6,9 @@ const StatisticSchema = new mongoose.Schema(
       type: Object,
       required: true,
     },
+  },
+  {
+    timestamps: true,
   }
 );
 

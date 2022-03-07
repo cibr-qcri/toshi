@@ -19,9 +19,9 @@ const runJobs = () => {
 const scheduleJobs = () => {
   if (process.env.NODE_ENV === 'production') {
     if (process.env.PM2_INSTANCE_ID === '0') {
+      cron.schedule('0 0 * * *', computeStats);
       cron.schedule('0 0 * * *', deleteInactiveUsers);
       cron.schedule('0 0 * * *', sendAlerts);
-      cron.schedule('0 0 * * *', computeStats);
     }
   } else {
     console.log('Cron jobs are disabled in development mode'.yellow);

@@ -11,7 +11,6 @@ const initialState = {
       count: {
         wallet: 0,
         label: 0,
-        riskLevelScore: -1,
       },
     },
   },

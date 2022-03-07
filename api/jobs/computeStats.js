@@ -11,20 +11,18 @@ const computeStats = async () => {
     console.log(error);
   }
 
-  const count = {};
   try {
-    const walletRequest = gp.query('SELECT count(*) from btc_wallet;');
-    const labelRequest = gp.query('SELECT count(distinct label) from btc_address_label;');
-    const riskLevelRequest = gp.query('SELECT avg(risk_score) from btc_wallet;');
-    const [walletResponse, labelResponse, riskLevelResponse] = await Promise.all([walletRequest, labelRequest, riskLevelRequest]);
+    const numWalletsReq = gp.query('SELECT count(*) from btc_wallet;');
+    const numLabelsReq = gp.query('SELECT count(*) from btc_address_label;');
+    const [numWalletsRes, numLabelRes] = await Promise.all([numWalletsReq, numLabelsReq]);
 
-    if (!walletResponse|| !labelResponse || !riskLevelResponse) {
+    if (!numWalletsRes|| !numLabelRes) {
       throw new Error('There are no statistics available in greenplump');
     }
 
-    count.wallet = walletResponse.rows[0].count;
-    count.label = labelResponse.rows[0].count;
-    count.riskLevelScore = riskLevelResponse.rows[0].avg;
+    const count = {};
+    count.wallet = parseInt(numWalletsRes.rows[0].count);
+    count.label = parseInt(numLabelRes.rows[0].count);
 
     await Statistic.create({
       computed: {
