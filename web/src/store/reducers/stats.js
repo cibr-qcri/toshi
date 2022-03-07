@@ -9,11 +9,8 @@ const initialState = {
   data: {
     computed: {
       count: {
-        page: 0,
-        domain: 0,
-        crypto: {
-          btc: 0,
-        },
+        wallet: 0,
+        label: 0,
       },
     },
   },

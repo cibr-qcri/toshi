@@ -15,22 +15,16 @@ const MainAnalytics = () => {
   const view = (
     <div className={classes.root}>
       <Typography className={classes.title} color="primary" variant="h5">
-        Darkweb analytics
+        Wallet analytics
       </Typography>
       <Typography className={classes.subtitle}>
         Get useful insights with your search results
       </Typography>
       <div className={classes.features}>
-        <Feature iconLigature="category" text="Website categorization" />
-        <Feature iconLigature="token" text="Crypto address attribution" />
-        <Feature iconLigature="security" text="Illicit website detection" />
-        <Feature iconLigature="lock" text="User tracking detection" />
-        <Feature
-          iconLigature="content_copy"
-          text="Mirrored website detection"
-        />
-        <Feature iconLigature="language" text="Website language detection" />
-        <Feature iconLigature="offline_bolt" text="Service status check" />
+        <Feature iconLigature="category" text="Categorization" />
+        <Feature iconLigature="token" text="Labeling" />
+        <Feature iconLigature="security" text="Risk scoring" />
+        <Feature iconLigature="offline_bolt" text="Activity monitoring" />
       </div>
     </div>
   );

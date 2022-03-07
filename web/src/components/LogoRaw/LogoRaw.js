@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Assets
-import logo from '../../assets/images/dizzy-logo.png';
+import logo from '../../assets/images/toshi-logo.png';
 
 // Router
 import { NavLink } from 'react-router-dom';
@@ -21,7 +21,7 @@ const LogoRaw = (props) => {
   const view = (
     <div className={classes.root}>
       <Link className={classes.link} component={NavLink} to="/main">
-        <img src={logo} alt="Dizzy" height={height} />
+        <img src={logo} alt="Toshi" height={height} />
       </Link>
     </div>
   );
