@@ -9,6 +9,7 @@ import WebResult from '../Result';
 
 // Styles
 import { useStyles } from './WebResults-styles';
+import WebResultsLabel from "../ResultsLabel/WebResultsLabel";
 
 export const WebResults = (props) => {
   // Variables
@@ -17,17 +18,17 @@ export const WebResults = (props) => {
   // JSX
   const final = (
     <div className={classes.root}>
+      <WebResultsLabel count={props.count} type={props.type} />
       <List component="ul" aria-label="search results" className={classes.list}>
         {props.items.map((result) => {
           return (
-            <ListItem key={result.id}>
+            <ListItem key={result.wallet_id}>
               <WebResult
-                id={result.id}
-                url={result.url}
-                title={result.title}
-                crawledat={result.crawledAt}
-                body={result.body}
+                id={result.wallet_id}
+                url={result.wallet_id}
+                title={result.wallet_id}
                 info={result.info}
+                type={result.type}
               />
             </ListItem>
           );

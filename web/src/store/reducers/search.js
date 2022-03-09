@@ -12,7 +12,9 @@ const initialState = {
     noResults: false,
     isPaged: false,
     pagination: {},
-    source: 'web',
+    source: 'blockchain',
+    type: 'empty value',
+    count: 0,
   },
   error: null,
   isBusy: true,
@@ -31,6 +33,8 @@ const reducer = (state = initialState, action) => {
           pagination: sourceSwitched ? {} : state.data.pagination,
           noResults: sourceSwitched ? false : state.data.noResults,
           source: action.payload.source,
+          type: action.payload.type,
+          count: state.data.count,
         }),
         isBusy: true,
       });
@@ -43,6 +47,7 @@ const reducer = (state = initialState, action) => {
             : action.payload.data,
           noResults: !state.data.isPaged && action.payload.data.length === 0,
           pagination: { ...action.payload.pagination },
+          count: action.payload.count,
         }),
         isBusy: false,
       });

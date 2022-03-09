@@ -4,16 +4,13 @@ import { makeStyles } from "../../../../../utils";
 export const stylesCreator = (theme) => ({
   Default: {
     root: {},
-    expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
+    walletIcon: {
     },
-    expandOpen: {
-      transform: "rotate(180deg)",
-    },
+    CardAction: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingRight: theme.spacing(2),
+    }
   },
 });
 

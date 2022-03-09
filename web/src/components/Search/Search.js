@@ -16,7 +16,7 @@ import MoreResults from './MoreResults';
 import NoResults from './NoResults';
 
 // Store
-import { getWebResults, showAlertDialog } from '../../store/actions';
+import { getBlockchainResults, showAlertDialog } from '../../store/actions';
 
 // Styles
 import { useStyles, LazyProgress, SearchBox, Switcher } from './Search-styles';
@@ -28,17 +28,20 @@ export const Search = () => {
   const location = useLocation();
   const isBusy = useSelector((state) => state.search.isBusy);
   const query = useSelector((state) => state.search.data.query);
+  const type = useSelector((state) => state.search.data.type);
+  const count = useSelector((state) => state.search.data.count);
   const results = useSelector((state) => state.search.data.results);
   const noResults = useSelector((state) => state.search.data.noResults);
   const pagination = useSelector((state) => state.search.data.pagination);
   const source = location.pathname.split('/')[2];
 
+
   // Hooks
   useEffect(() => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true }).query;
     const source = location.pathname.split('/')[2];
-    if (source === 'web') {
-      dispatch(getWebResults(query));
+    if (source === 'blockchain' && !!query) {
+      dispatch(getBlockchainResults(query));
     }
   }, [dispatch, location]);
 
@@ -54,8 +57,8 @@ export const Search = () => {
   }
 
   let searchResults;
-  if (source === 'web') {
-    searchResults = <WebResults items={results} />;
+  if (source === 'blockchain') {
+    searchResults = <WebResults items={results} count={count} type={type} />;
   }
 
   let alertSwitcher = null;
@@ -76,12 +79,12 @@ export const Search = () => {
   );
 
   if (noResults) {
-    content = <NoResults query={query} />;
+    content = <NoResults query={query} type={type} />;
   }
   const view = (
     <div className={classes.root}>
       <SearchBox />
-      {isBusy && !pagination.next ? <LazyProgress /> : content}
+      {isBusy && !pagination.next && query.length > 0 ? <LazyProgress /> : content}
     </div>
   );
 

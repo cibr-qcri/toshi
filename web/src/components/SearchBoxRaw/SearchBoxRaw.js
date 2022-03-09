@@ -46,7 +46,7 @@ const SearchBoxRaw = (props) => {
     event.preventDefault();
     if (query.trim() !== '') {
       const location = {
-        pathname: '/search/web',
+        pathname: '/search/blockchain',
         search: '?query=' + query,
       };
       if (isAuth) {
@@ -72,7 +72,7 @@ const SearchBoxRaw = (props) => {
         <InputBase
           className={classes.input}
           type="search"
-          value={query}
+          value={query ?? ""}
           placeholder={placeholder}
           onChange={queryChangeHandler}
         />

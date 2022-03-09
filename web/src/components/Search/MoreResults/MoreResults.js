@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 
 // Store
-import { getWebResults } from '../../../store/actions';
+import { getBlockchainResults } from '../../../store/actions';
 
 // Styles
 import { useStyles } from './MoreResults-styles';
@@ -22,7 +22,7 @@ const SearchMoreResults = (props) => {
   // Handlers
   const moreResultsHandler = () => {
     if (source === 'web') {
-      dispatch(getWebResults(query, true));
+      dispatch(getBlockchainResults(query, true));
     }
   };
 

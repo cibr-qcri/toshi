@@ -4,6 +4,7 @@ import { makeStyles } from "../../../../../utils";
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
+      paddingTop: theme.spacing(2.5),
       paddingLeft: theme.spacing(2.5),
       paddingRight: theme.spacing(2.5),
     },

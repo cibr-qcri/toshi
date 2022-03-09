@@ -10,14 +10,27 @@ import { batch } from 'react-redux';
 // Creators
 import * as creators from './creators';
 import { showAlert } from '../';
+import {validateBitCoinAddress, validateBitCoinTx} from "../../../utils/common";
 
-export const getWebResults = (query, isPaged = false) => {
+const queryType = (query) => {
+  if (validateBitCoinAddress(query)) {
+    return 'address'
+  } else if (validateBitCoinTx(query)) {
+    return 'transaction'
+  } else {
+    return 'label'
+  }
+}
+
+export const getBlockchainResults = (query, isPaged = false) => {
   return (dispatch, getState) => {
-    dispatch(creators.getResultsStart({ query, isPaged, source: 'web' }));
 
     let queryParams = {
       query,
     };
+    const searchType = queryType(queryParams.query);
+    queryParams.type = searchType
+    dispatch(creators.getResultsStart({ query, isPaged, source: 'blockchain', type: searchType }));
 
     if (isPaged) {
       const { page, limit } = getState().search.data.pagination.next;
@@ -28,7 +41,7 @@ export const getWebResults = (query, isPaged = false) => {
       };
     }
 
-    const searchUrl = `/search/web?${qs.stringify(queryParams)}`;
+    const searchUrl = `/search/blockchain?${qs.stringify(queryParams)}`;
 
     axios
       .get(searchUrl)
