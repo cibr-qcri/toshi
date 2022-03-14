@@ -52,7 +52,7 @@ services:
       ACCOUNT_ACTIVIATION_URL: 'https://toshi.cibr.qcri.org/activate'
       ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
       SEARCH_ALERTS_URL: 'https://toshi.cibr.qcri.org/alerts'
-      SEARCH_WEB_URL: 'https://toshi.cibr.qcri.org/search/blockchain'
+      SEARCH_WEB_URL: 'https://toshi.cibr.qcri.org/search/wallet'
       SMTP_HOST: 'smtp.office365.com'
       SMTP_PORT: 587
       SMTP_EMAIL: 'noreply@mail.cibr.qcri.org'

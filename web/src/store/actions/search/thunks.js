@@ -1,31 +1,31 @@
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 // QueryString
-import qs from "qs";
+import qs from 'qs';
 
 // Redux
-import { batch } from "react-redux";
+import { batch } from 'react-redux';
 
 // Creators
-import * as creators from "./creators";
-import { showAlert } from "../";
+import * as creators from './creators';
+import { showAlert } from '../';
 import {
   validateBitCoinAddress,
   validateBitCoinTx,
-} from "../../../utils/common";
+} from '../../../utils/common';
 
 const queryType = (query) => {
   if (validateBitCoinAddress(query)) {
-    return "address";
+    return 'address';
   } else if (validateBitCoinTx(query)) {
-    return "transaction";
+    return 'transaction';
   } else {
-    return "label";
+    return 'label';
   }
 };
 
-export const getBlockchainResults = (query, isPaged = false) => {
+export const getWalletResults = (query, isPaged = false) => {
   return (dispatch, getState) => {
     let queryParams = {
       query,
@@ -45,12 +45,12 @@ export const getBlockchainResults = (query, isPaged = false) => {
       creators.getResultsStart({
         query,
         isPaged,
-        source: "blockchain",
+        source: 'wallet',
         type: searchType,
       })
     );
 
-    const searchUrl = `/search/blockchain?${qs.stringify(queryParams)}`;
+    const searchUrl = `/search/wallet?${qs.stringify(queryParams)}`;
 
     axios
       .get(searchUrl)

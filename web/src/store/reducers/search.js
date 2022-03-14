@@ -12,7 +12,7 @@ const initialState = {
     noResults: false,
     isPaged: false,
     pagination: {},
-    source: 'blockchain',
+    source: 'wallet',
     type: 'empty',
     count: 0,
   },

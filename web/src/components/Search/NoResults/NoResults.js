@@ -18,7 +18,7 @@ const SearchNoResults = (props) => {
       <Switcher
         question="Interesting search"
         action="Check this out"
-        path="/search/blockchain?query=wiki"
+        path="/search/wallet?query=bit"
       />
     </div>
   );

@@ -1,25 +1,25 @@
 // React
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect } from 'react';
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Router
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Querystring
-import qs from "qs";
+import qs from 'qs';
 
 // Components
-import WalletResults from "./Wallet/Results/WalletResults";
-import MoreResults from "./MoreResults";
-import NoResults from "./NoResults";
+import WalletResults from './Wallet/Results/WalletResults';
+import MoreResults from './MoreResults';
+import NoResults from './NoResults';
 
 // Store
-import { getBlockchainResults, showAlertDialog } from "../../store/actions";
+import { getWalletResults, showAlertDialog } from '../../store/actions';
 
 // Styles
-import { useStyles, LazyProgress, SearchBox, Switcher } from "./Search-styles";
+import { useStyles, LazyProgress, SearchBox, Switcher } from './Search-styles';
 
 export const Search = () => {
   // Variables
@@ -34,19 +34,19 @@ export const Search = () => {
   const results = useSelector((state) => state.search.data.results);
   const noResults = useSelector((state) => state.search.data.noResults);
   const pagination = useSelector((state) => state.search.data.pagination);
-  const source = location.pathname.split("/")[2];
+  const source = location.pathname.split('/')[2];
 
   // Hooks
   useEffect(() => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true }).query;
-    const source = location.pathname.split("/")[2];
+    const source = location.pathname.split('/')[2];
 
     if (!query || query.length === 0) {
-      history.push("/main");
+      history.push('/main');
     }
 
-    if (source === "blockchain") {
-      dispatch(getBlockchainResults(query));
+    if (source === 'wallet') {
+      dispatch(getWalletResults(query));
     }
   }, [dispatch, location, history]);
 
@@ -62,7 +62,7 @@ export const Search = () => {
   }
 
   let searchResults;
-  if (source === "blockchain") {
+  if (source === 'wallet') {
     searchResults = <WalletResults items={results} count={count} type={type} />;
   }
 
@@ -89,11 +89,7 @@ export const Search = () => {
   const view = (
     <div className={classes.root}>
       <SearchBox />
-      {isBusy && !pagination.next && query.length > 0 ? (
-        <LazyProgress />
-      ) : (
-        content
-      )}
+      {isBusy ? <LazyProgress /> : content}
     </div>
   );
 

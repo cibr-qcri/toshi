@@ -6,7 +6,8 @@ const gp = new Pool({
   database: process.env.GP_DATABASE,
   password: process.env.GP_PASSWORD,
   port: process.env.GP_PORT,
-})
+});
+
 gp.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.log(`Error: ${err.message}`.red);
@@ -15,6 +16,6 @@ gp.query('SELECT NOW()', (err, res) => {
       `Server connected to greenplum on ${process.env.GP_HOST}`.green
     );
   }
-})
+});
 
 module.exports = gp;

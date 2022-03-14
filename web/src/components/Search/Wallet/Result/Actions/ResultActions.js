@@ -1,29 +1,29 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Redux
-import {useDispatch} from "react-redux";
+import { useDispatch } from 'react-redux';
 
 // Material
 import {
   Label as TagIcon,
   ArrowRightAlt as WalletInIcon,
   SyncAlt as WalletInOutIcon,
-} from "@material-ui/icons";
+} from '@material-ui/icons';
 
-import {CardActions, IconButton, Typography} from "@material-ui/core";
+import { CardActions, IconButton, Typography } from '@material-ui/core';
 
 // Store
-import {showTagDialog} from "../../../../../store/actions";
+import { showTagDialog } from '../../../../../store/actions';
 
 // Styles
-import {useStyles} from "./ResultActions-styles";
+import { useStyles } from './ResultActions-styles';
 
 const ResultActions = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {id, type} = props;
+  const { id, type } = props;
 
   // Handlers
   const tagHandler = () => {
@@ -34,7 +34,7 @@ const ResultActions = (props) => {
   if (type.in_wallet && type.out_wallet) {
     walletFlowData = (
       <div className={classes.walletFlow}>
-        <WalletInOutIcon/>
+        <WalletInOutIcon />
         <Typography
           className={classes.walletMetadataLabel}
           variant="body2"
@@ -47,7 +47,7 @@ const ResultActions = (props) => {
   } else if (type.in_wallet && !type.out_wallet) {
     walletFlowData = (
       <div className={classes.walletFlow}>
-        <WalletInIcon className={classes.walletFlowOutIcon}/>
+        <WalletInIcon className={classes.walletFlowOutIcon} />
         <Typography
           className={classes.walletMetadataLabel}
           variant="body2"
@@ -60,7 +60,7 @@ const ResultActions = (props) => {
   } else if (!type.in_wallet && type.out_wallet) {
     walletFlowData = (
       <div className={classes.walletFlow}>
-        <WalletInIcon className={classes.walletFlowInIcon}/>
+        <WalletInIcon className={classes.walletFlowInIcon} />
         <Typography
           className={classes.walletMetadataLabel}
           variant="body2"
@@ -71,7 +71,7 @@ const ResultActions = (props) => {
       </div>
     );
   } else {
-    walletFlowData = <div/>;
+    walletFlowData = <div />;
   }
 
   //JSX
@@ -80,7 +80,7 @@ const ResultActions = (props) => {
       <CardActions className={classes.CardAction} disableSpacing>
         {walletFlowData}
         <IconButton onClick={tagHandler}>
-          <TagIcon/>
+          <TagIcon />
         </IconButton>
       </CardActions>
     </div>
