@@ -13,7 +13,7 @@ const initialState = {
     isPaged: false,
     pagination: {},
     source: 'blockchain',
-    type: 'empty value',
+    type: 'empty',
     count: 0,
   },
   error: null,

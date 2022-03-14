@@ -5,30 +5,31 @@ import React from 'react';
 import { List, ListItem } from '@material-ui/core';
 
 // Componets
-import WebResult from '../Result';
+import WalletResult from '../Result';
 
 // Styles
-import { useStyles } from './WebResults-styles';
-import WebResultsLabel from "../ResultsLabel/WebResultsLabel";
+import { useStyles } from './WalletResults-styles';
+import WalletResultsLabel from "../ResultsLabel/WalletResultsLabel";
 
-export const WebResults = (props) => {
+export const WalletResults = (props) => {
   // Variables
   const classes = useStyles();
 
   // JSX
   const final = (
     <div className={classes.root}>
-      <WebResultsLabel count={props.count} type={props.type} />
+      <WalletResultsLabel count={props.count} type={props.type} />
       <List component="ul" aria-label="search results" className={classes.list}>
         {props.items.map((result) => {
           return (
             <ListItem key={result.wallet_id}>
-              <WebResult
+              <WalletResult
                 id={result.wallet_id}
                 url={result.wallet_id}
                 title={result.wallet_id}
                 info={result.info}
                 type={result.type}
+                labels={result.labels}
               />
             </ListItem>
           );
@@ -40,4 +41,4 @@ export const WebResults = (props) => {
   return final;
 };
 
-export default WebResults;
+export default WalletResults;

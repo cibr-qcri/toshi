@@ -1,8 +1,8 @@
 // React
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 
 // Material
-import { Card } from '@material-ui/core';
+import {Card} from '@material-ui/core';
 
 // Components
 import Title from './Title';
@@ -10,12 +10,12 @@ import Actions from './Actions';
 import Info from './Info';
 
 // Styles
-import { useStyles } from './WebResult-styles';
+import {useStyles} from './WalletResult-styles';
 
-const WebResult = (props) => {
+const WalletResult = (props) => {
   // Variables
   const classes = useStyles();
-  const { id, info, url, title, type } = props;
+  const {id, info, url, title, type} = props;
 
   // Handlers
 
@@ -23,10 +23,10 @@ const WebResult = (props) => {
   const view = (
     <div className={classes.root}>
       <Card variant="outlined">
-        <Title text={title.split('-')[0]} url={url} />
+        <Title text={title.split('-')[0]} url={url}/>
         <Fragment>
-          <Info items={info} />
-          <Actions id={id} type={type} />
+          <Info items={info}/>
+          <Actions id={id} type={type}/>
         </Fragment>
       </Card>
     </div>
@@ -35,4 +35,4 @@ const WebResult = (props) => {
   return view;
 };
 
-export default WebResult;
+export default WalletResult;

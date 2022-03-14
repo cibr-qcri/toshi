@@ -1,27 +1,28 @@
 // React
-import React from 'react';
+import React from "react";
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 // Material
-import { Button } from '@material-ui/core';
+import { Button } from "@material-ui/core";
 
 // Store
-import { getBlockchainResults } from '../../../store/actions';
+import { getBlockchainResults } from "../../../store/actions";
 
 // Styles
-import { useStyles } from './MoreResults-styles';
+import { useStyles } from "./MoreResults-styles";
 
 const SearchMoreResults = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
   const { query, source } = props;
+  const isBusy = useSelector((state) => state.search.isBusy);
 
   // Handlers
   const moreResultsHandler = () => {
-    if (source === 'web') {
+    if (source === "blockchain") {
       dispatch(getBlockchainResults(query, true));
     }
   };
@@ -35,7 +36,7 @@ const SearchMoreResults = (props) => {
         color="primary"
         onClick={moreResultsHandler}
       >
-        More Results
+        {isBusy ? "Loading ..." : "More Results"}
       </Button>
     </div>
   );
