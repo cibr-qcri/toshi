@@ -11,14 +11,14 @@ import { batch } from 'react-redux';
 import * as creators from './creators';
 import { showAlert } from '../';
 import {
-  validateBitCoinAddress,
-  validateBitCoinTx,
+  validateBitcoinAddress,
+  validateBitcoinTx,
 } from '../../../utils/common';
 
 const queryType = (query) => {
-  if (validateBitCoinAddress(query)) {
+  if (validateBitcoinAddress(query)) {
     return 'address';
-  } else if (validateBitCoinTx(query)) {
+  } else if (validateBitcoinTx(query)) {
     return 'transaction';
   } else {
     return 'label';

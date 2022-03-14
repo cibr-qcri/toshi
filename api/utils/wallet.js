@@ -1,14 +1,9 @@
 calculateMaxValue = (array) => {
-  return array.reduce((previous, current, i, arr) => {
-    if (
-      arr.filter((item) => item === previous).length >
-      arr.filter((item) => item === current).length
-    ) {
-      return previous;
-    } else {
-      return current;
-    }
-  });
+  const occurrences = array.reduce(function (acc, curr) {
+    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+  }, {});
+
+  return Object.keys(occurrences).reduce((a, b) => occurrences[a] > occurrences[b] ? a : b);
 };
 
 exports.getTopCategory = (categories) => {
