@@ -20,7 +20,7 @@ const NoResultsMessage = (props) => {
     <div className={classes.root}>
       <Card variant="outlined" className={classes.card}>
         <div className={classes.content}>
-          <Header query={props.query}></Header>
+          <Header query={props.query} type={props.type}></Header>
           <Body />
         </div>
       </Card>

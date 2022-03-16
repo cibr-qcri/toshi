@@ -21,7 +21,7 @@ const ResultTitle = (props) => {
           target="_blank"
           rel="noopener"
         >
-          {props.text}
+          Wallet [{props.text}]
         </Link>
       </Typography>
     </div>

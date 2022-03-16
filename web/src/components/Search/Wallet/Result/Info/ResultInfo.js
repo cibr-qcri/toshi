@@ -2,7 +2,7 @@
 import React from "react";
 
 // Material
-import { Collapse, Divider, Grid, Typography } from "@material-ui/core";
+import { Divider, Grid, Typography } from "@material-ui/core";
 
 // Styles
 import { useStyles } from "./ResultInfo-styles";
@@ -10,7 +10,7 @@ import { useStyles } from "./ResultInfo-styles";
 const ResultInfo = (props) => {
   // Variables
   const classes = useStyles();
-  const { expanded, items } = props;
+  const { items } = props;
 
   //JSX
   const infoItems = items.map((info, index) => {
@@ -27,11 +27,9 @@ const ResultInfo = (props) => {
 
   const view = (
     <div className={classes.root}>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Grid className={classes.content} container>
-          {infoItems}
+            {infoItems}
         </Grid>
-      </Collapse>
     </div>
   );
 

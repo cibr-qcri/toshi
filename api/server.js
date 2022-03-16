@@ -45,7 +45,8 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(limiter);
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'developement') {
+  console.log('Morgan logger set to developement mode'.yellow);
   app.use(morgan('dev'));
 }
 

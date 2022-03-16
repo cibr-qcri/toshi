@@ -15,7 +15,7 @@ const MessageHeader = (props) => {
   const view = (
     <div className={classes.root}>
       <Typography className={classes.typography}>
-        No results found for <b>{props.query}</b>.
+        No results found for {props.type}: <b>{props.query}</b>.
       </Typography>
     </div>
   );

@@ -14,11 +14,11 @@ const SearchNoResults = (props) => {
   //JSX
   const view = (
     <div className={classes.root}>
-      <Message query={props.query} />
+      <Message query={props.query} type={props.type} />
       <Switcher
         question="Interesting search"
         action="Check this out"
-        path="/search/web?query=wiki"
+        path="/search/wallet?query=bit"
       />
     </div>
   );

@@ -25,6 +25,7 @@
     "mongoose": "^5.9.21",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.10",
+    "numeral": "^2.0.6",
     "pg": "^8.7.3",
     "xss-clean": "^0.1.1"
   },

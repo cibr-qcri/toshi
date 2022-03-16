@@ -10,25 +10,47 @@ import { batch } from 'react-redux';
 // Creators
 import * as creators from './creators';
 import { showAlert } from '../';
+import {
+  validateBitcoinAddress,
+  validateBitcoinTx,
+} from '../../../utils/common';
 
-export const getWebResults = (query, isPaged = false) => {
+const queryType = (query) => {
+  if (validateBitcoinAddress(query)) {
+    return 'address';
+  } else if (validateBitcoinTx(query)) {
+    return 'transaction';
+  } else {
+    return 'label';
+  }
+};
+
+export const getWalletResults = (query, isPaged = false) => {
   return (dispatch, getState) => {
-    dispatch(creators.getResultsStart({ query, isPaged, source: 'web' }));
-
     let queryParams = {
       query,
     };
 
     if (isPaged) {
-      const { page, limit } = getState().search.data.pagination.next;
+      const { page } = getState().search.data.pagination.next;
       queryParams = {
         ...queryParams,
         page,
-        limit,
       };
     }
 
-    const searchUrl = `/search/web?${qs.stringify(queryParams)}`;
+    const searchType = queryType(queryParams.query);
+    queryParams.type = searchType;
+    dispatch(
+      creators.getResultsStart({
+        query,
+        isPaged,
+        source: 'wallet',
+        type: searchType,
+      })
+    );
+
+    const searchUrl = `/search/wallet?${qs.stringify(queryParams)}`;
 
     axios
       .get(searchUrl)

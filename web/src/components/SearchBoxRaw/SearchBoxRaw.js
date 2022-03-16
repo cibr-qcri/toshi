@@ -11,9 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 // Material
-import {
-  Search as SearchIcon,
-} from '@material-ui/icons';
+import { Search as SearchIcon } from '@material-ui/icons';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 
 // Store
@@ -21,10 +19,7 @@ import { setRedirect } from '../../store/actions';
 
 const SearchBoxRaw = (props) => {
   // Variables
-  const {
-    classes,
-    placeholder = 'Search Bitcoin wallets',
-  } = props;
+  const { classes, placeholder = 'Search Bitcoin wallets' } = props;
   const dispatch = useDispatch();
   const history = useHistory();
   const [query, setQuery] = useState('');
@@ -46,7 +41,7 @@ const SearchBoxRaw = (props) => {
     event.preventDefault();
     if (query.trim() !== '') {
       const location = {
-        pathname: '/search/web',
+        pathname: '/search/wallet',
         search: '?query=' + query,
       };
       if (isAuth) {
@@ -72,7 +67,7 @@ const SearchBoxRaw = (props) => {
         <InputBase
           className={classes.input}
           type="search"
-          value={query}
+          value={query ?? ''}
           placeholder={placeholder}
           onChange={queryChangeHandler}
         />

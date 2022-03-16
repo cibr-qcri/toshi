@@ -5,18 +5,18 @@ import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Router
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Querystring
 import qs from 'qs';
 
 // Components
-import WebResults from './Web/Results/WebResults';
+import WalletResults from './Wallet/Results/WalletResults';
 import MoreResults from './MoreResults';
 import NoResults from './NoResults';
 
 // Store
-import { getWebResults, showAlertDialog } from '../../store/actions';
+import { getWalletResults, showAlertDialog } from '../../store/actions';
 
 // Styles
 import { useStyles, LazyProgress, SearchBox, Switcher } from './Search-styles';
@@ -26,8 +26,11 @@ export const Search = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const isBusy = useSelector((state) => state.search.isBusy);
   const query = useSelector((state) => state.search.data.query);
+  const type = useSelector((state) => state.search.data.type);
+  const count = useSelector((state) => state.search.data.count);
   const results = useSelector((state) => state.search.data.results);
   const noResults = useSelector((state) => state.search.data.noResults);
   const pagination = useSelector((state) => state.search.data.pagination);
@@ -37,10 +40,15 @@ export const Search = () => {
   useEffect(() => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true }).query;
     const source = location.pathname.split('/')[2];
-    if (source === 'web') {
-      dispatch(getWebResults(query));
+
+    if (!query || query.length === 0) {
+      history.push('/main');
     }
-  }, [dispatch, location]);
+
+    if (source === 'wallet') {
+      dispatch(getWalletResults(query));
+    }
+  }, [dispatch, location, history]);
 
   // Handlers
   const alertHandler = () => {
@@ -54,8 +62,8 @@ export const Search = () => {
   }
 
   let searchResults;
-  if (source === 'web') {
-    searchResults = <WebResults items={results} />;
+  if (source === 'wallet') {
+    searchResults = <WalletResults items={results} count={count} type={type} />;
   }
 
   let alertSwitcher = null;
@@ -76,12 +84,12 @@ export const Search = () => {
   );
 
   if (noResults) {
-    content = <NoResults query={query} />;
+    content = <NoResults query={query} type={type} />;
   }
   const view = (
     <div className={classes.root}>
       <SearchBox />
-      {isBusy && !pagination.next ? <LazyProgress /> : content}
+      {isBusy ? <LazyProgress /> : content}
     </div>
   );
 

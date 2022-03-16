@@ -1,102 +1,136 @@
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const gp = require('../services/gp');
-const moment = require('moment');
-const Search = require('../models/Search');
+const numeral = require('numeral');
+const wallet = require('../utils/wallet');
 
 const MAX_RESULTS_IN_PAGE = 25;
-const DEFAULT_PAGE_NUM = 1;
 
 const walletResults = asyncHandler(async (request, response, next) => {
-  const { query } = request.query;
+  const { query, type } = request.query;
+  const allowedTypes = ['label', 'transaction', 'address'];
 
-  if (!query) {
-    return next(new ErrorResponse('Please provide a search query', 400));
+  if (!type) {
+    return next(new ErrorResponse('Please provide a search type', 400));
   }
 
-  await Search.create({
-    user: request.user.id,
-    query,
-    source: 'web',
-  });
+  if (!allowedTypes.includes(type)) {
+    return next(new ErrorResponse('Invalid search type', 400));
+  }
 
-  const page = parseInt(request.query.page, 10) || DEFAULT_PAGE_NUM;
-  const limit = parseInt(request.query.limit, 10) || MAX_RESULTS_IN_PAGE;
+  let requestPage = request.query.page;
+  let offset;
+  if (!requestPage) {
+    offset = 0; // SQL offset starts with 0
+    requestPage = 1;
+  } else {
+    requestPage = parseInt(requestPage, 10);
+    offset = (requestPage - 1) * MAX_RESULTS_IN_PAGE;
+  }
 
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+  let getWalletsQuery;
+  let queryValues;
+  if (type === 'address') {
+    getWalletsQuery = wallet.queries.getWalletsByAddress;
+    queryValues = [query, offset, MAX_RESULTS_IN_PAGE];
+  } else if (type === 'transaction') {
+    getWalletsQuery = wallet.queries.getWalletByTx;
+    queryValues = [query, query, offset, MAX_RESULTS_IN_PAGE];
+  } else {
+    getWalletsQuery = wallet.queries.getWalletByLabel;
+    queryValues = [query, offset, MAX_RESULTS_IN_PAGE];
+  }
 
-  const results = await gp.query('');
+  const results = await gp.query(getWalletsQuery, queryValues);
 
-  const total = results.body.hits.total.value;
+  // set total result count of the query
+  let total = 0;
+  if (results && results.rows.length > 0) {
+    total = results.rows[0].total_count;
+  }
 
-  const hits = results.body.hits.hits.map((hit) => {
+  const records = results.rows.map((row) => {
+    let riskLevel = 'Low';
+    if (row.risk_score >= 0.7) {
+      riskLevel = 'High';
+    } else if (row.risk_score >= 0.5 && row.risk_score < 0.7) {
+      riskLevel = 'Medium';
+    }
 
-    return {
-      id: hit._id,
-      url: hit._source.data.info.url,
-      title: hit._source.data.info.title,
-      crawledAt: moment(hit._source.data.timestamp).utc().toISOString(true),
-      body: hit._source.data.info.summary || hit._source.data.info.title,
+    const walletData = {
+      wallet_id: row.cluster_id,
       info: [
         {
-          title: 'Category',
-          text: '',
+          title: 'Top Category',
+          text:
+            row.category && row.category.length > 0
+              ? wallet.getTopCategory(row.category)
+              : 'N/A',
         },
         {
-          title: 'Crypto Addresses',
-          text: '',
+          title: 'Top Label',
+          text:
+            row.label && row.label.length > 0
+              ? wallet.getTopLabel(row.label)
+              : 'N/A',
         },
         {
-          title: 'Safety',
-          text: '',
+          title: 'Size',
+          text: numeral(row.num_address).format('0,0'),
         },
         {
-          title: 'Privacy',
-          text: '',
+          title: 'Risk Score',
+          text: numeral(row.risk_score).format('0.00') + ' (' + riskLevel + ')',
         },
         {
-          title: 'Mirroring',
-          text: '',
+          title: 'Total In',
+          text: numeral(row.total_received_usd).format('$0,0.00'),
         },
         {
-          title: 'Main Language',
-          text: '',
-        },
-        {
-          title: 'Status',
-          text: '',
-        },
-        {
-          title: 'Availability',
-          text: '',
+          title: 'Total Out',
+          text: numeral(row.total_spent_usd).format('$0,0.00'),
         },
       ],
+      type: {
+        in_wallet: false,
+        out_wallet: false,
+      },
     };
+
+    if (type === 'transaction') {
+      if (row.wallet_type === 'in_wallet') {
+        walletData.type.in_wallet = true;
+      } else if (row.wallet_type === 'out_wallet') {
+        walletData.type.out_wallet = true;
+      } else if (row.wallet_type === 'in_wallet/out_wallet') {
+        walletData.type.in_wallet = true;
+        walletData.type.out_wallet = true;
+      }
+    }
+
+    return walletData;
   });
 
   const pagination = {};
-  if (hits.length > 0) {
-    if (endIndex < total) {
+  if (records.length > 0) {
+    if (total > requestPage * MAX_RESULTS_IN_PAGE) {
       pagination.next = {
-        page: page + 1,
-        limit,
+        page: requestPage + 1,
+        MAX_RESULTS_IN_PAGE,
       };
     }
 
-    if (startIndex > 0) {
-      pagination.prev = {
-        page: page - 1,
-        limit,
-      };
-    }
+    pagination.prev = {
+      page: requestPage - 1,
+      MAX_RESULTS_IN_PAGE,
+    };
   }
 
   response.walletResults = {
     success: true,
-    count: hits.length,
+    count: total,
     pagination,
-    data: hits,
+    data: records,
   };
 
   next();

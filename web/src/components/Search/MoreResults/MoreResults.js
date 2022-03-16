@@ -2,13 +2,13 @@
 import React from 'react';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Material
 import { Button } from '@material-ui/core';
 
 // Store
-import { getWebResults } from '../../../store/actions';
+import { getWalletResults } from '../../../store/actions';
 
 // Styles
 import { useStyles } from './MoreResults-styles';
@@ -18,11 +18,12 @@ const SearchMoreResults = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { query, source } = props;
+  const isBusy = useSelector((state) => state.search.isBusy);
 
   // Handlers
   const moreResultsHandler = () => {
-    if (source === 'web') {
-      dispatch(getWebResults(query, true));
+    if (source === 'wallet') {
+      dispatch(getWalletResults(query, true));
     }
   };
 
@@ -35,7 +36,7 @@ const SearchMoreResults = (props) => {
         color="primary"
         onClick={moreResultsHandler}
       >
-        More Results
+        {isBusy ? 'Loading ...' : 'More Results'}
       </Button>
     </div>
   );
