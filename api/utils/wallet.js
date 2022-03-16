@@ -1,15 +1,29 @@
-calculateMaxValue = (array) => {
-  const occurrences = array.reduce(function (acc, curr) {
-    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+const findMostFrequentItem = (strArray) => {
+  let result = {
+    value: '',
+    count: 0,
+  };
+
+  strArray.reduce((strCount, currentStr) => {
+    if (strCount[currentStr]) {
+      strCount[currentStr] += 1;
+    } else {
+      strCount[currentStr] = 1;
+    }
+    if (strCount[currentStr] > result.count) {
+      result.value = currentStr;
+      result.count = strCount[currentStr];
+    }
+    return strCount;
   }, {});
 
-  return Object.keys(occurrences).reduce((a, b) => occurrences[a] > occurrences[b] ? a : b);
+  return result;
 };
 
 exports.getTopCategory = (categories) => {
   const categoryArray = categories.split(',');
   if (categoryArray.length > 1) {
-    return calculateMaxValue(categoryArray);
+    return findMostFrequentItem(categoryArray).value;
   } else {
     return categories;
   }
@@ -18,7 +32,7 @@ exports.getTopCategory = (categories) => {
 exports.getTopLabel = (labels) => {
   const labelArray = labels.split(',');
   if (labelArray.length > 1) {
-    return calculateMaxValue(labelArray);
+    return findMostFrequentItem(labelArray).value;
   } else {
     return labels;
   }
