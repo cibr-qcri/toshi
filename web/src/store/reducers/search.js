@@ -18,6 +18,7 @@ const initialState = {
   },
   error: null,
   isBusy: true,
+  isMoreLoading: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +38,7 @@ const reducer = (state = initialState, action) => {
           count: state.data.count,
         }),
         isBusy: true,
+        isMoreLoading: action.payload.isMoreLoading,
       });
     }
     case types.GET_RESULTS_SUCCESS: {
@@ -50,6 +52,7 @@ const reducer = (state = initialState, action) => {
           count: action.payload.count,
         }),
         isBusy: false,
+        isMoreLoading: false,
       });
     }
     case types.GET_RESULTS_FAILURE: {
@@ -58,6 +61,7 @@ const reducer = (state = initialState, action) => {
           error: action.payload,
         }),
         isBusy: false,
+        isMoreLoading: false,
       });
     }
     // Reset

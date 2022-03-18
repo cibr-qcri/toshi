@@ -28,6 +28,7 @@ export const Search = () => {
   const location = useLocation();
   const history = useHistory();
   const isBusy = useSelector((state) => state.search.isBusy);
+  const isMoreLoading = useSelector((state) => state.search.isMoreLoading);
   const query = useSelector((state) => state.search.data.query);
   const type = useSelector((state) => state.search.data.type);
   const count = useSelector((state) => state.search.data.count);
@@ -66,7 +67,7 @@ export const Search = () => {
     searchResults = <WalletResults items={results} count={count} type={type} />;
   }
 
-  let alertSwitcher = null;
+  let alertSwitcher;
   alertSwitcher = (
     <Switcher
       question="Want to stay updated"
@@ -89,7 +90,7 @@ export const Search = () => {
   const view = (
     <div className={classes.root}>
       <SearchBox />
-      {isBusy ? <LazyProgress /> : content}
+      {isBusy && !isMoreLoading ? <LazyProgress /> : content}
     </div>
   );
 

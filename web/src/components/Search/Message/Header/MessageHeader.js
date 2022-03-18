@@ -14,7 +14,7 @@ const MessageHeader = (props) => {
   //JSX
   const view = (
     <div className={classes.root}>
-      <Typography className={classes.typography}>
+      <Typography className={ props.type !== 'wallet' ? classes.typography : ''}>
         No results found for {props.type}: <b>{props.query}</b>.
       </Typography>
     </div>

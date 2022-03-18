@@ -18,12 +18,12 @@ const SearchMoreResults = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { query, source } = props;
-  const isBusy = useSelector((state) => state.search.isBusy);
+  const isMoreLoading = useSelector((state) => state.search.isMoreLoading);
 
   // Handlers
   const moreResultsHandler = () => {
     if (source === 'wallet') {
-      dispatch(getWalletResults(query, true));
+      dispatch(getWalletResults(query, true, true));
     }
   };
 
@@ -36,7 +36,7 @@ const SearchMoreResults = (props) => {
         color="primary"
         onClick={moreResultsHandler}
       >
-        {isBusy ? 'Loading ...' : 'More Results'}
+        {isMoreLoading ? 'Loading ...' : 'More Results'}
       </Button>
     </div>
   );

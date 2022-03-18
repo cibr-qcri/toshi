@@ -53,3 +53,6 @@ export {
   getAlerts as getUserAlerts,
   deleteAlert as deleteUserAlert,
 } from './user/thunks';
+
+// Wallet
+export { getWalletInfo, getWalletTx } from "./wallet/thunks";
