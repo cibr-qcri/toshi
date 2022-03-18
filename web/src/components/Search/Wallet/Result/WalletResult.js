@@ -23,7 +23,7 @@ const WalletResult = (props) => {
   const view = (
     <div className={classes.root}>
       <Card variant="outlined">
-        <Title text={title.split('-')[0]} url={url}/>
+        <Title text={title} url={url}/>
         <Fragment>
           <Info items={info}/>
           <Actions id={id} type={type}/>

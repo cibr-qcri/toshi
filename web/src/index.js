@@ -26,11 +26,12 @@ import statsReducer from './store/reducers/stats';
 import themeReducer from './store/reducers/theme';
 import toastReducer from './store/reducers/toast';
 import userReducer from './store/reducers/user';
+import walletReducer from "./store/reducers/wallet";
 
 // App
 import App from './components/App';
 
-axios.defaults.baseURL = 'https://dizzy.cibr.qcri.org/api/v1';
+axios.defaults.baseURL = 'https://toshi.cibr.qcri.org/api/v1';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 let composeEnhancers = compose;
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   theme: themeReducer,
   toast: toastReducer,
   user: userReducer,
+  wallet: walletReducer,
 });
 
 const store = createStore(

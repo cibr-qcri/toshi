@@ -31,7 +31,7 @@ export const WalletResultsLabel = (props) => {
     <div className={classes.root}>
       <Typography className={classes.label}>
         Showing {numeral(loadedCount).format("0,0")} out of{" "}
-        {numeral(totalCount).format("0,0")} results found for the given{" "}
+        {numeral(totalCount).format("0,0")} results for the given{" "}
         <b>{props.type}</b>
       </Typography>
     </div>

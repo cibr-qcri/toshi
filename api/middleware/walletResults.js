@@ -50,13 +50,6 @@ const walletResults = asyncHandler(async (request, response, next) => {
   }
 
   const records = results.rows.map((row) => {
-    let riskLevel = 'Low';
-    if (row.risk_score >= 0.7) {
-      riskLevel = 'High';
-    } else if (row.risk_score >= 0.5 && row.risk_score < 0.7) {
-      riskLevel = 'Medium';
-    }
-
     const walletData = {
       wallet_id: row.cluster_id,
       info: [
@@ -71,7 +64,7 @@ const walletResults = asyncHandler(async (request, response, next) => {
           title: 'Top Label',
           text:
             row.label && row.label.length > 0
-              ? wallet.getTopLabel(row.label)
+              ? wallet.getLabels(row.label, true)
               : 'N/A',
         },
         {
@@ -80,7 +73,7 @@ const walletResults = asyncHandler(async (request, response, next) => {
         },
         {
           title: 'Risk Score',
-          text: numeral(row.risk_score).format('0.00') + ' (' + riskLevel + ')',
+          text: numeral(row.risk_score).format('0.00') + ' (' + wallet.getRiskLevel(row.risk_score) + ')',
         },
         {
           title: 'Total In',

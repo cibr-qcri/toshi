@@ -1,56 +1,129 @@
+const stringShortener = (value) => {
+  if (value.endsWith(".onion")) {
+    value = "[" + value.substring(0,7) + "].onion"
+  }
+  return value;
+}
+
 const findMostFrequentItem = (strArray) => {
   let result = {
-    value: '',
+    topValue: '',
     count: 0,
+    values: [],
   };
-
-  strArray.reduce((strCount, currentStr) => {
+  result.values = strArray.reduce((strCount, currentStr) => {
+    currentStr = stringShortener(currentStr);
     if (strCount[currentStr]) {
       strCount[currentStr] += 1;
     } else {
       strCount[currentStr] = 1;
     }
     if (strCount[currentStr] > result.count) {
-      result.value = currentStr;
+      result.topValue = currentStr;
       result.count = strCount[currentStr];
     }
     return strCount;
   }, {});
-
   return result;
 };
 
 exports.getTopCategory = (categories) => {
   const categoryArray = categories.split(',');
   if (categoryArray.length > 1) {
-    return findMostFrequentItem(categoryArray).value;
+    return findMostFrequentItem(categoryArray).topValue;
   } else {
     return categories;
   }
 };
 
-exports.getTopLabel = (labels) => {
+exports.getLabels = (labels, isTopLabel = false) => {
   const labelArray = labels.split(',');
-  if (labelArray.length > 1) {
-    return findMostFrequentItem(labelArray).value;
+  if (labelArray.length < 2 && isTopLabel) {
+    return stringShortener(labels);
+  } if (labelArray.length < 2) {
+    return [stringShortener(labels)];
+  } else if (isTopLabel) {
+    return findMostFrequentItem(labelArray).topValue;
   } else {
-    return labels;
+    return Object.keys(findMostFrequentItem(labelArray).values);
   }
 };
 
+exports.getRiskLevel = (score) => {
+  let riskLevel = 'Low';
+  if (score >= 0.7) {
+    riskLevel = 'High';
+  } else if (score >= 0.5 && score < 0.7) {
+    riskLevel = 'Medium';
+  }
+  return riskLevel;
+}
+
 exports.queries = {
+  getWalletsById: `
+      SELECT *
+      FROM btc_wallet
+      WHERE cluster_id = $1;
+  `,
+  getWalletTxById: `
+      LET start_vertex = @start_wallet
+      LET txes = (
+        for edge in btc_wallet_address_edges
+        FILTER (edge._from == start_vertex)
+        LET address = edge._to
+        for item in btc_edges 
+            FILTER (item._from == address or item._to == address) 
+            return distinct ((item._from == address) ? 
+            { 'hash' : SPLIT(item._to, '/')[1], 'type': 'SENDING' } : 
+            { 'hash' : SPLIT(item._from, '/')[1], 'type': 'RECEIVING' })
+        )
+      LET detailed_txes = (
+        FOR item in txes
+          FOR d IN btc_transactions
+            FILTER item.hash == d._key RETURN UNSET(MERGE (d, item),  "_id", "_key", "_rev")
+      )
+      LET response_data = (
+        FOR item in detailed_txes
+          LIMIT @offset, 10
+          RETURN item
+      )
+      RETURN { "total_count": LENGTH(detailed_txes), "data": response_data }
+  `,
+  getWalletAddressById: `
+      LET start_vertex = @start_wallet
+      LET addresses = (
+        FOR edge in btc_wallet_address_edges
+        FILTER (edge._from == start_vertex)
+        LET address = SPLIT(edge._to, '/')[1]
+        FOR item in btc_addresses
+        FILTER (item._key == address)
+        RETURN { "id": edge._key, "address": item._key, "type": item.type }
+    )
+    LET response_data = (
+      FOR item in addresses
+        LIMIT @offset, 10
+        RETURN item
+    )
+    RETURN { "total_count": LENGTH(addresses), "data": response_data }
+  `,
   getWalletsByAddress: `
       SELECT *,
       count(*) OVER() AS total_count
-      from btc_wallet
-      where cluster_id in (
+      FROM btc_wallet
+      WHERE cluster_id in (
               SELECT cluster_id
-              from btc_address_cluster
-              where address = $1
+              FROM btc_address_cluster
+              WHERE address = $1
           )
-      order by id OFFSET $2
+      ORDER BY id OFFSET $2
       LIMIT $3;
     `,
+  getWalletMoneyFlowById: `
+    SELECT category, SUM(total_usd_amount) as total_usd_amount, flow_type
+    FROM btc_wallet_money_flow
+    WHERE wallet_id = $1
+    GROUP BY category, flow_type;
+  `,
   getWalletByLabel: `
     SELECT btc_wallet.*,
         count(*) OVER() AS total_count
@@ -107,7 +180,33 @@ exports.queries = {
         risk_score,
         label,
         category
-    GROUP BY id OFFSET $3
+    OFFSET $3
     LIMIT $4;
     `,
+  getTopWalletsById: `
+    WITH btc_addresses, btc_wallets 
+    let start_vertex = @start_wallet
+    FOR v, e in 1..1 any start_vertex btc_wallet_edges 
+    FILTER not(e._to == start_vertex and e._to == start_vertex) 
+    LET c_wallet = (e._from == start_vertex ? e._to : e._from) 
+    COLLECT wallet = c_wallet INTO wallets_group_by_id 
+    LET in_wallet_satoshi_amount = (for item in wallets_group_by_id[*].e 
+    FILTER item._to == start_vertex return SUM([ item.in_satoshi_amount, item.out_satoshi_amount ])) 
+    LET in_wallet_usd_amount = (for item in wallets_group_by_id[*].e 
+    FILTER item._to == start_vertex return SUM([ item.in_usd_amount, item.out_usd_amount ])) 
+    LET in_wallet_tx_hashes = (for item in wallets_group_by_id[*].e 
+    FILTER item._to == start_vertex return distinct item.tx_hash) 
+    LET out_wallet_satoshi_amount = (for item in wallets_group_by_id[*].e 
+    FILTER item._from == start_vertex return SUM([ item.in_satoshi_amount, item.out_satoshi_amount ])) 
+    LET out_wallet_usd_amount = (for item in wallets_group_by_id[*].e 
+    FILTER item._from == start_vertex return SUM([ item.in_usd_amount, item.out_usd_amount ])) 
+    LET out_wallet_tx_hashes = (for item in wallets_group_by_id[*].e 
+    FILTER item._from == start_vertex return distinct item.tx_hash) 
+    LET tx_hashes = (for hash in wallets_group_by_id[*].e.tx_hash return distinct hash) 
+    SORT LENGTH (tx_hashes) DESC LIMIT 0, 10 
+    RETURN { 'wallet_id': wallet, 'num_total_txes': LENGTH(tx_hashes), 'num_inbound_txes': LENGTH(in_wallet_tx_hashes), 
+    'inbound_satoshi_amount': SUM(in_wallet_satoshi_amount), 'inbound_usd_amount': SUM(in_wallet_usd_amount), 
+    'num_outbound_txes': LENGTH(out_wallet_tx_hashes), 'outbound_satoshi_amount': SUM(out_wallet_satoshi_amount), 
+    'outbound_usd_amount': SUM(out_wallet_usd_amount) }
+  `,
 };
