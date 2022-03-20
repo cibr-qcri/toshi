@@ -1,13 +1,13 @@
 const stringShortener = (value) => {
   if (value.endsWith(".onion")) {
-    value = "[" + value.substring(0,7) + "].onion"
+    value = "[" + value.substring(0, 7) + "].onion";
   }
   return value;
-}
+};
 
 const findMostFrequentItem = (strArray) => {
   let result = {
-    topValue: '',
+    topValue: "",
     count: 0,
     values: [],
   };
@@ -28,7 +28,7 @@ const findMostFrequentItem = (strArray) => {
 };
 
 exports.getTopCategory = (categories) => {
-  const categoryArray = categories.split(',');
+  const categoryArray = categories.split(",");
   if (categoryArray.length > 1) {
     return findMostFrequentItem(categoryArray).topValue;
   } else {
@@ -37,10 +37,11 @@ exports.getTopCategory = (categories) => {
 };
 
 exports.getLabels = (labels, isTopLabel = false) => {
-  const labelArray = labels.split(',');
+  const labelArray = labels.split(",");
   if (labelArray.length < 2 && isTopLabel) {
     return stringShortener(labels);
-  } if (labelArray.length < 2) {
+  }
+  if (labelArray.length < 2) {
     return [stringShortener(labels)];
   } else if (isTopLabel) {
     return findMostFrequentItem(labelArray).topValue;
@@ -50,14 +51,14 @@ exports.getLabels = (labels, isTopLabel = false) => {
 };
 
 exports.getRiskLevel = (score) => {
-  let riskLevel = 'Low';
+  let riskLevel = "Low";
   if (score >= 0.7) {
-    riskLevel = 'High';
+    riskLevel = "High";
   } else if (score >= 0.5 && score < 0.7) {
-    riskLevel = 'Medium';
+    riskLevel = "Medium";
   }
   return riskLevel;
-}
+};
 
 exports.queries = {
   getWalletsById: `
