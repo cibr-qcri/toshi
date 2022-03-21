@@ -1,13 +1,15 @@
+const numeral = require('numeral');
+
 const stringShortener = (value) => {
-  if (value.endsWith(".onion")) {
-    value = "[" + value.substring(0, 7) + "].onion";
+  if (value.endsWith('.onion')) {
+    value = '[' + value.substring(0, 7) + '].onion';
   }
   return value;
 };
 
 const findMostFrequentItem = (strArray) => {
   let result = {
-    topValue: "",
+    topValue: '',
     count: 0,
     values: [],
   };
@@ -28,7 +30,7 @@ const findMostFrequentItem = (strArray) => {
 };
 
 exports.getTopCategory = (categories) => {
-  const categoryArray = categories.split(",");
+  const categoryArray = categories.split(',');
   if (categoryArray.length > 1) {
     return findMostFrequentItem(categoryArray).topValue;
   } else {
@@ -37,7 +39,7 @@ exports.getTopCategory = (categories) => {
 };
 
 exports.getLabels = (labels, isTopLabel = false) => {
-  const labelArray = labels.split(",");
+  const labelArray = labels.split(',');
   if (labelArray.length < 2 && isTopLabel) {
     return stringShortener(labels);
   }
@@ -51,13 +53,70 @@ exports.getLabels = (labels, isTopLabel = false) => {
 };
 
 exports.getRiskLevel = (score) => {
-  let riskLevel = "Low";
+  let riskLevel = 'Low';
   if (score >= 0.7) {
-    riskLevel = "High";
+    riskLevel = 'High';
   } else if (score >= 0.5 && score < 0.7) {
-    riskLevel = "Medium";
+    riskLevel = 'Medium';
   }
   return riskLevel;
+};
+
+exports.getWalletInfo = (result, isDetailed = false) => {
+  let walletInfo = {
+    topCategory: {
+      name: 'Top Category',
+      value:
+        result.category && result.category.length > 0
+          ? this.getTopCategory(result.category)
+          : 'N/A',
+    },
+    topLabel: {
+      name: 'Top Label',
+      value:
+        result.label && result.label.length > 0
+          ? this.getLabels(result.label, (isTopLabel = true))
+          : 'N/A',
+    },
+    riskScore: {
+      name: 'Risk Score',
+      value:
+        numeral(result.risk_score).format('0.00') +
+        ' (' +
+        this.getRiskLevel(result.risk_score) +
+        ')',
+    },
+    size: {
+      name: 'Size',
+      value: numeral(result.num_address).format('0,0'),
+    },
+  };
+
+  if (isDetailed) {
+    walletInfo = {
+      ...walletInfo,
+      volume: {
+        name: 'Volume',
+        value: numeral(result.num_tx).format('0,0'),
+      },
+      balance: {
+        name: 'Balance',
+        value: numeral(result.total_received_usd)
+          .subtract(result.total_spent_usd)
+          .format('$0,0.00'),
+      },
+      totalIn: {
+        name: 'Total In',
+        value: numeral(result.total_received_usd).format('$0,0.00'),
+      },
+      totalOut: {
+        name: 'Total Out',
+        value: numeral(result.total_spent_usd).format('$0,0.00'),
+      },
+    };
+  }
+
+  return walletInfo;
 };
 
 exports.queries = {

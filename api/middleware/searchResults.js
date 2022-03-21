@@ -1,7 +1,6 @@
 const asyncHandler = require('./async');
 const ErrorResponse = require('../utils/errorResponse');
 const gp = require('../services/gp');
-const numeral = require('numeral');
 const wallet = require('../utils/wallet');
 
 const MAX_RESULTS_IN_PAGE = 25;
@@ -52,42 +51,7 @@ const searchResults = asyncHandler(async (request, response, next) => {
   const records = results.rows.map((row) => {
     const walletData = {
       _id: row.cluster_id,
-      info: {
-        topCategory: {
-          name: 'Top Category',
-          value:
-            row.category && row.category.length > 0
-              ? wallet.getTopCategory(row.category)
-              : 'N/A',
-        },
-        topLabel: {
-          name: 'Top Label',
-          value:
-            row.label && row.label.length > 0
-              ? wallet.getLabels(row.label, true)
-              : 'N/A',
-        },
-        riskScore: {
-          name: 'Risk Score',
-          value:
-            numeral(row.risk_score).format('0.00') +
-            ' (' +
-            wallet.getRiskLevel(row.risk_score) +
-            ')',
-        },
-        size: {
-          name: 'Size',
-          value: numeral(row.num_address).format('0,0'),
-        },
-        totalIn: {
-          name: 'Total In',
-          value: numeral(row.total_received_usd).format('$0,0.00'),
-        },
-        totalOut: {
-          name: 'Total Out',
-          value: numeral(row.total_spent_usd).format('$0,0.00'),
-        },
-      },
+      info: wallet.getWalletInfo(row),
       type: {
         in_wallet: false,
         out_wallet: false,
