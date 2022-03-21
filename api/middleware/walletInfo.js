@@ -53,13 +53,13 @@ const walletInfo = asyncHandler(async (request, response, next) => {
           .subtract(row.total_spent_usd)
           .format('$0,0.00'),
       },
-      totalOut: {
-        name: 'Total Out',
-        value: numeral(row.total_spent_usd).format('$0,0.00'),
-      },
       totalIn: {
         name: 'Total In',
         value: numeral(row.total_received_usd).format('$0,0.00'),
+      },
+      totalOut: {
+        name: 'Total Out',
+        value: numeral(row.total_spent_usd).format('$0,0.00'),
       },
     };
   }
