@@ -1,2 +1,2 @@
 // Component
-export { default } from './WalletTitle';
+export { default } from './WalletInfoTitle';

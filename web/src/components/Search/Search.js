@@ -67,7 +67,8 @@ export const Search = () => {
 
   let content = (
     <Fragment>
-      <Results items={results} count={count} type={type} />;{moreResults}
+      <Results items={results} count={count} type={type} />
+      {moreResults}
       {alertSwitcher}
     </Fragment>
   );

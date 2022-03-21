@@ -1,4 +1,4 @@
-const asyncHandler = require('../middleware/async');
+const asyncHandler = require('./async');
 const ErrorResponse = require('../utils/errorResponse');
 const gp = require('../services/gp');
 const numeral = require('numeral');
@@ -6,7 +6,7 @@ const wallet = require('../utils/wallet');
 
 const MAX_RESULTS_IN_PAGE = 25;
 
-const walletResults = asyncHandler(async (request, response, next) => {
+const searchResults = asyncHandler(async (request, response, next) => {
   const { query, type } = request.query;
   const allowedTypes = ['label', 'transaction', 'address'];
 
@@ -123,7 +123,7 @@ const walletResults = asyncHandler(async (request, response, next) => {
     };
   }
 
-  response.walletResults = {
+  response.searchResults = {
     success: true,
     count: total,
     pagination,
@@ -133,4 +133,4 @@ const walletResults = asyncHandler(async (request, response, next) => {
   next();
 });
 
-module.exports = walletResults;
+module.exports = searchResults;

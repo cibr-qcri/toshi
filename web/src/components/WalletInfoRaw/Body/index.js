@@ -1,1 +1,1 @@
-export { default } from './WalletBody';
+export { default } from './WalletInfoBody';

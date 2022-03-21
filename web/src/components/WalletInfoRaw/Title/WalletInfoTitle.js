@@ -5,9 +5,9 @@ import React from 'react';
 import { Link, Typography } from '@material-ui/core';
 
 // Styles
-import { useStyles } from './WalletTitle-styles';
+import { useStyles } from './WalletInfoTitle-styles';
 
-const WalletTitle = (props) => {
+const WalletInfoTitle = (props) => {
   // Variables
   const classes = useStyles();
   const { id } = props;
@@ -30,4 +30,4 @@ const WalletTitle = (props) => {
   return view;
 };
 
-export default WalletTitle;
+export default WalletInfoTitle;

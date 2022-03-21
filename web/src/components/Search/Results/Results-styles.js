@@ -11,12 +11,7 @@ export const stylesCreator = (theme) => ({
     },
     list: {},
   },
-  WalletInfoRaw: {
-    ...walletStyler(theme).Default,
-    root: {
-      width: '100%',
-    },
-  },
+  WalletInfoRaw: walletStyler(theme).Default,
 });
 
 // Local

@@ -8,10 +8,7 @@ import { updateObject } from '../../utils';
 const initialState = {
   id: '',
   data: {
-    summary: {},
-    links: [],
-    moneyFlow: {},
-    labels: [],
+    info: {},
     isBusy: true,
     error: null,
     noResults: false,
@@ -34,7 +31,7 @@ const initialState = {
     isBusy: true,
     error: null,
   },
-  source: 'flow',
+  source: 'addresses',
 };
 
 const reducer = (state = initialState, action) => {
@@ -69,10 +66,7 @@ const reducer = (state = initialState, action) => {
     case types.GET_WALLET_INFO_SUCCESS: {
       return updateObject(state, {
         data: updateObject(state.data, {
-          links: action.payload.data.links,
-          summary: action.payload.data.summary,
-          moneyFlow: action.payload.data.moneyFlow,
-          labels: action.payload.data.labels,
+          info: action.payload.data,
           isBusy: false,
           noResults: action.payload.count === 0,
         }),

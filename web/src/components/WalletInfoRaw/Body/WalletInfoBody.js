@@ -5,9 +5,9 @@ import React from 'react';
 import { Divider, Grid, Typography } from '@material-ui/core';
 
 // Styles
-import { useStyles } from './WalletBody-styles';
+import { useStyles } from './WalletInfoBody-styles';
 
-const WalletBody = (props) => {
+const WalletInfoBody = (props) => {
   // Variables
   const classes = useStyles();
   const { items } = props;
@@ -36,4 +36,4 @@ const WalletBody = (props) => {
   return view;
 };
 
-export default WalletBody;
+export default WalletInfoBody;

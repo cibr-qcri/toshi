@@ -26,7 +26,7 @@ import statsReducer from './store/reducers/stats';
 import themeReducer from './store/reducers/theme';
 import toastReducer from './store/reducers/toast';
 import userReducer from './store/reducers/user';
-import walletReducer from "./store/reducers/wallet";
+import walletReducer from './store/reducers/wallet';
 
 // App
 import App from './components/App';
@@ -60,7 +60,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AnalyticsProvider devOptions={{ logToTracker: true }}>
+        <AnalyticsProvider devOptions={{ logToConsole: true }}>
           <App />
         </AnalyticsProvider>
       </BrowserRouter>

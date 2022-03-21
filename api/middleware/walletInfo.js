@@ -11,47 +11,12 @@ const walletInfo = asyncHandler(async (request, response, next) => {
     return next(new ErrorResponse('Please provide the wallet Id', 400));
   }
 
-  const walletInfoReq = gp.query(wallet.queries.getWalletsById, [id]);
-  const walletMoneyFlowReq = gp.query(wallet.queries.getWalletMoneyFlowById, [
-    id,
-  ]);
-  const topLinkedWalletReq = arango.query({
-    query: wallet.queries.getTopWalletsById,
-    bindVars: { start_wallet: 'btc_wallets/' + id },
-  });
-  const [walletInfoRes, walletMoneyFlowRes, topLinkedWalletCursor] =
-    await Promise.all([walletInfoReq, walletMoneyFlowReq, topLinkedWalletReq]);
-  const topLinkedWalletRes = await topLinkedWalletCursor.all();
+  const result = await gp.query(wallet.queries.getWalletsById, [id]);
 
-  let record = {};
-
-  record.links = topLinkedWalletRes.map((wallet) => {
-    return {
-      id: wallet.wallet_id.split('/')[1],
-      data: [
-        {
-          title: 'Num In Txes',
-          text: numeral(wallet.num_inbound_txes).format('0,0'),
-        },
-        {
-          title: 'In Amount',
-          text: numeral(wallet.inbound_usd_amount).format('$0,0.00'),
-        },
-        {
-          title: 'Num Out Txes',
-          text: numeral(wallet.num_outbound_txes).format('0,0'),
-        },
-        {
-          title: 'Out Amount',
-          text: numeral(wallet.outbound_usd_amount).format('$0,0.00'),
-        },
-      ],
-    };
-  });
-
-  if (walletInfoRes.rows.length > 0) {
-    const row = walletInfoRes.rows[0];
-    record.summary = {
+  let data = {};
+  if (result.rows.length > 0) {
+    const row = result.rows[0];
+    data = {
       topCategory: {
         name: 'Top Category',
         value:
@@ -97,35 +62,12 @@ const walletInfo = asyncHandler(async (request, response, next) => {
         value: numeral(row.total_received_usd).format('$0,0.00'),
       },
     };
-    record.labels =
-      row.label && row.label.length > 0 ? wallet.getLabels(row.label) : [];
   }
-
-  let moneyFlowNodes = [{ id: 'Wallet' }];
-  let moneyFlowLinks = [];
-  walletMoneyFlowRes.rows.forEach((row) => {
-    if (row.flow_type === 'IN') {
-      moneyFlowNodes.push({ id: row.category + ' ' });
-      moneyFlowLinks.push({
-        source: 'Wallet',
-        target: row.category + ' ',
-        value: Math.round(row.total_usd_amount * 100) / 100,
-      });
-    } else {
-      moneyFlowNodes.push({ id: row.category });
-      moneyFlowLinks.push({
-        source: row.category,
-        target: 'Wallet',
-        value: Math.round(row.total_usd_amount * 100) / 100,
-      });
-    }
-  });
-  record.moneyFlow = { nodes: moneyFlowNodes, links: moneyFlowLinks };
 
   response.walletInfo = {
     success: true,
-    count: walletInfoRes.rows.length,
-    data: record,
+    count: result.rows.length,
+    data,
   };
 
   next();
