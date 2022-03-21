@@ -1,27 +1,27 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Material
-import { Link, Typography } from "@material-ui/core";
+import { Link, Typography } from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./ResultTitle-styles";
+import { useStyles } from './WalletTitle-styles';
 
-const ResultTitle = (props) => {
+const WalletTitle = (props) => {
   // Variables
   const classes = useStyles();
-  const { text } = props;
+  const { id } = props;
   //JSX
   const view = (
     <div className={classes.root}>
       <Typography className={classes.typography}>
         <Link
           className={classes.link}
-          href={"/info/wallet?id=" + text}
+          href={'/wallet?id=' + id}
           target="_blank"
           rel="noopener"
         >
-          Wallet [{text.split('-')[0]}]
+          Wallet [{id.split('-')[0]}]
         </Link>
       </Typography>
     </div>
@@ -30,4 +30,4 @@ const ResultTitle = (props) => {
   return view;
 };
 
-export default ResultTitle;
+export default WalletTitle;

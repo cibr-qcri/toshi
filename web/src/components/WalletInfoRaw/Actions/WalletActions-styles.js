@@ -1,31 +1,27 @@
 // Utils
-import { makeStyles } from "../../../../../utils";
+import { makeStyles } from '../../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {},
     walletFlow: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
     },
     walletMetadataLabel: {
       marginLeft: theme.spacing(1),
-      width: "fit-content",
-      "&:hover": {
-        textDecoration: "none",
-        cursor: "pointer",
-      },
+      width: 'fit-content',
     },
     walletFlowInIcon: {
-      fontSize: "1.75rem",
+      fontSize: '1.75rem',
     },
     walletFlowOutIcon: {
-      fontSize: "1.75rem",
-      transform: "rotate(180deg)",
+      fontSize: '1.75rem',
+      transform: 'rotate(180deg)',
     },
     CardAction: {
-      display: "flex",
-      justifyContent: "space-between",
+      display: 'flex',
+      justifyContent: 'space-between',
       paddingRight: theme.spacing(2),
       paddingLeft: theme.spacing(2),
     },

@@ -1,11 +1,11 @@
 // Utils
-import { makeStyles } from "../../../utils";
+import { makeStyles } from '../../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     action: {
-      width: "100%",
-      display: "flex",
+      width: '100%',
+      display: 'flex',
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
     },
@@ -15,17 +15,21 @@ export const stylesCreator = (theme) => ({
     chips: {
       marginTop: theme.spacing(0.4),
       marginRight: theme.spacing(0.4),
-      width: "fit-content",
-      "&:hover": {
-        textDecoration: "none",
-        cursor: "pointer",
+      width: 'fit-content',
+      '&:hover': {
+        textDecoration: 'none',
+        cursor: 'pointer',
       },
     },
-    cardHeader: {
-      paddingBottom: theme.spacing(0),
+    title: {
+      paddingTop: theme.spacing(2.5),
+      paddingLeft: theme.spacing(2.5),
+      paddingRight: theme.spacing(2.5),
     },
     content: {
+      paddingLeft: theme.spacing(2.5),
       paddingTop: theme.spacing(1.5),
+      paddingRight: theme.spacing(2.5),
     },
     item: {
       paddingTop: theme.spacing(0.5),

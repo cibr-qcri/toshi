@@ -24,7 +24,7 @@ export {
 
 // Search
 export { reset as resetSearch } from './search/creators';
-export { getWalletResults } from './search/thunks';
+export { getResults } from './search/thunks';
 
 // Stats
 export { getStats } from './stats/thunks';
@@ -55,4 +55,4 @@ export {
 } from './user/thunks';
 
 // Wallet
-export { getWalletInfo, getWalletTx } from "./wallet/thunks";
+export { getWalletInfo, getWalletTx } from './wallet/thunks';

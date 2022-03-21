@@ -6,6 +6,6 @@ const { wallets } = require('../controllers/search');
 const router = express.Router();
 
 router.use(protect);
-router.get('/wallet', walletResults, wallets);
+router.get('/', walletResults, wallets);
 
 module.exports = router;

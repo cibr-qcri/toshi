@@ -27,7 +27,7 @@ const me = require('./routes/me');
 const password = require('./routes/password');
 const search = require('./routes/search');
 const statistics = require('./routes/statistics');
-const info = require("./routes/wallet");
+const wallet = require('./routes/wallet');
 
 // Database
 connectDB();
@@ -59,7 +59,7 @@ app.use('/api/v1/me', me);
 app.use('/api/v1/password', password);
 app.use('/api/v1/search', search);
 app.use('/api/v1/statistics', statistics);
-app.use("/api/v1/info", info);
+app.use('/api/v1/wallet', wallet);
 app.use(errorHandler);
 
 // Server

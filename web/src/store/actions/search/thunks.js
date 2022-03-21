@@ -1,35 +1,31 @@
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 // QueryString
-import qs from "qs";
+import qs from 'qs';
 
 // Redux
-import { batch } from "react-redux";
+import { batch } from 'react-redux';
 
 // Creators
-import * as creators from "./creators";
-import { showAlert } from "../";
+import * as creators from './creators';
+import { showAlert } from '../';
 import {
   validateBitcoinAddress,
   validateBitcoinTx,
-} from "../../../utils/common";
+} from '../../../utils/common';
 
 const queryType = (query) => {
   if (validateBitcoinAddress(query)) {
-    return "address";
+    return 'address';
   } else if (validateBitcoinTx(query)) {
-    return "transaction";
+    return 'transaction';
   } else {
-    return "label";
+    return 'label';
   }
 };
 
-export const getWalletResults = (
-  query,
-  isPaged = false,
-  isMoreResult = false
-) => {
+export const getResults = (query, isPaged = false, isMoreResult = false) => {
   return (dispatch, getState) => {
     let queryParams = {
       query,
@@ -49,13 +45,12 @@ export const getWalletResults = (
       creators.getResultsStart({
         query,
         isPaged,
-        source: "wallet",
         type: searchType,
         isMoreLoading: isMoreResult,
       })
     );
 
-    const searchUrl = `/search/wallet?${qs.stringify(queryParams)}`;
+    const searchUrl = `/search?${qs.stringify(queryParams)}`;
 
     axios
       .get(searchUrl)

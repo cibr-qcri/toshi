@@ -14,12 +14,12 @@ import {
 import { CardActions, IconButton, Typography } from '@material-ui/core';
 
 // Store
-import { showTagDialog } from '../../../../../store/actions';
+import { showTagDialog } from '../../../store/actions';
 
 // Styles
-import { useStyles } from './ResultActions-styles';
+import { useStyles } from './WalletActions-styles';
 
-const ResultActions = (props) => {
+const WalletActions = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -89,4 +89,4 @@ const ResultActions = (props) => {
   return view;
 };
 
-export default ResultActions;
+export default WalletActions;

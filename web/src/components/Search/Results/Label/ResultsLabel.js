@@ -1,15 +1,19 @@
 // React
-import React from "react";
+import React from 'react';
+
+// Numeral
+import numeral from 'numeral';
+
+// Redux
+import { useSelector } from 'react-redux';
+
+// Material
+import { Typography } from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletResultsLabel-styles";
+import { useStyles } from './ResultsLabel-styles';
 
-import numeral from "numeral";
-
-import { useSelector } from "react-redux";
-import { Typography } from "@material-ui/core";
-
-export const WalletResultsLabel = (props) => {
+export const ResultsLabel = (props) => {
   // Variables
   const classes = useStyles();
   const pagination = useSelector((state) => state.search.data.pagination);
@@ -30,8 +34,8 @@ export const WalletResultsLabel = (props) => {
   const final = (
     <div className={classes.root}>
       <Typography className={classes.label}>
-        Showing {numeral(loadedCount).format("0,0")} out of{" "}
-        {numeral(totalCount).format("0,0")} results for the given{" "}
+        Showing {numeral(loadedCount).format('0,0')} out of{' '}
+        {numeral(totalCount).format('0,0')} results for the given{' '}
         <b>{props.type}</b>
       </Typography>
     </div>
@@ -40,4 +44,4 @@ export const WalletResultsLabel = (props) => {
   return final;
 };
 
-export default WalletResultsLabel;
+export default ResultsLabel;

@@ -1,34 +1,33 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Router
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Querystring
-import qs from "qs";
+import qs from 'qs';
 
 // Material
-import { Grid } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { Grid, Paper } from '@material-ui/core';
 
 // Components
-import WalletSummary from "./Summary/WalletSummary";
-import WalletTopLinks from "./TopLinks/WalletTopLinks";
-import WalletMoneyFlow from "./MoneyFlow/WalletMoneyFlow";
-import WalletTabs from "./Tabs";
-import WalletTransactions from "./Transactions/WalletTransactions";
+import WalletAddresses from './Addresses';
+import WalletSummary from './Summary/WalletSummary'; // stylize WalletInfoRaw in wallet-styles and export it as WalletInfo
+import WalletTopLinks from './TopLinks/WalletTopLinks';
+import WalletMoneyFlow from './MoneyFlow/WalletMoneyFlow';
+import WalletTabs from './Tabs';
+import WalletTransactions from './Transactions/WalletTransactions';
+
+import NoResults from '../Search/NoResults/NoResults'; // create a new NoResultsRaw and use it here and in search component
 
 // Store
-import { getWalletInfo } from "../../store/actions";
+import { getWalletInfo } from '../../store/actions';
 
 // Styles
-import { useStyles } from "./Wallet-styles";
-import NoResults from "../Search/NoResults/NoResults";
-import { LazyProgress } from "../Search/Search-styles";
-import WalletAddresses from "./Addresses";
+import { useStyles, LazyProgress } from './Wallet-styles';
 
 export const Wallet = (props) => {
   // Variables
@@ -50,16 +49,16 @@ export const Wallet = (props) => {
     const id = qs.parse(location.search, { ignoreQueryPrefix: true }).id;
 
     if (!id || id.length === 0) {
-      history.push("/main");
+      history.push('/main');
     }
 
     dispatch(getWalletInfo(id));
   }, [dispatch, location, history]);
 
   let tabView;
-  if (source === "flow") {
+  if (source === 'flow') {
     tabView = <WalletMoneyFlow data={moneyFlow} />;
-  } else if (source === "transactions") {
+  } else if (source === 'transactions') {
     tabView = <WalletTransactions />;
   } else {
     tabView = <WalletAddresses />;
@@ -67,13 +66,13 @@ export const Wallet = (props) => {
 
   let content;
   if (noResults) {
-    content = <NoResults query={id} type={"wallet"} />;
+    content = <NoResults query={id} type={'wallet'} />;
   } else {
     content = (
       <div className={classes.root}>
         <Grid container spacing={2}>
           <Grid item className={classes.root}>
-            <WalletSummary summary={summary} labels={labels} />
+            <WalletSummary id={id} summary={summary} labels={labels} />
           </Grid>
           <Grid item className={classes.root}>
             <WalletTopLinks links={links} />

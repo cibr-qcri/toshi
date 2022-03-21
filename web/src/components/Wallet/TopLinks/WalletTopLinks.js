@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Material
 import {
@@ -9,13 +9,13 @@ import {
   Grid,
   Link,
   Typography,
-} from "@material-ui/core";
-import { Card, CardContent, CardHeader } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+} from '@material-ui/core';
+import { Card, CardContent, CardHeader } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Styles
-import { useStyles } from "./WalletTopLinks-styles";
-import Info from "../../Search/Wallet/Result/Info/ResultInfo";
+import { useStyles } from './WalletTopLinks-styles';
+//import Info from "../../Search/Wallet/Result/Info/ResultInfo";
 
 export const WalletTopLinks = (props) => {
   // Variables
@@ -37,16 +37,16 @@ export const WalletTopLinks = (props) => {
             >
               <Link
                 className={classes.link}
-                href={"/info/wallet?id=" + id}
+                href={'/wallet?id=' + id}
                 target="_blank"
                 rel="noopener"
               >
-                Wallet [{id.split("-")[0]}]
+                Wallet [{id.split('-')[0]}]
               </Link>
             </AccordionSummary>
-            <AccordionDetails>
+            {/* <AccordionDetails>
               <Info items={link.data} />
-            </AccordionDetails>
+            </AccordionDetails> */}
           </Accordion>
         </Grid>
       );
@@ -64,7 +64,7 @@ export const WalletTopLinks = (props) => {
       <CardHeader
         title="Top Connected Wallets"
         className={classes.cardHeader}
-        titleTypographyProps={{ variant: "h6" }}
+        titleTypographyProps={{ variant: 'h6' }}
       />
       <CardContent>
         <Grid className={classes.content} container>

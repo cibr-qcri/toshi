@@ -1,12 +1,15 @@
+// Components
+import LazyProgressRaw, { lazyProgressStyler } from '../LazyProgressRaw';
+
 // Utils
-import { makeStyles } from "../../utils";
+import { makeStyles, withStyles } from '../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
-      width: "100%",
-      flexDirection: "column",
-      alignItems: "center",
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'center',
       padding: theme.spacing(1),
     },
     tableCell: {
@@ -27,13 +30,17 @@ export const stylesCreator = (theme) => ({
     },
     paper: {
       marginTop: theme.spacing(2.5),
-      display: "block",
-      width: "100%",
-      transitionDuration: "0.3s",
-      height: "500px",
+      display: 'block',
+      width: '100%',
+      transitionDuration: '0.3s',
+      height: '500px',
     },
+    LazyProgressRaw: lazyProgressStyler(theme).Default,
   },
 });
 
 // Local
 export const useStyles = makeStyles(stylesCreator);
+
+// HOCs
+export const LazyProgress = withStyles(stylesCreator, LazyProgressRaw);

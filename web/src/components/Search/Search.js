@@ -11,12 +11,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 
 // Components
-import WalletResults from './Wallet/Results/WalletResults';
+import Results from './Results';
 import MoreResults from './MoreResults';
 import NoResults from './NoResults';
 
 // Store
-import { getWalletResults, showAlertDialog } from '../../store/actions';
+import { getResults, showAlertDialog } from '../../store/actions';
 
 // Styles
 import { useStyles, LazyProgress, SearchBox, Switcher } from './Search-styles';
@@ -35,20 +35,14 @@ export const Search = () => {
   const results = useSelector((state) => state.search.data.results);
   const noResults = useSelector((state) => state.search.data.noResults);
   const pagination = useSelector((state) => state.search.data.pagination);
-  const source = location.pathname.split('/')[2];
 
   // Hooks
   useEffect(() => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true }).query;
-    const source = location.pathname.split('/')[2];
-
     if (!query || query.length === 0) {
       history.push('/main');
     }
-
-    if (source === 'wallet') {
-      dispatch(getWalletResults(query));
-    }
+    dispatch(getResults(query));
   }, [dispatch, location, history]);
 
   // Handlers
@@ -59,12 +53,7 @@ export const Search = () => {
   // JSX
   let moreResults = null;
   if (pagination.next) {
-    moreResults = <MoreResults query={query} source={source} />;
-  }
-
-  let searchResults;
-  if (source === 'wallet') {
-    searchResults = <WalletResults items={results} count={count} type={type} />;
+    moreResults = <MoreResults query={query} />;
   }
 
   let alertSwitcher;
@@ -78,8 +67,7 @@ export const Search = () => {
 
   let content = (
     <Fragment>
-      {searchResults}
-      {moreResults}
+      <Results items={results} count={count} type={type} />;{moreResults}
       {alertSwitcher}
     </Fragment>
   );

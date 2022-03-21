@@ -1,8 +1,8 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Material
 import {
@@ -14,12 +14,12 @@ import {
   TableCell,
   TableBody,
   Link,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletAddresses-styles";
-import { getWalletAddress } from "../../../store/actions/wallet/thunks";
-import { Skeleton } from "@material-ui/lab";
+import { useStyles } from './WalletAddresses-styles';
+import { getWalletAddress } from '../../../store/actions/wallet/thunks';
+import { Skeleton } from '@material-ui/lab';
 
 export const WalletAddresses = (props) => {
   // Variables
@@ -34,17 +34,17 @@ export const WalletAddresses = (props) => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    dispatch(getWalletAddress(walletId, "addresses", newPage, rowsPerPage));
+    dispatch(getWalletAddress(walletId, 'addresses', newPage, rowsPerPage));
   };
 
   const handleChangeRowsPerPage = (event) => {
     const pageCount = event.target.value;
     setRowsPerPage(pageCount);
     setPage(0);
-    dispatch(getWalletAddress(walletId, "addresses", page, pageCount));
+    dispatch(getWalletAddress(walletId, 'addresses', page, pageCount));
   };
 
-  const columns = [{ id: "address", label: "Address", align: "center" }];
+  const columns = [{ id: 'address', label: 'Address', align: 'center' }];
 
   // JSX
   let body = null;
@@ -55,9 +55,9 @@ export const WalletAddresses = (props) => {
           {columns.map((column) => {
             return (
               <TableCell key={column.id} align={column.align}>
-                {column.id === "address" ? (
+                {column.id === 'address' ? (
                   <Link
-                    href={"/search/wallet?query=" + row[column.id]}
+                    href={'/search?query=' + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >

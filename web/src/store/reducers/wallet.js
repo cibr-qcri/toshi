@@ -1,14 +1,14 @@
 // Types
-import * as types from "../actions/wallet/types";
+import * as types from '../actions/wallet/types';
 
 // Shared
-import { updateObject } from "../../utils";
+import { updateObject } from '../../utils';
 
 // State
 const initialState = {
-  id: "",
+  id: '',
   data: {
-    summary: [],
+    summary: {},
     links: [],
     moneyFlow: {},
     labels: [],
@@ -34,7 +34,7 @@ const initialState = {
     isBusy: true,
     error: null,
   },
-  source: "flow",
+  source: 'flow',
 };
 
 const reducer = (state = initialState, action) => {

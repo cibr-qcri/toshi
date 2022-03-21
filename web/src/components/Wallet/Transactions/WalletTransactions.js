@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Material
 import {
@@ -10,14 +10,14 @@ import {
   TableRow,
   TableCell,
   TableBody,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletTransactions-styles";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "@material-ui/core";
-import { getWalletTx } from "../../../store/actions/wallet/thunks";
-import { Skeleton } from "@material-ui/lab";
+import { useStyles } from './WalletTransactions-styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from '@material-ui/core';
+import { getWalletTx } from '../../../store/actions/wallet/thunks';
+import { Skeleton } from '@material-ui/lab';
 
 export const WalletTransactions = (props) => {
   // Variables
@@ -32,23 +32,23 @@ export const WalletTransactions = (props) => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    dispatch(getWalletTx(walletId, "transactions", newPage, rowsPerPage));
+    dispatch(getWalletTx(walletId, 'transactions', newPage, rowsPerPage));
   };
 
   const handleChangeRowsPerPage = (event) => {
     const pageCount = event.target.value;
     setRowsPerPage(event.target.value);
     setPage(0);
-    dispatch(getWalletTx(walletId, "transactions", page, pageCount));
+    dispatch(getWalletTx(walletId, 'transactions', page, pageCount));
   };
 
   const columns = [
-    { id: "id", label: "Tx Hash", align: "center" },
-    { id: "block_number", label: "Block Number", align: "left" },
-    { id: "input_value", label: "Input Value", align: "left" },
-    { id: "output_value", label: "Output Value", align: "left" },
-    { id: "is_coinbase", label: "Coinbase", align: "left" },
-    { id: "type", label: "Source", align: "left" },
+    { id: 'id', label: 'Tx Hash', align: 'center' },
+    { id: 'block_number', label: 'Block Number', align: 'left' },
+    { id: 'input_value', label: 'Input Value', align: 'left' },
+    { id: 'output_value', label: 'Output Value', align: 'left' },
+    { id: 'is_coinbase', label: 'Coinbase', align: 'left' },
+    { id: 'type', label: 'Source', align: 'left' },
   ];
 
   // JSX
@@ -64,9 +64,9 @@ export const WalletTransactions = (props) => {
                 key={column.id}
                 align={column.align}
               >
-                {column.id === "id" ? (
+                {column.id === 'id' ? (
                   <Link
-                    href={"/search/wallet?query=" + row[column.id]}
+                    href={'/search?query=' + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >

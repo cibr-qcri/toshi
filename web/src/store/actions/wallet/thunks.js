@@ -1,20 +1,20 @@
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 // Redux
-import { batch } from "react-redux";
+import { batch } from 'react-redux';
 
 // QueryString
-import qs from "qs";
+import qs from 'qs';
 
 // Creators
-import * as creators from "./creators";
-import { showAlert } from "../";
+import * as creators from './creators';
+import { showAlert } from '../';
 
 export const getWalletInfo = (id) => {
   return (dispatch, getState) => {
     dispatch(creators.getWalletInfoStart({ id }));
-    const walletUrl = "/info/wallet?id=" + id;
+    const walletUrl = '/wallet?id=' + id;
 
     axios
       .get(walletUrl)
