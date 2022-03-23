@@ -2,6 +2,7 @@
 import LazyProgressRaw, { lazyProgressStyler } from '../LazyProgressRaw';
 import SearchBoxRaw, { searchBoxStyler } from '../SearchBoxRaw';
 import SwitcherRaw, { switcherStyler } from '../SwitcherRaw';
+import NoResultsRaw , { noResultsStyler } from '../NoResultsRaw';
 
 // Utils
 import { makeStyles, withStyles } from '../../utils';
@@ -28,6 +29,7 @@ export const stylesCreator = (theme) => ({
       width: '100%',
     },
   },
+  NoResultsRaw: noResultsStyler(theme).Default,
 });
 
 // Local
@@ -37,3 +39,4 @@ export const useStyles = makeStyles(stylesCreator);
 export const LazyProgress = withStyles(stylesCreator, LazyProgressRaw);
 export const SearchBox = withStyles(stylesCreator, SearchBoxRaw);
 export const Switcher = withStyles(stylesCreator, SwitcherRaw);
+export const NoResults = withStyles(stylesCreator, NoResultsRaw);

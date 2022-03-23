@@ -52,20 +52,15 @@ const searchResults = asyncHandler(async (request, response, next) => {
     const walletData = {
       _id: row.cluster_id,
       info: wallet.getWalletInfo(row),
-      type: {
-        in_wallet: false,
-        out_wallet: false,
-      },
     };
 
     if (type === 'transaction') {
       if (row.wallet_type === 'in_wallet') {
-        walletData.type.in_wallet = true;
+        walletData.moneyFlow = 'RECEIVED';
       } else if (row.wallet_type === 'out_wallet') {
-        walletData.type.out_wallet = true;
+        walletData.moneyFlow = 'SPENT';
       } else if (row.wallet_type === 'in_wallet/out_wallet') {
-        walletData.type.in_wallet = true;
-        walletData.type.out_wallet = true;
+        walletData.moneyFlow = 'RECEIVED/SPENT';
       }
     }
 

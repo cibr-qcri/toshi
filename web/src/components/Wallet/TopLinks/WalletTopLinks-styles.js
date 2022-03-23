@@ -5,20 +5,23 @@ export const stylesCreator = (theme) => ({
   Default: {
     root: {
       width: "100%",
-      paddingTop: theme.spacing(2),
       marginTop: theme.spacing(2.5),
+      height: '350px',
     },
-    tab: {
-      textTransform: "none",
-      minWidth: 72,
+    header: {
+      fontSize: "1rem",
       fontWeight: theme.typography.fontWeightRegular,
-      marginRight: theme.spacing(4),
+      paddingLeft: theme.spacing(2),
+      paddingTop: theme.spacing(2),
     },
-    paper: {
-      display: 'block',
-      width: '100%',
-      transitionDuration: '0.3s',
-      height: '500px',
+    graph: {
+      marginTop: theme.spacing(-1),
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
+    },
+    empty: {
+      height: "100%",
+      marginTop: "60px",
     },
   },
 });

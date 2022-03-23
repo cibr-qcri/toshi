@@ -9,15 +9,28 @@ const initialState = {
   id: '',
   data: {
     info: {},
+    labels: [],
     isBusy: true,
     error: null,
     noResults: false,
+  },
+  topLinks: {
+    result: {},
+    error: null,
+    isBusy: true,
+    noResults: false,
+  },
+  links: {
+    result: [],
+    error: null,
+    isBusy: true,
+    noResults: false,
+    count: 0,
   },
   transactions: {
     result: [],
     noResults: false,
     count: 0,
-    isPaged: false,
     pagination: {},
     isBusy: true,
     error: null,
@@ -26,12 +39,10 @@ const initialState = {
     result: [],
     noResults: false,
     count: 0,
-    isPaged: false,
     pagination: {},
     isBusy: true,
     error: null,
   },
-  source: 'addresses',
 };
 
 const reducer = (state = initialState, action) => {
@@ -48,25 +59,40 @@ const reducer = (state = initialState, action) => {
     case types.GET_WALLET_TX_START: {
       return updateObject(state, {
         transactions: updateObject(state.transactions, {
-          results: state.data.results,
+          result: state.transactions.result,
           isBusy: true,
         }),
-        source: action.payload.source,
       });
     }
     case types.GET_WALLET_ADDRESS_START: {
       return updateObject(state, {
         addresses: updateObject(state.addresses, {
-          results: state.data.results,
+          result: state.addresses.result,
           isBusy: true,
         }),
-        source: action.payload.source,
+      });
+    }
+    case types.GET_WALLET_TOP_LINKS_START: {
+      return updateObject(state, {
+        topLinks: updateObject(state.topLinks, {
+          result: state.topLinks.result,
+          isBusy: true,
+        }),
+      });
+    }
+    case types.GET_WALLET_LINKS_START: {
+      return updateObject(state, {
+        links: updateObject(state.links, {
+          result: state.links.result,
+          isBusy: true,
+        }),
       });
     }
     case types.GET_WALLET_INFO_SUCCESS: {
       return updateObject(state, {
         data: updateObject(state.data, {
-          info: action.payload.data,
+          info: action.payload.data.info,
+          labels: action.payload.data.labels,
           isBusy: false,
           noResults: action.payload.count === 0,
         }),
@@ -87,6 +113,24 @@ const reducer = (state = initialState, action) => {
         addresses: updateObject(state.addresses, {
           result: action.payload.data,
           pagination: { ...action.payload.pagination },
+          count: action.payload.count,
+          isBusy: false,
+        }),
+      });
+    }
+    case types.GET_WALLET_TOP_LINKS_SUCCESS: {
+      return updateObject(state, {
+        topLinks: updateObject(state.topLinks, {
+          result: action.payload.data,
+          count: action.payload.count,
+          isBusy: false,
+        }),
+      });
+    }
+    case types.GET_WALLET_LINKS_SUCCESS: {
+      return updateObject(state, {
+        links: updateObject(state.links, {
+          result: action.payload.data,
           count: action.payload.count,
           isBusy: false,
         }),
@@ -119,9 +163,22 @@ const reducer = (state = initialState, action) => {
         }),
       });
     }
-    case types.SET_WALLET_SOURCE: {
+    case types.GET_WALLET_TOP_LINKS_FAILURE: {
       return updateObject(state, {
-        source: action.payload.source,
+        topLinks: updateObject(state.topLinks, {
+          error: action.payload,
+          isBusy: false,
+          noResults: true,
+        }),
+      });
+    }
+    case types.GET_WALLET_LINKS_FAILURE: {
+      return updateObject(state, {
+        links: updateObject(state.links, {
+          error: action.payload,
+          isBusy: false,
+          noResults: true,
+        }),
       });
     }
     // Reset

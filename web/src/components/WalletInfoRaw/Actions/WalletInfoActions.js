@@ -23,7 +23,7 @@ const WalletInfoActions = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { id, type } = props;
+  const { id, moneyFlow } = props;
 
   // Handlers
   const tagHandler = () => {
@@ -31,51 +31,47 @@ const WalletInfoActions = (props) => {
   };
 
   let walletFlowData;
-  if (!type) {
-    walletFlowData = <div />;
+  if (moneyFlow === 'RECEIVED/SPENT') {
+    walletFlowData = (
+      <div className={classes.walletFlow}>
+        <WalletInOutIcon />
+        <Typography
+          className={classes.walletMetadataLabel}
+          variant="body2"
+          color="textSecondary"
+        >
+          Sending &amp; Receiving
+        </Typography>
+      </div>
+    );
+  } else if (moneyFlow === 'SPENT') {
+    walletFlowData = (
+      <div className={classes.walletFlow}>
+        <WalletInIcon className={classes.walletFlowOutIcon} />
+        <Typography
+          className={classes.walletMetadataLabel}
+          variant="body2"
+          color="textSecondary"
+        >
+          Sending
+        </Typography>
+      </div>
+    );
+  } else if (moneyFlow === 'RECEIVED') {
+    walletFlowData = (
+      <div className={classes.walletFlow}>
+        <WalletInIcon className={classes.walletFlowInIcon} />
+        <Typography
+          className={classes.walletMetadataLabel}
+          variant="body2"
+          color="textSecondary"
+        >
+          Receiving
+        </Typography>
+      </div>
+    );
   } else {
-    if (type.in_wallet && type.out_wallet) {
-      walletFlowData = (
-        <div className={classes.walletFlow}>
-          <WalletInOutIcon />
-          <Typography
-            className={classes.walletMetadataLabel}
-            variant="body2"
-            color="textSecondary"
-          >
-            Sending &amp; Receiving
-          </Typography>
-        </div>
-      );
-    } else if (type.in_wallet && !type.out_wallet) {
-      walletFlowData = (
-        <div className={classes.walletFlow}>
-          <WalletInIcon className={classes.walletFlowOutIcon} />
-          <Typography
-            className={classes.walletMetadataLabel}
-            variant="body2"
-            color="textSecondary"
-          >
-            Sending
-          </Typography>
-        </div>
-      );
-    } else if (!type.in_wallet && type.out_wallet) {
-      walletFlowData = (
-        <div className={classes.walletFlow}>
-          <WalletInIcon className={classes.walletFlowInIcon} />
-          <Typography
-            className={classes.walletMetadataLabel}
-            variant="body2"
-            color="textSecondary"
-          >
-            Receiving
-          </Typography>
-        </div>
-      );
-    } else {
-      walletFlowData = <div />;
-    }
+    walletFlowData = <div />;
   }
 
   //JSX

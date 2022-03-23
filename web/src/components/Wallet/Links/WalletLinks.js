@@ -1,55 +1,54 @@
 // React
 import React from 'react';
 
-// Redux
-import {useDispatch, useSelector} from 'react-redux';
-
 // Material
 import {
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
   TablePagination,
+  TableContainer,
+  Table,
+  TableHead,
   TableRow,
+  TableCell,
+  TableBody,
 } from '@material-ui/core';
 
 // Styles
-import {useStyles} from './WalletAddresses-styles';
-import {getWalletAddress} from '../../../store/actions/wallet/thunks';
-import {Skeleton} from '@material-ui/lab';
+import { useStyles } from './WalletLinks-styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import {titleShortener} from "../../../utils/common";
+import {getWalletLinks} from "../../../store/actions/wallet/thunks";
 
-export const WalletAddresses = (props) => {
+export const WalletLinks = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const walletId = useSelector((state) => state.wallet.id);
-  const rows = useSelector((state) => state.wallet.addresses.result);
-  const totalCount = useSelector((state) => state.wallet.addresses.count);
-  const isBusy = useSelector((state) => state.wallet.addresses.isBusy);
+  const rows = useSelector((state) => state.wallet.links.result);
+  const totalCount = useSelector((state) => state.wallet.links.count);
+  const isBusy = useSelector((state) => state.wallet.links.isBusy);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    dispatch(getWalletAddress(walletId, newPage, rowsPerPage));
+    dispatch(getWalletLinks(walletId, newPage, rowsPerPage));
   };
 
   const handleChangeRowsPerPage = (event) => {
     const pageCount = event.target.value;
-    setRowsPerPage(pageCount);
+    setRowsPerPage(event.target.value);
     setPage(0);
-    dispatch(getWalletAddress(walletId, page, pageCount));
+    dispatch(getWalletLinks(walletId, page, pageCount));
   };
 
   const columns = [
-    { id: 'address', label: 'Address', align: 'left' },
-    { id: 'totalReceivedUSD', label: 'Total Received ($)', align: 'left' },
-    { id: 'totalSpentUSD', label: 'Total Spent ($)', align: 'left' },
-    { id: 'usdBalance', label: 'Balance ($)', align: 'left' },
+    { id: 'walletId', label: 'Wallet', align: 'left' },
+    { id: 'numInTxes', label: 'Num Receiving Txes', align: 'left' },
+    { id: 'inUSDAmount', label: 'Receiving Amount ($)', align: 'left' },
+    { id: 'numOutTxes', label: 'Num Sending Txes', align: 'left' },
+    { id: 'outUSDAmount', label: 'Sending Amount ($)', align: 'left' },
   ];
 
   // JSX
@@ -57,17 +56,20 @@ export const WalletAddresses = (props) => {
   if (rows.length > 0) {
     body = rows.map((row) => {
       return (
-        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+        <TableRow hover role="checkbox" tabIndex={-1} key={row.walletId}>
           {columns.map((column) => {
             return (
-              <TableCell key={column.id} align={column.align}>
-                {column.id === 'address' ? (
+              <TableCell
+                key={column.id}
+                align={column.align}
+              >
+                {column.id === 'walletId' ? (
                   <Link
-                    href={'/search?query=' + row[column.id]}
+                    href={'/wallet/' + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >
-                    {titleShortener('address', row[column.id])}
+                    {titleShortener('wallet', row[column.id])}
                   </Link>
                 ) : (
                   row[column.id]
@@ -80,18 +82,18 @@ export const WalletAddresses = (props) => {
     });
   }
 
-  return (
+  const view = (
     <div className={classes.root}>
       <TableContainer className={classes.container}>
         {isBusy ? (
           <div>
-            <Skeleton animation="wave"/>
-            <Skeleton animation="wave"/>
-            <Skeleton animation="wave"/>
-            <Skeleton animation="wave"/>
-            <Skeleton animation="wave"/>
-            <Skeleton animation="wave"/>
-            <Skeleton animation="wave"/>
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
           </div>
         ) : (
           <Table stickyHeader aria-label="sticky table">
@@ -119,6 +121,8 @@ export const WalletAddresses = (props) => {
       />
     </div>
   );
+
+  return view;
 };
 
-export default WalletAddresses;
+export default WalletLinks;

@@ -25,7 +25,7 @@ export const Results = (props) => {
               <WalletInfo
                 id={result._id}
                 info={result.info}
-                type={result.type}
+                moneyFlow={result.moneyFlow}
               />
             </ListItem>
           );

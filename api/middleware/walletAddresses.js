@@ -1,11 +1,11 @@
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const gp = require("../services/gp");
-const numeral = require("numeral");
 const wallet = require("../utils/wallet");
+const numeral = require('numeral');
 
 const walletAddresses = asyncHandler(async (request, response, next) => {
-  const id = request.query.id;
+  const id = request.params.id;
   if (!id) {
     return next(new ErrorResponse("Please provide the wallet Id", 400));
   }
@@ -35,6 +35,14 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
     return {
       id: row.id,
       address: row.address,
+      totalSpentSatoshi: (row.total_spent_satoshi) ? numeral(row.total_spent_satoshi).format('0,0'): '-',
+      totalSpentUSD: (row.total_spent_usd) ? numeral(row.total_spent_usd).format('$0,0.00'): '-',
+      totalReceivedSatoshi: (row.total_received_satoshi) ? numeral(row.total_received_satoshi).format('0,0'): '-',
+      totalReceivedUSD: (row.total_received_usd) ? numeral(row.total_received_usd).format('$0,0.00'): '-',
+      satoshiBalance: (row.total_received_satoshi && row.total_spent_satoshi) ? numeral(row.total_received_satoshi)
+        .subtract(row.total_spent_satoshi).format('0,0'): '-',
+      usdBalance: (row.total_received_usd && row.total_spent_usd) ? numeral(row.total_received_usd)
+        .subtract(row.total_spent_usd).format('$0,0.00'): '-',
     };
   });
 

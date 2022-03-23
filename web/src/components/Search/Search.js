@@ -13,13 +13,12 @@ import qs from 'qs';
 // Components
 import Results from './Results';
 import MoreResults from './MoreResults';
-import NoResults from './NoResults';
 
 // Store
 import { getResults, showAlertDialog } from '../../store/actions';
 
 // Styles
-import { useStyles, LazyProgress, SearchBox, Switcher } from './Search-styles';
+import { useStyles, LazyProgress, SearchBox, Switcher, NoResults } from './Search-styles';
 
 export const Search = () => {
   // Variables

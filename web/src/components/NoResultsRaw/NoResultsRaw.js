@@ -2,12 +2,12 @@
 import React from 'react';
 
 // Components
-import Message from '../Message';
+import Message from '../Search/Message';
 
 // Styles
-import { useStyles, Switcher } from './NoResults-styles';
+import { useStyles, Switcher } from './NoResultsRaw-styles';
 
-const SearchNoResults = (props) => {
+const NoResultsRaw = (props) => {
   // Variables
   const classes = useStyles();
 
@@ -26,4 +26,7 @@ const SearchNoResults = (props) => {
   return view;
 };
 
-export default SearchNoResults;
+// Dynamic styling
+NoResultsRaw.styledAs = 'NoResultsRaw';
+
+export default NoResultsRaw;

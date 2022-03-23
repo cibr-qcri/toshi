@@ -1,6 +1,7 @@
 // Components
 import LazyProgressRaw, { lazyProgressStyler } from '../LazyProgressRaw';
 import WalletInfoRaw, { walletStyler } from '../WalletInfoRaw';
+import NoResultsRaw, {noResultsStyler} from "../NoResultsRaw";
 
 // Utils
 import { makeStyles, withStyles } from '../../utils';
@@ -12,17 +13,17 @@ export const stylesCreator = (theme) => ({
       flexDirection: 'column',
       alignItems: 'center',
       padding: theme.spacing(1),
+      display: 'block',
     },
     paper: {
       marginTop: theme.spacing(2.5),
       display: 'block',
       width: '100%',
-      transitionDuration: '0.3s',
-      height: '500px',
     },
   },
   LazyProgressRaw: lazyProgressStyler(theme).Default,
   WalletInfoRaw: walletStyler(theme).Default,
+  NoResultsRaw: noResultsStyler(theme).Default,
 });
 
 // Local
@@ -31,3 +32,4 @@ export const useStyles = makeStyles(stylesCreator);
 // HOCs
 export const LazyProgress = withStyles(stylesCreator, LazyProgressRaw);
 export const WalletInfo = withStyles(stylesCreator, WalletInfoRaw);
+export const NoResults = withStyles(stylesCreator, NoResultsRaw);

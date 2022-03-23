@@ -14,7 +14,7 @@ import Info from './Body';
 
 const WalletInfoRaw = (props) => {
   // Variables
-  const { classes, id, info, type } = props;
+  const { classes, id, info, moneyFlow } = props;
 
   // Handlers
 
@@ -25,7 +25,7 @@ const WalletInfoRaw = (props) => {
         <Title id={id} />
         <Fragment>
           <Info items={info} />
-          <Actions id={id} type={type} />
+          <Actions id={id} moneyFlow={moneyFlow} />
         </Fragment>
       </Card>
     </div>

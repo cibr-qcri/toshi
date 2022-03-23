@@ -1,8 +1,8 @@
 // Components
-import SwitcherRaw, { switcherStyler } from "../../SwitcherRaw";
+import SwitcherRaw, { switcherStyler } from "../SwitcherRaw";
 
 // Utils
-import { makeStyles, withStyles } from "../../../utils";
+import { makeStyles, withStyles } from "../../utils";
 
 export const stylesCreator = (theme) => ({
   Default: {

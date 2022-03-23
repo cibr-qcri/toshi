@@ -6,6 +6,7 @@ import { Link, Typography } from '@material-ui/core';
 
 // Styles
 import { useStyles } from './WalletInfoTitle-styles';
+import {titleShortener} from "../../../utils/common";
 
 const WalletInfoTitle = (props) => {
   // Variables
@@ -17,11 +18,11 @@ const WalletInfoTitle = (props) => {
       <Typography className={classes.typography}>
         <Link
           className={classes.link}
-          href={'/wallet?id=' + id}
+          href={'/wallet/' + id}
           target="_blank"
           rel="noopener"
         >
-          Wallet [{id.split('-')[0]}]
+          {titleShortener('wallet', id)}
         </Link>
       </Typography>
     </div>
