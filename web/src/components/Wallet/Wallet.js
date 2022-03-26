@@ -1,26 +1,34 @@
 // React
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 // Router
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from "react-router-dom";
 
 // Material
-import {Grid, Paper} from '@material-ui/core';
+import { Grid, Paper } from "@material-ui/core";
 
 // Components
-import Tabs from './Tabs';
-import Labels from "./Labels";
+import Tabs from "./Tabs";
+import LabelCloud from "./LabelCloud";
 import TopLinks from "./TopLinks";
 
 // Store
-import { getWalletInfo } from '../../store/actions';
+import { getWalletInfo } from "../../store/actions";
 
 // Styles
-import { useStyles, LazyProgress, WalletInfo, NoResults } from './Wallet-styles';
-import {getWalletAddress, getWalletTopLinks} from "../../store/actions/wallet/thunks";
+import {
+  useStyles,
+  LazyProgress,
+  WalletInfo,
+  NoResults,
+} from "./Wallet-styles";
+import {
+  getWalletAddress,
+  getWalletTopLinks,
+} from "../../store/actions/wallet/thunks";
 
 export const Wallet = (props) => {
   // Variables
@@ -37,7 +45,7 @@ export const Wallet = (props) => {
   useEffect(() => {
     const id = location.pathname.split("/")[2];
     if (!id || id.length === 0) {
-      history.push('/main');
+      history.push("/main");
     }
     dispatch(getWalletInfo(id));
     dispatch(getWalletAddress(id));
@@ -49,7 +57,7 @@ export const Wallet = (props) => {
       <WalletInfo id={id} info={info} />
       <Grid container spacing={2}>
         <Grid xs={12} sm={6} item>
-          <Labels />
+          <LabelCloud />
         </Grid>
         <Grid xs={12} sm={6} item>
           <TopLinks />
@@ -62,7 +70,7 @@ export const Wallet = (props) => {
   );
 
   if (noResults) {
-    content = <NoResults query={id} type={'wallet'} />;
+    content = <NoResults query={id} type={"wallet"} />;
   }
 
   const view = (

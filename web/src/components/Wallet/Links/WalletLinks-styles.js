@@ -8,7 +8,7 @@ export const stylesCreator = (theme) => ({
       width: "100%",
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
-      marginTop: theme.spacing(5),
+      marginTop: theme.spacing(3),
     },
     container: {
       height: "70%",

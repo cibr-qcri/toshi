@@ -1,21 +1,26 @@
 // React
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 // Material
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab } from "@material-ui/core";
 
 // Styles
-import { useStyles } from './WalletTabs-styles';
+import { useStyles } from "./WalletTabs-styles";
 
 // Store
-import {getWalletTx} from '../../../store/actions';
-import {getWalletAddress, getWalletLinks} from '../../../store/actions/wallet/thunks';
+import { getWalletTx } from "../../../store/actions";
+import {
+  getWalletAddress,
+  getWalletLabels,
+  getWalletLinks,
+} from "../../../store/actions/wallet/thunks";
 import Addresses from "../Addresses/WalletAddresses";
 import Transactions from "../Transactions/WalletTransactions";
 import Links from "../Links";
+import Labels from "../Labels";
 
 const WalletTabs = (props) => {
   // Variables
@@ -26,6 +31,7 @@ const WalletTabs = (props) => {
   const walletTxes = useSelector((state) => state.wallet.transactions.result);
   const walletAddresses = useSelector((state) => state.wallet.addresses.result);
   const walletLinks = useSelector((state) => state.wallet.links.result);
+  const walletLabels = useSelector((state) => state.wallet.labels.result);
 
   // Hooks
   useEffect(() => {
@@ -41,6 +47,8 @@ const WalletTabs = (props) => {
       dispatch(getWalletTx(id));
     } else if (index === 2 && walletLinks.length === 0) {
       dispatch(getWalletLinks(id));
+    } else if (index === 3 && walletLabels.length === 0) {
+      dispatch(getWalletLabels(id));
     }
   };
 
@@ -49,18 +57,17 @@ const WalletTabs = (props) => {
     tabView = <Transactions />;
   } else if (tabIndex === 2) {
     tabView = <Links />;
+  } else if (tabIndex === 3) {
+    tabView = <Labels />;
   }
 
   const view = (
     <div className={classes.paper}>
-      <Tabs
-        value={tabIndex}
-        onChange={handleChange}
-        indicatorColor="primary"
-      >
+      <Tabs value={tabIndex} onChange={handleChange} indicatorColor="primary">
         <Tab className={classes.tab} disableRipple label="Addresses" />
         <Tab className={classes.tab} disableRipple label="Transactions" />
         <Tab className={classes.tab} disableRipple label="Connected Wallets" />
+        <Tab className={classes.tab} disableRipple label="Reported Labels" />
       </Tabs>
       {tabView}
     </div>

@@ -11,7 +11,6 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "amplitude-js": "^8.8.0",
-    "antd": "^4.19.3",
     "axios": "^0.21.4",
     "clsx": "^1.1.0",
     "material-table": "^1.60.0",

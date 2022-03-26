@@ -1,20 +1,20 @@
 // Axios
-import axios from 'axios';
+import axios from "axios";
 
 // Redux
-import { batch } from 'react-redux';
+import { batch } from "react-redux";
 
 // QueryString
-import qs from 'qs';
+import qs from "qs";
 
 // Creators
-import * as creators from './creators';
-import { showAlert } from '../';
+import * as creators from "./creators";
+import { showAlert } from "../";
 
 export const getWalletInfo = (id) => {
   return (dispatch, getState) => {
     dispatch(creators.getWalletInfoStart({ id }));
-    const walletUrl = '/wallet/' + id;
+    const walletUrl = "/wallet/" + id;
 
     axios
       .get(walletUrl)
@@ -82,7 +82,9 @@ export const getWalletAddress = (id, page = 0, count = 10) => {
       count: count,
     };
 
-    const walletAddressUrl = `/wallet/${id}/addresses?${qs.stringify(queryParams)}`;
+    const walletAddressUrl = `/wallet/${id}/addresses?${qs.stringify(
+      queryParams
+    )}`;
     axios
       .get(walletAddressUrl)
       .then((response) => {
@@ -114,6 +116,29 @@ export const getWalletLinks = (id, page = 0, count = 10) => {
       .catch((error) => {
         batch(() => {
           dispatch(creators.getWalletLinksFailure(error));
+          dispatch(showAlert());
+        });
+      });
+  };
+};
+
+export const getWalletLabels = (id, page = 0, count = 10) => {
+  return (dispatch, getState) => {
+    dispatch(creators.getWalletLabelsStart());
+    let queryParams = {
+      page: page,
+      count: count,
+    };
+
+    const walletLinksUrl = `/wallet/${id}/labels?${qs.stringify(queryParams)}`;
+    axios
+      .get(walletLinksUrl)
+      .then((response) => {
+        dispatch(creators.getWalletLabelsSuccess(response.data));
+      })
+      .catch((error) => {
+        batch(() => {
+          dispatch(creators.getWalletLabelsFailure(error));
           dispatch(showAlert());
         });
       });

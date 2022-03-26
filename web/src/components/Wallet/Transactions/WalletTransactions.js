@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React from "react";
 
 // Material
 import {
@@ -10,15 +10,15 @@ import {
   TableRow,
   TableCell,
   TableBody,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 // Styles
-import { useStyles } from './WalletTransactions-styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from '@material-ui/core';
-import { getWalletTx } from '../../../store/actions/wallet/thunks';
-import { Skeleton } from '@material-ui/lab';
-import {titleShortener} from "../../../utils/common";
+import { useStyles } from "./WalletTransactions-styles";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "@material-ui/core";
+import { getWalletTx } from "../../../store/actions/wallet/thunks";
+import { Skeleton } from "@material-ui/lab";
+import { titleShortener } from "../../../utils/common";
 
 export const WalletTransactions = (props) => {
   // Variables
@@ -44,12 +44,12 @@ export const WalletTransactions = (props) => {
   };
 
   const columns = [
-    { id: 'txHash', label: 'Transaction', align: 'left' },
-    { id: 'blockNumber', label: 'Block Number', align: 'left' },
-    { id: 'inputSatoshiValue', label: 'Input Satoshi Value', align: 'left' },
-    { id: 'outputSatoshiValue', label: 'Output Satoshi Value', align: 'left' },
-    { id: 'isCoinbase', label: 'Coinbase', align: 'left' },
-    { id: 'type', label: 'Money Flow', align: 'left' },
+    { id: "txHash", label: "Transaction", align: "left" },
+    { id: "blockNumber", label: "Block Number", align: "left" },
+    { id: "inputSatoshiValue", label: "Input Satoshi Value", align: "left" },
+    { id: "outputSatoshiValue", label: "Output Satoshi Value", align: "left" },
+    { id: "isCoinbase", label: "Coinbase", align: "left" },
+    { id: "type", label: "Money Flow", align: "left" },
   ];
 
   // JSX
@@ -60,17 +60,14 @@ export const WalletTransactions = (props) => {
         <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
           {columns.map((column) => {
             return (
-              <TableCell
-                key={column.id}
-                align={column.align}
-              >
-                {column.id === 'txHash' ? (
+              <TableCell key={column.id} align={column.align}>
+                {column.id === "txHash" ? (
                   <Link
-                    href={'/search?query=' + row[column.id]}
+                    href={"/search?query=" + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >
-                    {titleShortener('transaction', row[column.id])}
+                    {titleShortener("transaction", row[column.id])}
                   </Link>
                 ) : (
                   row[column.id]

@@ -15,10 +15,10 @@ export const stylesCreator = (theme) => ({
       marginRight: theme.spacing(4),
     },
     paper: {
-      display: 'block',
-      width: '100%',
-      transitionDuration: '0.3s',
-      height: '500px',
+      display: "block",
+      width: "100%",
+      transitionDuration: "0.3s",
+      height: "500px",
     },
   },
 });

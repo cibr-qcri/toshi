@@ -1,15 +1,15 @@
-const numeral = require('numeral');
+const numeral = require("numeral");
 
 const stringShortener = (value) => {
-  if (value.endsWith('.onion')) {
-    value = '[' + value.substring(0, 7) + '].onion';
+  if (value.endsWith(".onion")) {
+    value = "[" + value.substring(0, 7) + "].onion";
   }
   return value;
 };
 
 const findMostFrequentItem = (strArray) => {
   let result = {
-    topValue: '',
+    topValue: "",
     count: 0,
     values: [],
   };
@@ -18,7 +18,7 @@ const findMostFrequentItem = (strArray) => {
     if (strCount[currentStr]) {
       strCount[currentStr].value += 1;
     } else {
-      strCount[currentStr] = { 'text': currentStr, 'value': 1 };
+      strCount[currentStr] = { text: currentStr, value: 1 };
     }
     if (strCount[currentStr].value > result.count) {
       result.topValue = currentStr;
@@ -31,7 +31,7 @@ const findMostFrequentItem = (strArray) => {
 };
 
 exports.getTopCategory = (categories) => {
-  const categoryArray = categories.split(',');
+  const categoryArray = categories.split(",");
   if (categoryArray.length > 1) {
     return findMostFrequentItem(categoryArray).topValue;
   } else {
@@ -43,7 +43,7 @@ exports.getLabels = (labels, isTopLabel = false) => {
   if (!labels) {
     return "";
   }
-  const labelArray = labels.split(',');
+  const labelArray = labels.split(",");
   if (labelArray.length < 2 && isTopLabel) {
     return stringShortener(labels);
   } else if (isTopLabel) {
@@ -53,12 +53,22 @@ exports.getLabels = (labels, isTopLabel = false) => {
   }
 };
 
+exports.getEdgeWidth = (value) => {
+  if (value > 1000) {
+    return 5;
+  } else if (value > 100) {
+    return 3;
+  } else {
+    return 1;
+  }
+};
+
 exports.getRiskLevel = (score) => {
-  let riskLevel = 'Low';
+  let riskLevel = "Low";
   if (score >= 0.7) {
-    riskLevel = 'High';
+    riskLevel = "High";
   } else if (score >= 0.5 && score < 0.7) {
-    riskLevel = 'Medium';
+    riskLevel = "Medium";
   }
   return riskLevel;
 };
@@ -66,30 +76,30 @@ exports.getRiskLevel = (score) => {
 exports.getWalletInfo = (result, isDetailed = false) => {
   let walletInfo = {
     topCategory: {
-      name: 'Top Category',
+      name: "Top Category",
       value:
         result.category && result.category.length > 0
           ? this.getTopCategory(result.category)
-          : 'N/A',
+          : "N/A",
     },
     topLabel: {
-      name: 'Top Label',
+      name: "Top Label",
       value:
         result.label && result.label.length > 0
           ? this.getLabels(result.label, (isTopLabel = true))
-          : 'N/A',
+          : "N/A",
     },
     riskScore: {
-      name: 'Risk Score',
+      name: "Risk Score",
       value:
-        numeral(result.risk_score).format('0.00') +
-        ' (' +
+        numeral(result.risk_score).format("0.00") +
+        " (" +
         this.getRiskLevel(result.risk_score) +
-        ')',
+        ")",
     },
     size: {
-      name: 'Size',
-      value: numeral(result.num_address).format('0,0'),
+      name: "Size",
+      value: numeral(result.num_address).format("0,0"),
     },
   };
 
@@ -97,22 +107,22 @@ exports.getWalletInfo = (result, isDetailed = false) => {
     walletInfo = {
       ...walletInfo,
       volume: {
-        name: 'Volume',
-        value: numeral(result.num_tx).format('0,0'),
+        name: "Volume",
+        value: numeral(result.num_tx).format("0,0"),
       },
       balance: {
-        name: 'Balance',
+        name: "Balance",
         value: numeral(result.total_received_usd)
           .subtract(result.total_spent_usd)
-          .format('$0,0.00'),
+          .format("$0,0.00"),
       },
       totalIn: {
-        name: 'Total In',
-        value: numeral(result.total_received_usd).format('$0,0.00'),
+        name: "Total In",
+        value: numeral(result.total_received_usd).format("$0,0.00"),
       },
       totalOut: {
-        name: 'Total Out',
-        value: numeral(result.total_spent_usd).format('$0,0.00'),
+        name: "Total Out",
+        value: numeral(result.total_spent_usd).format("$0,0.00"),
       },
     };
   }
@@ -127,16 +137,33 @@ exports.queries = {
       WHERE cluster_id = $1;
   `,
   getWalletTxById: `
-      SELECT *, count(*) OVER() AS total_count
+      SELECT *
       FROM btc_wallet_transaction
       WHERE cluster_id = $1
       ORDER BY id OFFSET $2
       LIMIT $3;
   `,
+  getWalletTxCountById: `
+      SELECT num_tx
+      FROM btc_wallet
+      WHERE cluster_id = $1;
+  `,
+  getWalletAddressCountById: `
+      SELECT num_address
+      FROM btc_wallet
+      WHERE cluster_id = $1;
+  `,
   getWalletAddressById: `
-      SELECT id, address, total_spent_satoshi, total_spent_usd, total_received_satoshi, total_received_usd,
-      count(*) OVER() AS total_count
+      SELECT id, address, total_spent_satoshi, total_spent_usd, total_received_satoshi, total_received_usd
       FROM btc_address_cluster
+      WHERE cluster_id  = $1
+      ORDER BY id OFFSET $2
+      LIMIT $3;
+  `,
+  getWalletLabelsById: `
+      SELECT *,
+      count(*) OVER() AS total_count
+      FROM btc_address_label
       WHERE cluster_id  = $1
       ORDER BY id OFFSET $2
       LIMIT $3;
@@ -160,8 +187,7 @@ exports.queries = {
     GROUP BY category, flow_type;
   `,
   getWalletByLabel: `
-    SELECT btc_wallet.*,
-        count(*) OVER() AS total_count
+    SELECT btc_wallet.*, count(*) OVER() AS total_count
     FROM btc_wallet
     WHERE label ~* $1
     ORDER BY id OFFSET $2
@@ -225,9 +251,14 @@ exports.queries = {
     FILTER not (e._to == start_vertex and e._from == start_vertex)
     LET c_wallet =  SPLIT((e._from == start_vertex ? e._to : e._from), '/')[1]
     COLLECT wallet = c_wallet INTO wallets_group_by_id
+    LET in_wallet_tx_hashes = (for item in wallets_group_by_id[*].e 
+        FILTER item._to == start_vertex return distinct item.tx_hash)
+    LET out_wallet_tx_hashes = (for item in wallets_group_by_id[*].e 
+        FILTER item._from == start_vertex return distinct item.tx_hash)
     LET tx_hashes = (for hash in wallets_group_by_id[*].e.tx_hash return distinct hash)
-    SORT LENGTH(tx_hashes) DESC LIMIT 0, 8
-    RETURN { 'wallet_id': wallet, "num_total_txes": LENGTH(tx_hashes) }
+    SORT LENGTH(tx_hashes) DESC LIMIT 0, 5
+    RETURN { 'wallet_id': wallet, 'num_inbound_txes': LENGTH(in_wallet_tx_hashes), 
+    'num_outbound_txes': LENGTH(out_wallet_tx_hashes) }
   `,
   getLinkedWalletsById: `
     WITH btc_addresses, btc_wallets 

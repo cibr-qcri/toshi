@@ -4,24 +4,14 @@ import { makeStyles } from "../../../utils";
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
-      width: "100%",
-      marginTop: theme.spacing(2.5),
-      height: "350px",
-    },
-    header: {
-      fontSize: "1rem",
-      fontWeight: theme.typography.fontWeightRegular,
-      paddingLeft: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-    },
-    cloud: {
-      marginTop: theme.spacing(-1),
-      marginLeft: theme.spacing(-2),
-      marginRight: theme.spacing(-2),
-    },
-    empty: {
       height: "100%",
-      marginTop: "60px",
+      width: "100%",
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      marginTop: theme.spacing(3),
+    },
+    container: {
+      height: "70%",
     },
   },
 });

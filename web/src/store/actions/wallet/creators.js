@@ -22,6 +22,10 @@ export const getWalletLinksStart = () => ({
   type: types.GET_WALLET_LINKS_START,
 });
 
+export const getWalletLabelsStart = () => ({
+  type: types.GET_WALLET_LABELS_START,
+});
+
 export const getWalletInfoSuccess = (data) => ({
   type: types.GET_WALLET_INFO_SUCCESS,
   payload: data,
@@ -47,6 +51,11 @@ export const getWalletLinksSuccess = (data) => ({
   payload: data,
 });
 
+export const getWalletLabelsSuccess = (data) => ({
+  type: types.GET_WALLET_LABELS_SUCCESS,
+  payload: data,
+});
+
 export const getWalletInfoFailure = (error) => ({
   type: types.GET_WALLET_INFO_FAILURE,
   payload: error,
@@ -69,6 +78,11 @@ export const getWalletTopLinksFailure = (error) => ({
 
 export const getWalletLinksFailure = (error) => ({
   type: types.GET_WALLET_LINKS_FAILURE,
+  payload: error,
+});
+
+export const getWalletLabelsFailure = (error) => ({
+  type: types.GET_WALLET_LABELS_FAILURE,
   payload: error,
 });
 

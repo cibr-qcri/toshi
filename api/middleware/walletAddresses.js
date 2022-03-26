@@ -2,7 +2,7 @@ const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const gp = require("../services/gp");
 const wallet = require("../utils/wallet");
-const numeral = require('numeral');
+const numeral = require("numeral");
 
 const walletAddresses = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -28,21 +28,41 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
 
   let totalCount = 0;
   if (walletAddressRes && walletAddressRes.rows.length > 0) {
-    totalCount = parseInt(walletAddressRes.rows[0].total_count);
+    const walletAddressCountRes = await gp.query(
+      wallet.queries.getWalletAddressCountById,
+      [id]
+    );
+    totalCount = parseInt(walletAddressCountRes.rows[0].num_address);
   }
 
   const addresses = walletAddressRes.rows.map((row) => {
     return {
       id: row.id,
       address: row.address,
-      totalSpentSatoshi: (row.total_spent_satoshi) ? numeral(row.total_spent_satoshi).format('0,0'): '-',
-      totalSpentUSD: (row.total_spent_usd) ? numeral(row.total_spent_usd).format('$0,0.00'): '-',
-      totalReceivedSatoshi: (row.total_received_satoshi) ? numeral(row.total_received_satoshi).format('0,0'): '-',
-      totalReceivedUSD: (row.total_received_usd) ? numeral(row.total_received_usd).format('$0,0.00'): '-',
-      satoshiBalance: (row.total_received_satoshi && row.total_spent_satoshi) ? numeral(row.total_received_satoshi)
-        .subtract(row.total_spent_satoshi).format('0,0'): '-',
-      usdBalance: (row.total_received_usd && row.total_spent_usd) ? numeral(row.total_received_usd)
-        .subtract(row.total_spent_usd).format('$0,0.00'): '-',
+      totalSpentSatoshi: row.total_spent_satoshi
+        ? numeral(row.total_spent_satoshi).format("0,0")
+        : "-",
+      totalSpentUSD: row.total_spent_usd
+        ? numeral(row.total_spent_usd).format("$0,0.00")
+        : "-",
+      totalReceivedSatoshi: row.total_received_satoshi
+        ? numeral(row.total_received_satoshi).format("0,0")
+        : "-",
+      totalReceivedUSD: row.total_received_usd
+        ? numeral(row.total_received_usd).format("$0,0.00")
+        : "-",
+      satoshiBalance:
+        row.total_received_satoshi && row.total_spent_satoshi
+          ? numeral(row.total_received_satoshi)
+              .subtract(row.total_spent_satoshi)
+              .format("0,0")
+          : "-",
+      usdBalance:
+        row.total_received_usd && row.total_spent_usd
+          ? numeral(row.total_received_usd)
+              .subtract(row.total_spent_usd)
+              .format("$0,0.00")
+          : "-",
     };
   });
 

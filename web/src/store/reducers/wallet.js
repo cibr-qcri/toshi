@@ -1,12 +1,12 @@
 // Types
-import * as types from '../actions/wallet/types';
+import * as types from "../actions/wallet/types";
 
 // Shared
-import { updateObject } from '../../utils';
+import { updateObject } from "../../utils";
 
 // State
 const initialState = {
-  id: '',
+  id: "",
   data: {
     info: {},
     labels: [],
@@ -42,6 +42,13 @@ const initialState = {
     pagination: {},
     isBusy: true,
     error: null,
+  },
+  labels: {
+    result: [],
+    error: null,
+    isBusy: true,
+    noResults: false,
+    count: 0,
   },
 };
 
@@ -84,6 +91,14 @@ const reducer = (state = initialState, action) => {
       return updateObject(state, {
         links: updateObject(state.links, {
           result: state.links.result,
+          isBusy: true,
+        }),
+      });
+    }
+    case types.GET_WALLET_LABELS_START: {
+      return updateObject(state, {
+        labels: updateObject(state.labels, {
+          result: state.labels.result,
           isBusy: true,
         }),
       });
@@ -136,6 +151,15 @@ const reducer = (state = initialState, action) => {
         }),
       });
     }
+    case types.GET_WALLET_LABELS_SUCCESS: {
+      return updateObject(state, {
+        labels: updateObject(state.labels, {
+          result: action.payload.data,
+          count: action.payload.count,
+          isBusy: false,
+        }),
+      });
+    }
     case types.GET_WALLET_INFO_FAILURE: {
       return updateObject(state, {
         data: updateObject(state.data, {
@@ -175,6 +199,15 @@ const reducer = (state = initialState, action) => {
     case types.GET_WALLET_LINKS_FAILURE: {
       return updateObject(state, {
         links: updateObject(state.links, {
+          error: action.payload,
+          isBusy: false,
+          noResults: true,
+        }),
+      });
+    }
+    case types.GET_WALLET_LABELS_FAILURE: {
+      return updateObject(state, {
+        labels: updateObject(state.labels, {
           error: action.payload,
           isBusy: false,
           noResults: true,

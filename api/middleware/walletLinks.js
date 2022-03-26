@@ -2,7 +2,7 @@ const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const arango = require("../services/arango");
 const wallet = require("../utils/wallet");
-const numeral = require('numeral');
+const numeral = require("numeral");
 
 const walletLinks = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -20,9 +20,13 @@ const walletLinks = asyncHandler(async (request, response, next) => {
     offset = 0;
   }
 
-  const linkedWalletCursor =  await arango.query({
+  const linkedWalletCursor = await arango.query({
     query: wallet.queries.getLinkedWalletsById,
-    bindVars: { start_wallet: 'btc_wallets/' + id, offset: offset, limit: count },
+    bindVars: {
+      start_wallet: "btc_wallets/" + id,
+      offset: offset,
+      limit: count,
+    },
   });
   const linkedWalletRes = await linkedWalletCursor.all();
 
@@ -34,10 +38,10 @@ const walletLinks = asyncHandler(async (request, response, next) => {
   const records = linkedWalletRes.map((wallet) => {
     return {
       walletId: wallet.item.wallet_id,
-      numInTxes: numeral(wallet.item.num_inbound_txes).format('0,0'),
-      inUSDAmount: numeral(wallet.item.inbound_usd_amount).format('$0,0.00'),
-      numOutTxes: numeral(wallet.item.num_outbound_txes).format('0,0'),
-      outUSDAmount: numeral(wallet.item.outbound_usd_amount).format('$0,0.00'),
+      numInTxes: numeral(wallet.item.num_inbound_txes).format("0,0"),
+      inUSDAmount: numeral(wallet.item.inbound_usd_amount).format("$0,0.00"),
+      numOutTxes: numeral(wallet.item.num_outbound_txes).format("0,0"),
+      outUSDAmount: numeral(wallet.item.outbound_usd_amount).format("$0,0.00"),
     };
   });
 

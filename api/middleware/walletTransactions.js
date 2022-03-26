@@ -2,7 +2,7 @@ const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const wallet = require("../utils/wallet");
 const gp = require("../services/gp");
-const numeral = require('numeral');
+const numeral = require("numeral");
 
 const walletTransactions = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -28,20 +28,24 @@ const walletTransactions = asyncHandler(async (request, response, next) => {
 
   let totalCount = 0;
   if (walletTransactionRes && walletTransactionRes.rows.length > 0) {
-    totalCount = parseInt(walletTransactionRes.rows[0].total_count);
+    const walletTransactionCountRes = await gp.query(
+      wallet.queries.getWalletTxCountById,
+      [id]
+    );
+    totalCount = parseInt(walletTransactionCountRes.rows[0].num_tx);
   }
 
   const transactions = walletTransactionRes.rows.map((row) => {
     return {
-        id: row.id,
-        txHash: row.tx_hash,
-        blockNumber: numeral(row.block_number).format('0,0'),
-        outputSatoshiValue: numeral(row.output_value).format('0,0'),
-        inputSatoshiValue: numeral(row.input_value).format('0,0'),
-        type: row.tx_type,
-        isCoinbase: row.is_coinbase ? "True" : "False",
-      };
-    });
+      id: row.id,
+      txHash: row.tx_hash,
+      blockNumber: numeral(row.block_number).format("0,0"),
+      outputSatoshiValue: numeral(row.output_value).format("0,0"),
+      inputSatoshiValue: numeral(row.input_value).format("0,0"),
+      type: row.tx_type,
+      isCoinbase: row.is_coinbase ? "True" : "False",
+    };
+  });
 
   const pagination = {};
   if (transactions.length > 0) {

@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React from "react";
 
 // Material
 import {
@@ -10,15 +10,15 @@ import {
   TableRow,
   TableCell,
   TableBody,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 // Styles
-import { useStyles } from './WalletLinks-styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
-import {titleShortener} from "../../../utils/common";
-import {getWalletLinks} from "../../../store/actions/wallet/thunks";
+import { useStyles } from "./WalletLinks-styles";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
+import { titleShortener } from "../../../utils/common";
+import { getWalletLinks } from "../../../store/actions/wallet/thunks";
 
 export const WalletLinks = (props) => {
   // Variables
@@ -44,11 +44,11 @@ export const WalletLinks = (props) => {
   };
 
   const columns = [
-    { id: 'walletId', label: 'Wallet', align: 'left' },
-    { id: 'numInTxes', label: 'Num Receiving Txes', align: 'left' },
-    { id: 'inUSDAmount', label: 'Receiving Amount ($)', align: 'left' },
-    { id: 'numOutTxes', label: 'Num Sending Txes', align: 'left' },
-    { id: 'outUSDAmount', label: 'Sending Amount ($)', align: 'left' },
+    { id: "walletId", label: "Wallet", align: "left" },
+    { id: "numInTxes", label: "Num Receiving Txes", align: "left" },
+    { id: "inUSDAmount", label: "Receiving Amount ($)", align: "left" },
+    { id: "numOutTxes", label: "Num Sending Txes", align: "left" },
+    { id: "outUSDAmount", label: "Sending Amount ($)", align: "left" },
   ];
 
   // JSX
@@ -59,17 +59,14 @@ export const WalletLinks = (props) => {
         <TableRow hover role="checkbox" tabIndex={-1} key={row.walletId}>
           {columns.map((column) => {
             return (
-              <TableCell
-                key={column.id}
-                align={column.align}
-              >
-                {column.id === 'walletId' ? (
+              <TableCell key={column.id} align={column.align}>
+                {column.id === "walletId" ? (
                   <Link
-                    href={'/wallet/' + row[column.id]}
+                    href={"/wallet/" + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >
-                    {titleShortener('wallet', row[column.id])}
+                    {titleShortener("wallet", row[column.id])}
                   </Link>
                 ) : (
                   row[column.id]
