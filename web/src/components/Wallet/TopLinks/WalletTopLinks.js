@@ -60,8 +60,9 @@ export const TopLinks = (props) => {
 
   const events = {
     select: ({ nodes, edges }) => {
-      if (nodes[0] !== walletId) {
-        window.open("/wallet/" + nodes[0], "_blank");
+      let selectedId = nodes[0];
+      if (selectedId && selectedId !== walletId) {
+        window.open("/wallet/" + selectedId, "_blank");
       }
     },
   };
@@ -69,22 +70,22 @@ export const TopLinks = (props) => {
   const view = (
     <Card className={classes.root} variant="outlined">
       <Typography className={classes.header}>Top Connected Wallets</Typography>
-      {Object.keys(topLinks).length > 0 && topLinks.edges.length > 0 ? (
-        <CardContent className={classes.graph}>
-          <Graph
-            graph={topLinks}
-            options={options}
-            events={events}
-            style={{ height: "300px" }}
-          />
-        </CardContent>
-      ) : (
-        <CardContent className={classes.empty}>
-          <Typography align="center" variant="subtitle1" color="textSecondary">
+      <CardContent>
+        {Object.keys(topLinks).length > 0 && topLinks.edges.length > 0 ? (
+          <div className={classes.graph}>
+            <Graph graph={topLinks} options={options} events={events} />
+          </div>
+        ) : (
+          <Typography
+            className={classes.empty}
+            align="center"
+            variant="subtitle1"
+            color="textSecondary"
+          >
             No connected wallets found
           </Typography>
-        </CardContent>
-      )}
+        )}
+      </CardContent>
     </Card>
   );
 

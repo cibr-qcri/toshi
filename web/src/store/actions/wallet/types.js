@@ -17,6 +17,7 @@ export const GET_WALLET_ADDRESS_FAILURE = "wallet/getWalletAddressFailure";
 export const GET_WALLET_TOP_LINKS_FAILURE = "wallet/getWalletTopLinksFailure";
 export const GET_WALLET_LINKS_FAILURE = "wallet/getWalletTopLinksFailure";
 export const GET_WALLET_LABELS_FAILURE = "wallet/getWalletTopLabelsFailure";
+export const SET_WALLET_CURRENCY_TYPE = "wallet/setWalletCurrencyType";
 
 // Reset
 export const RESET = "wallet/reset";

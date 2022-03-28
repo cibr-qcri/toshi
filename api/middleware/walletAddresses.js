@@ -39,22 +39,22 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
     return {
       id: row.id,
       address: row.address,
-      totalSpentSatoshi: row.total_spent_satoshi
-        ? numeral(row.total_spent_satoshi).format("0,0")
+      totalSpentBTC: row.total_spent_satoshi
+        ? numeral(wallet.satoshiToBTC(row.total_spent_satoshi)).format("0,0")
         : "-",
       totalSpentUSD: row.total_spent_usd
         ? numeral(row.total_spent_usd).format("$0,0.00")
         : "-",
-      totalReceivedSatoshi: row.total_received_satoshi
-        ? numeral(row.total_received_satoshi).format("0,0")
+      totalReceivedBTC: row.total_received_satoshi
+        ? numeral(wallet.satoshiToBTC(row.total_received_satoshi)).format("0,0")
         : "-",
       totalReceivedUSD: row.total_received_usd
         ? numeral(row.total_received_usd).format("$0,0.00")
         : "-",
-      satoshiBalance:
+      btcBalance:
         row.total_received_satoshi && row.total_spent_satoshi
-          ? numeral(row.total_received_satoshi)
-              .subtract(row.total_spent_satoshi)
+          ? numeral(wallet.satoshiToBTC(row.total_received_satoshi))
+              .subtract(wallet.satoshiToBTC(row.total_spent_satoshi))
               .format("0,0")
           : "-",
       usdBalance:

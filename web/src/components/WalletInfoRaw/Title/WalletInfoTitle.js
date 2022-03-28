@@ -1,12 +1,13 @@
 // React
-import React from 'react';
+import React from "react";
 
 // Material
-import { Link, Typography } from '@material-ui/core';
+import { Link, Typography } from "@material-ui/core";
 
 // Styles
-import { useStyles } from './WalletInfoTitle-styles';
-import {titleShortener} from "../../../utils/common";
+import { useStyles } from "./WalletInfoTitle-styles";
+import { titleShortener } from "../../../utils/common";
+import CurrencyToggle from "../../CurrencyToggle";
 
 const WalletInfoTitle = (props) => {
   // Variables
@@ -18,13 +19,14 @@ const WalletInfoTitle = (props) => {
       <Typography className={classes.typography}>
         <Link
           className={classes.link}
-          href={'/wallet/' + id}
+          href={"/wallet/" + id}
           target="_blank"
           rel="noopener"
         >
-          {titleShortener('wallet', id)}
+          {titleShortener("wallet", id)}
         </Link>
       </Typography>
+      <CurrencyToggle />
     </div>
   );
 

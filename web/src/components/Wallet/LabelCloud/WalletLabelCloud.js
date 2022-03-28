@@ -32,17 +32,22 @@ export const WalletLabelCloud = (props) => {
   const view = (
     <Card className={classes.root} variant="outlined">
       <Typography className={classes.header}>Labels Overview</Typography>
-      {labels.length > 0 ? (
-        <CardContent className={classes.cloud}>
-          <ReactWordcloud maxWords={30} options={options} words={labels} />
-        </CardContent>
-      ) : (
-        <CardContent className={classes.empty}>
-          <Typography align="center" variant="subtitle1" color="textSecondary">
+      <CardContent>
+        {labels.length > 0 ? (
+          <div className={classes.cloud}>
+            <ReactWordcloud maxWords={30} options={options} words={labels} />
+          </div>
+        ) : (
+          <Typography
+            className={classes.empty}
+            align="center"
+            variant="subtitle1"
+            color="textSecondary"
+          >
             No labels found
           </Typography>
-        </CardContent>
-      )}
+        )}
+      </CardContent>
     </Card>
   );
 

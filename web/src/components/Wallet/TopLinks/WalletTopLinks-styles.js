@@ -5,19 +5,18 @@ export const stylesCreator = (theme) => ({
   Default: {
     root: {
       width: "100%",
-      marginTop: theme.spacing(2.5),
-      height: "350px",
+      height: "370px",
     },
     header: {
       fontSize: "1rem",
+      fontWeight: theme.typography.fontWeightRegular,
       paddingLeft: theme.spacing(2),
       paddingTop: theme.spacing(2),
     },
     graph: {
-      marginTop: theme.spacing(-1),
+      height: "300px",
       marginLeft: theme.spacing(-2),
       marginRight: theme.spacing(-2),
-      maxHeight: "300px",
     },
     empty: {
       height: "100%",

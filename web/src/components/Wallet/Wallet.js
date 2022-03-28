@@ -55,11 +55,11 @@ export const Wallet = (props) => {
   let content = (
     <div className={classes.root}>
       <WalletInfo id={id} info={info} />
-      <Grid container spacing={2}>
-        <Grid xs={12} sm={6} item>
+      <Grid container spacing={2} className={classes.grid}>
+        <Grid xs={12} sm={6} item className={classes.root}>
           <LabelCloud />
         </Grid>
-        <Grid xs={12} sm={6} item>
+        <Grid xs={12} sm={6} item className={classes.root}>
           <TopLinks />
         </Grid>
       </Grid>

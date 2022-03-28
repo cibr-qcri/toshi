@@ -73,6 +73,10 @@ exports.getRiskLevel = (score) => {
   return riskLevel;
 };
 
+exports.satoshiToBTC = (value) => {
+  return value / 1000000;
+};
+
 exports.getWalletInfo = (result, isDetailed = false) => {
   let walletInfo = {
     topCategory: {
@@ -110,19 +114,38 @@ exports.getWalletInfo = (result, isDetailed = false) => {
         name: "Volume",
         value: numeral(result.num_tx).format("0,0"),
       },
-      balance: {
+      usdBalance: {
         name: "Balance",
         value: numeral(result.total_received_usd)
           .subtract(result.total_spent_usd)
           .format("$0,0.00"),
       },
-      totalIn: {
+      btcBalance: {
+        name: "Balance",
+        value:
+          numeral(result.total_received)
+            .subtract(result.total_spent)
+            .format("0,0.00") + " BTC",
+      },
+      totalUSDIn: {
         name: "Total In",
         value: numeral(result.total_received_usd).format("$0,0.00"),
       },
-      totalOut: {
+      totalUSDOut: {
         name: "Total Out",
         value: numeral(result.total_spent_usd).format("$0,0.00"),
+      },
+      totalBTCIn: {
+        name: "Total In",
+        value:
+          numeral(this.satoshiToBTC(result.total_received)).format("0,0.00") +
+          " BTC",
+      },
+      totalBTCOut: {
+        name: "Total Out",
+        value:
+          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.00") +
+          " BTC",
       },
     };
   }
@@ -214,7 +237,7 @@ exports.queries = {
                     FROM (
                             SELECT address
                             FROM btc_tx_input
-                            WHERE tx_hash = $1
+                            WHERE tx_hash = 'f4d62c464f876d818ae569375c223697e9f6796220f4b6862eacc3a1c0fa1d6a'
                         ) AS addresses
                         JOIN btc_address_cluster ON addresses.address = btc_address_cluster.address
                 ) AS wallets ON wallets.cluster_id = btc_wallet.cluster_id
@@ -227,7 +250,7 @@ exports.queries = {
                     FROM (
                             SELECT address
                             FROM btc_tx_output
-                            WHERE tx_hash = $2
+                            WHERE tx_hash = 'f4d62c464f876d818ae569375c223697e9f6796220f4b6862eacc3a1c0fa1d6a'
                         ) AS addresses
                         JOIN btc_address_cluster ON addresses.address = btc_address_cluster.address
                 ) AS wallets ON wallets.cluster_id = btc_wallet.cluster_id
@@ -241,8 +264,8 @@ exports.queries = {
         risk_score,
         label,
         category
-    OFFSET $3
-    LIMIT $4;
+    OFFSET 0
+    LIMIT 10;
     `,
   getTopLinkedWalletsById: `
     WITH btc_addresses, btc_wallets 

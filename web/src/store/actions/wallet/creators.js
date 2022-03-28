@@ -6,6 +6,11 @@ export const getWalletInfoStart = (id) => ({
   payload: id,
 });
 
+export const setWalletCurrencyType = (currencyType) => ({
+  type: types.SET_WALLET_CURRENCY_TYPE,
+  payload: currencyType,
+});
+
 export const getWalletTxStart = () => ({
   type: types.GET_WALLET_TX_START,
 });

@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, { useEffect } from "react";
 
 // Material
 import {
@@ -17,8 +17,8 @@ import { useStyles } from "./WalletTransactions-styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "@material-ui/core";
 import { getWalletTx } from "../../../store/actions/wallet/thunks";
-import { Skeleton } from "@material-ui/lab";
 import { titleShortener } from "../../../utils/common";
+import TableBodySkeleton from "../../TableBodySkeleton";
 
 export const WalletTransactions = (props) => {
   // Variables
@@ -26,10 +26,36 @@ export const WalletTransactions = (props) => {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [columns, setTableColumns] = React.useState([]);
   const walletId = useSelector((state) => state.wallet.id);
   const rows = useSelector((state) => state.wallet.transactions.result);
   const totalCount = useSelector((state) => state.wallet.transactions.count);
   const isBusy = useSelector((state) => state.wallet.transactions.isBusy);
+  const currencyType = useSelector((state) => state.wallet.currency);
+
+  // Hooks
+  useEffect(() => {
+    if (currencyType) {
+      let columnMap = [
+        { id: "txHash", label: "Transaction", align: "left" },
+        { id: "blockNumber", label: "Block Number", align: "left" },
+        { id: "isCoinbase", label: "Coinbase", align: "left" },
+      ];
+      if (currencyType === "btc") {
+        columnMap.push(
+          { id: "inputBTCValue", label: "Total Received (BTC)", align: "left" },
+          { id: "outputBTCValue", label: "Total Spent (BTC)", align: "left" }
+        );
+      } else {
+        columnMap.push(
+          { id: "inputUSDValue", label: "Total Received ($)", align: "left" },
+          { id: "outputUSDValue", label: "Total Spent ($)", align: "left" }
+        );
+      }
+      columnMap.push({ id: "type", label: "Money Flow", align: "left" });
+      setTableColumns(columnMap);
+    }
+  }, [currencyType]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -42,15 +68,6 @@ export const WalletTransactions = (props) => {
     setPage(0);
     dispatch(getWalletTx(walletId, page, pageCount));
   };
-
-  const columns = [
-    { id: "txHash", label: "Transaction", align: "left" },
-    { id: "blockNumber", label: "Block Number", align: "left" },
-    { id: "inputSatoshiValue", label: "Input Satoshi Value", align: "left" },
-    { id: "outputSatoshiValue", label: "Output Satoshi Value", align: "left" },
-    { id: "isCoinbase", label: "Coinbase", align: "left" },
-    { id: "type", label: "Money Flow", align: "left" },
-  ];
 
   // JSX
   let body = null;
@@ -83,30 +100,27 @@ export const WalletTransactions = (props) => {
   const view = (
     <div className={classes.root}>
       <TableContainer className={classes.container}>
-        {isBusy ? (
-          <div>
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-          </div>
-        ) : (
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell key={column.id} align={column.align}>
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>{body}</TableBody>
-          </Table>
-        )}
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell key={column.id} align={column.align}>
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {!isBusy ? (
+              body
+            ) : (
+              <TableBodySkeleton
+                numColumns={columns.length}
+                numRows={rowsPerPage}
+              />
+            )}
+          </TableBody>
+        </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}

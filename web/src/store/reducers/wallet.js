@@ -7,6 +7,7 @@ import { updateObject } from "../../utils";
 // State
 const initialState = {
   id: "",
+  currency: "usd",
   data: {
     info: {},
     labels: [],
@@ -212,6 +213,11 @@ const reducer = (state = initialState, action) => {
           isBusy: false,
           noResults: true,
         }),
+      });
+    }
+    case types.SET_WALLET_CURRENCY_TYPE: {
+      return updateObject(state, {
+        currency: action.payload.currencyType,
       });
     }
     // Reset

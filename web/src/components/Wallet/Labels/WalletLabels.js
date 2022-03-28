@@ -17,8 +17,8 @@ import { useStyles } from "./WalletLabels-styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "@material-ui/core";
 import { getWalletLabels } from "../../../store/actions/wallet/thunks";
-import { Skeleton } from "@material-ui/lab";
 import { titleShortener } from "../../../utils/common";
+import TableBodySkeleton from "../../TableBodySkeleton";
 
 export const WalletLabels = (props) => {
   // Variables
@@ -81,30 +81,27 @@ export const WalletLabels = (props) => {
   const view = (
     <div className={classes.root}>
       <TableContainer className={classes.container}>
-        {isBusy ? (
-          <div>
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-          </div>
-        ) : (
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell key={column.id} align={column.align}>
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>{body}</TableBody>
-          </Table>
-        )}
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell key={column.id} align={column.align}>
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {!isBusy ? (
+              body
+            ) : (
+              <TableBodySkeleton
+                numColumns={columns.length}
+                numRows={rowsPerPage}
+              />
+            )}
+          </TableBody>
+        </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}

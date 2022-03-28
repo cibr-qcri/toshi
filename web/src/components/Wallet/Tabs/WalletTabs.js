@@ -63,7 +63,12 @@ const WalletTabs = (props) => {
 
   const view = (
     <div className={classes.paper}>
-      <Tabs value={tabIndex} onChange={handleChange} indicatorColor="primary">
+      <Tabs
+        value={tabIndex}
+        onChange={handleChange}
+        indicatorColor="primary"
+        variant="scrollable"
+      >
         <Tab className={classes.tab} disableRipple label="Addresses" />
         <Tab className={classes.tab} disableRipple label="Transactions" />
         <Tab className={classes.tab} disableRipple label="Connected Wallets" />
