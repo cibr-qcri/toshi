@@ -125,7 +125,7 @@ exports.getWalletInfo = (result, isDetailed = false) => {
         value:
           numeral(result.total_received)
             .subtract(result.total_spent)
-            .format("0,0.00") + " BTC",
+            .format("0,0.00000") + " BTC",
       },
       totalUSDIn: {
         name: "Total In",
@@ -138,13 +138,13 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       totalBTCIn: {
         name: "Total In",
         value:
-          numeral(this.satoshiToBTC(result.total_received)).format("0,0.00") +
+          numeral(this.satoshiToBTC(result.total_received)).format("0,0.00000") +
           " BTC",
       },
       totalBTCOut: {
         name: "Total Out",
         value:
-          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.00") +
+          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.00000") +
           " BTC",
       },
     };
@@ -237,7 +237,7 @@ exports.queries = {
                     FROM (
                             SELECT address
                             FROM btc_tx_input
-                            WHERE tx_hash = 'f4d62c464f876d818ae569375c223697e9f6796220f4b6862eacc3a1c0fa1d6a'
+                            WHERE tx_hash = $1
                         ) AS addresses
                         JOIN btc_address_cluster ON addresses.address = btc_address_cluster.address
                 ) AS wallets ON wallets.cluster_id = btc_wallet.cluster_id
@@ -250,7 +250,7 @@ exports.queries = {
                     FROM (
                             SELECT address
                             FROM btc_tx_output
-                            WHERE tx_hash = 'f4d62c464f876d818ae569375c223697e9f6796220f4b6862eacc3a1c0fa1d6a'
+                            WHERE tx_hash = $2
                         ) AS addresses
                         JOIN btc_address_cluster ON addresses.address = btc_address_cluster.address
                 ) AS wallets ON wallets.cluster_id = btc_wallet.cluster_id
@@ -264,8 +264,8 @@ exports.queries = {
         risk_score,
         label,
         category
-    OFFSET 0
-    LIMIT 10;
+    OFFSET $3
+    LIMIT $4;
     `,
   getTopLinkedWalletsById: `
     WITH btc_addresses, btc_wallets 

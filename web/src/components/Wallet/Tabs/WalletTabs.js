@@ -64,6 +64,7 @@ const WalletTabs = (props) => {
   const view = (
     <div className={classes.paper}>
       <Tabs
+        className={classes.tabs}
         value={tabIndex}
         onChange={handleChange}
         indicatorColor="primary"

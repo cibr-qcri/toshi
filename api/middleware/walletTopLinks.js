@@ -3,6 +3,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const arango = require("../services/arango");
 const wallet = require("../utils/wallet");
 const numeral = require("numeral");
+const util = require("util");
 
 const walletTopLinks = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -20,23 +21,17 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
   let nodes = [
     {
       id: id,
-      label: "wallet",
+      label: util.format("[%s]", id.split("-")[0]),
       title: "Current Wallet",
       color: "#4791db",
     },
   ];
   let edges = [];
-  let index = 1;
-
   topLinkedWalletRes.map((row) => {
     nodes.push({
       id: row.wallet_id,
-      label: "wallet-" + index++,
-      title:
-        "Inbound Txes - " +
-        row.num_inbound_txes +
-        " \n Outbound Txes - " +
-        row.num_outbound_txes,
+      label:  util.format("[%s]", row.wallet_id.split("-")[0]),
+      title: util.format("Inbound Txes - %s \n Outbound Txes - %s", row.num_inbound_txes, row.num_outbound_txes),
     });
     if (row.num_inbound_txes > 0) {
       edges.push({

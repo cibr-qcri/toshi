@@ -19,7 +19,7 @@ export const TopLinks = (props) => {
 
   const options = {
     physics: false,
-    autoResize: false,
+    autoResize: true,
     layout: {
       hierarchical: {
         enabled: false,
@@ -36,7 +36,11 @@ export const TopLinks = (props) => {
       },
     },
     nodes: {
+      margin: 10,
       shape: "box",
+      shapeProperties: {
+        borderRadius: 16
+      },
       color: {
         background: "#707070",
         hover: {

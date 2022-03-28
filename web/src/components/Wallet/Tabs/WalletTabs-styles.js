@@ -3,16 +3,16 @@ import { makeStyles } from "../../../utils";
 
 export const stylesCreator = (theme) => ({
   Default: {
-    root: {
-      width: "100%",
-      paddingTop: theme.spacing(2),
-      marginTop: theme.spacing(2.5),
-    },
     tab: {
       textTransform: "none",
       minWidth: 72,
       fontWeight: theme.typography.fontWeightRegular,
       marginRight: theme.spacing(4),
+    },
+    tabs: {
+      marginTop: theme.spacing(1),
+      paddingRight: theme.spacing(2.5),
+      paddingLeft: theme.spacing(2.5),
     },
     paper: {
       display: "block",
