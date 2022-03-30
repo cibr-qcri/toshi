@@ -11,7 +11,7 @@ export const stylesCreator = (theme) => ({
     logo: {
       fontFamily: 'ubuntu',
       lineHeight: 0.9,
-      fontSize: 120
-    }
+      fontSize: 120,
+    },
   },
 });
