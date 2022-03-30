@@ -41,8 +41,7 @@ const searchResults = asyncHandler(async (request, response, next) => {
   }
 
   const results = await gp.query(getWalletsQuery, queryValues);
-
-  console.log(results.rows[0]);
+  
   // set total result count of the query
   let total = 0;
   if (results && results.rows.length > 0) {

@@ -18,7 +18,7 @@ const findMostFrequentItem = (object) => {
       result.topValue = stringShortener(key);
       result.count = value;
     }
-    result.values.push({ text: key, value: value });
+    result.values.push({ text: stringShortener(key), value: value });
   }, {});
   return result;
 };
@@ -33,6 +33,9 @@ exports.getTopCategory = (categories) => {
 };
 
 exports.getLabels = (labels, isTopLabel = false) => {
+  if (!labels) {
+    return [];
+  }
   const labelObject = JSON.parse(labels);
   if (Object.keys(labelObject).length < 2 && isTopLabel) {
     return stringShortener(Object.keys(labelObject)[0]);
