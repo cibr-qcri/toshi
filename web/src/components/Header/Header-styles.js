@@ -14,7 +14,13 @@ export const stylesCreator = (theme) => ({
       textDecoration: "none",
     },
   },
-  LogoRaw: logoStyler(theme).Default,
+  LogoRaw: {
+    ...logoStyler(theme).Default,
+    logo: {
+      ...logoStyler(theme).Default.logo,
+      fontSize: 26
+    }
+  }
 });
 
 // Local

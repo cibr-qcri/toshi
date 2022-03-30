@@ -8,5 +8,10 @@ export const stylesCreator = (theme) => ({
         textDecoration: 'none',
       },
     },
+    logo: {
+      fontFamily: 'ubuntu',
+      lineHeight: 0.9,
+      fontSize: 120
+    }
   },
 });
