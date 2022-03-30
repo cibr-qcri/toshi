@@ -14,6 +14,7 @@ export const WalletLabelCloud = (props) => {
   // Variables
   const classes = useStyles();
   const labels = useSelector((state) => state.wallet.data.labels);
+  const isBusy = useSelector((state) => state.wallet.data.isBusy);
 
   const options = {
     enableTooltip: false,
@@ -44,7 +45,7 @@ export const WalletLabelCloud = (props) => {
             variant="subtitle1"
             color="textSecondary"
           >
-            No labels found
+            { isBusy ? 'Loading...' : 'No labels found' }
           </Typography>
         )}
       </CardContent>

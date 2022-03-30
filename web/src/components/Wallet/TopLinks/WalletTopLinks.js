@@ -16,6 +16,7 @@ export const TopLinks = (props) => {
   const classes = useStyles();
   const walletId = useSelector((state) => state.wallet.id);
   const topLinks = useSelector((state) => state.wallet.topLinks.result);
+  const isBusy = useSelector((state) => state.wallet.topLinks.isBusy);
 
   const options = {
     physics: false,
@@ -75,7 +76,8 @@ export const TopLinks = (props) => {
     <Card className={classes.root} variant="outlined">
       <Typography className={classes.header}>Top Connected Wallets</Typography>
       <CardContent>
-        {Object.keys(topLinks).length > 0 && topLinks.edges.length > 0 ? (
+        {
+          Object.keys(topLinks).length > 0 && topLinks.edges.length > 0 ? (
           <div className={classes.graph}>
             <Graph graph={topLinks} options={options} events={events} />
           </div>
@@ -86,7 +88,7 @@ export const TopLinks = (props) => {
             variant="subtitle1"
             color="textSecondary"
           >
-            No connected wallets found
+            { isBusy ? 'Loading...' : 'No connected wallets found' }
           </Typography>
         )}
       </CardContent>

@@ -6,13 +6,14 @@ import { useStyles } from "./CurrencyToggle-styles";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { setWalletCurrencyType } from "../../store/actions/wallet/creators";
+import {useLocation} from "react-router-dom";
 
 const CurrencyToggle = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
+  const location = useLocation()
   const type = useSelector((state) => state.wallet.currency);
-  const walletData = useSelector((state) => state.wallet.data.info);
 
   const handleCurrencyType = (event, currencyType) => {
     if (currencyType !== null) {
@@ -21,7 +22,7 @@ const CurrencyToggle = (props) => {
   };
 
   //JSX
-  return Object.keys(walletData).length > 0 ? (
+  return location.pathname.startsWith('/wallet/') ? (
     <div className={classes.root}>
       <ToggleButtonGroup
         id="currency-select"

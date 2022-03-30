@@ -40,13 +40,17 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
       id: row.id,
       address: row.address,
       totalSpentBTC: row.total_spent_satoshi
-        ? numeral(wallet.satoshiToBTC(row.total_spent_satoshi)).format("0,0.00000")
+        ? numeral(wallet.satoshiToBTC(row.total_spent_satoshi)).format(
+            "0,0.0000"
+          )
         : "-",
       totalSpentUSD: row.total_spent_usd
         ? numeral(row.total_spent_usd).format("$0,0.00")
         : "-",
       totalReceivedBTC: row.total_received_satoshi
-        ? numeral(wallet.satoshiToBTC(row.total_received_satoshi)).format("0,0.00000")
+        ? numeral(wallet.satoshiToBTC(row.total_received_satoshi)).format(
+            "0,0.0000"
+          )
         : "-",
       totalReceivedUSD: row.total_received_usd
         ? numeral(row.total_received_usd).format("$0,0.00")

@@ -7,49 +7,39 @@ const stringShortener = (value) => {
   return value;
 };
 
-const findMostFrequentItem = (strArray) => {
+const findMostFrequentItem = (object) => {
   let result = {
     topValue: "",
     count: 0,
     values: [],
   };
-  result.values = strArray.reduce((strCount, currentStr) => {
-    currentStr = stringShortener(currentStr);
-    if (strCount[currentStr]) {
-      strCount[currentStr].value += 1;
-    } else {
-      strCount[currentStr] = { text: currentStr, value: 1 };
+  Object.entries(object).map(([key, value]) => {
+    if (value > result.count) {
+      result.topValue = stringShortener(key);
+      result.count = value;
     }
-    if (strCount[currentStr].value > result.count) {
-      result.topValue = currentStr;
-      result.count = strCount[currentStr].value;
-    }
-    return strCount;
+    result.values.push({ text: key, value: value });
   }, {});
-
   return result;
 };
 
 exports.getTopCategory = (categories) => {
-  const categoryArray = categories.split(",");
-  if (categoryArray.length > 1) {
-    return findMostFrequentItem(categoryArray).topValue;
+  const categoriesObject = JSON.parse(categories);
+  if (Object.keys(categoriesObject).length > 1) {
+    return findMostFrequentItem(categoriesObject).topValue;
   } else {
-    return categories;
+    return Object.keys(categoriesObject)[0];
   }
 };
 
 exports.getLabels = (labels, isTopLabel = false) => {
-  if (!labels) {
-    return "";
-  }
-  const labelArray = labels.split(",");
-  if (labelArray.length < 2 && isTopLabel) {
-    return stringShortener(labels);
+  const labelObject = JSON.parse(labels);
+  if (Object.keys(labelObject).length < 2 && isTopLabel) {
+    return stringShortener(Object.keys(labelObject)[0]);
   } else if (isTopLabel) {
-    return findMostFrequentItem(labelArray).topValue;
+    return findMostFrequentItem(labelObject).topValue;
   } else {
-    return Object.values(findMostFrequentItem(labelArray).values);
+    return findMostFrequentItem(labelObject).values;
   }
 };
 
@@ -74,7 +64,7 @@ exports.getRiskLevel = (score) => {
 };
 
 exports.satoshiToBTC = (value) => {
-  return value / 1000000;
+  return value / 100000000;
 };
 
 exports.getWalletInfo = (result, isDetailed = false) => {
@@ -123,9 +113,9 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       btcBalance: {
         name: "Balance",
         value:
-          numeral(result.total_received)
-            .subtract(result.total_spent)
-            .format("0,0.00000") + " BTC",
+          numeral(this.satoshiToBTC(result.total_received))
+            .subtract(this.satoshiToBTC(result.total_spent))
+            .format("0,0.0000") + " BTC",
       },
       totalUSDIn: {
         name: "Total In",
@@ -138,13 +128,13 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       totalBTCIn: {
         name: "Total In",
         value:
-          numeral(this.satoshiToBTC(result.total_received)).format("0,0.00000") +
+          numeral(this.satoshiToBTC(result.total_received)).format("0,0.0000") +
           " BTC",
       },
       totalBTCOut: {
         name: "Total Out",
         value:
-          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.00000") +
+          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.0000") +
           " BTC",
       },
     };

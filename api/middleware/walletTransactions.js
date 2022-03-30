@@ -41,10 +41,10 @@ const walletTransactions = asyncHandler(async (request, response, next) => {
       txHash: row.tx_hash,
       blockNumber: numeral(row.block_number).format("0,0"),
       outputBTCValue: numeral(wallet.satoshiToBTC(row.output_value)).format(
-        "0,0.00000"
+        "0,0.0000"
       ),
       inputBTCValue: numeral(wallet.satoshiToBTC(row.input_value)).format(
-        "0,0.00000"
+        "0,0.0000"
       ),
       inputUSDValue: numeral(row.input_usd_value).format("$0,0.00"),
       outputUSDValue: numeral(row.output_usd_value).format("$0,0.00"),
