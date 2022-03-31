@@ -42,16 +42,20 @@ const walletLinks = asyncHandler(async (request, response, next) => {
       inUSDAmount: numeral(currentWallet.item.inbound_usd_amount).format(
         "$0,0.00"
       ),
-      inBTCAmount: numeral(
-        wallet.satoshiToBTC(currentWallet.item.inbound_satoshi_amount)
-      ).format("0,0.0000"),
+      inBTCAmount:
+        "₿" +
+        numeral(
+          wallet.satoshiToBTC(currentWallet.item.inbound_satoshi_amount)
+        ).format("0,0.000000"),
       numOutTxes: numeral(currentWallet.item.num_outbound_txes).format("0,0"),
       outUSDAmount: numeral(currentWallet.item.outbound_usd_amount).format(
         "$0,0.00"
       ),
-      outBTCAmount: numeral(
-        wallet.satoshiToBTC(currentWallet.item.outbound_satoshi_amount)
-      ).format("0,0.0000"),
+      outBTCAmount:
+        "₿" +
+        numeral(
+          wallet.satoshiToBTC(currentWallet.item.outbound_satoshi_amount)
+        ).format("0,0.000000"),
     };
   });
 

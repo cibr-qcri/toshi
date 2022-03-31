@@ -116,9 +116,10 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       btcBalance: {
         name: "Balance",
         value:
+          "₿" +
           numeral(this.satoshiToBTC(result.total_received))
             .subtract(this.satoshiToBTC(result.total_spent))
-            .format("0,0.0000") + " BTC",
+            .format("0,0.000000"),
       },
       totalUSDIn: {
         name: "Total In",
@@ -131,14 +132,16 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       totalBTCIn: {
         name: "Total In",
         value:
-          numeral(this.satoshiToBTC(result.total_received)).format("0,0.0000") +
-          " BTC",
+          "₿" +
+          numeral(this.satoshiToBTC(result.total_received)).format(
+            "0,0.000000"
+          ),
       },
       totalBTCOut: {
         name: "Total Out",
         value:
-          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.0000") +
-          " BTC",
+          "₿" +
+          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.000000"),
       },
     };
   }

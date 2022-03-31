@@ -10,9 +10,13 @@ export const stylesCreator = (theme) => ({
       height: "35px",
     },
     selected: {
-      "&&, &&:hover": {
-        backgroundColor: theme.palette.primary.light,
-        color: "#ffffff",
+      "&&": {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+      },
+      "&&:hover": {
+        backgroundColor: theme.palette.primary.dark,
+        color: theme.palette.primary.contrastText,
       },
     },
   },

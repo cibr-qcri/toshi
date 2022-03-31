@@ -12,19 +12,23 @@ import CurrencyToggle from "../../CurrencyToggle";
 const WalletInfoTitle = (props) => {
   // Variables
   const classes = useStyles();
-  const { id } = props;
+  const { id, isClickable = false } = props;
   //JSX
   const view = (
     <div className={classes.root}>
       <Typography className={classes.typography}>
-        <Link
-          className={classes.link}
-          href={"/wallet/" + id}
-          target="_blank"
-          rel="noopener"
-        >
-          {titleShortener("wallet", id)}
-        </Link>
+        {isClickable ? (
+          <Link
+            className={classes.link}
+            href={"/wallet/" + id}
+            target="_blank"
+            rel="noopener"
+          >
+            {titleShortener("wallet", id)}
+          </Link>
+        ) : (
+          titleShortener("wallet", id)
+        )}
       </Typography>
       <CurrencyToggle />
     </div>

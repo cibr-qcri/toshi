@@ -10,6 +10,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  CircularProgress,
+  Typography,
 } from "@material-ui/core";
 
 // Styles
@@ -18,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "@material-ui/core";
 import { getWalletLabels } from "../../../store/actions/wallet/thunks";
 import { titleShortener } from "../../../utils/common";
-import TableBodySkeleton from "../../TableBodySkeleton";
 
 export const WalletLabels = (props) => {
   // Variables
@@ -58,7 +59,11 @@ export const WalletLabels = (props) => {
         <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
           {columns.map((column) => {
             return (
-              <TableCell key={column.id} align={column.align}>
+              <TableCell
+                key={column.id}
+                align={column.align}
+                className={classes.tableBodyText}
+              >
                 {column.id === "address" ? (
                   <Link
                     href={"/search?query=" + row[column.id]}
@@ -80,38 +85,41 @@ export const WalletLabels = (props) => {
 
   const view = (
     <div className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align}>
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!isBusy ? (
-              body
-            ) : (
-              <TableBodySkeleton
-                numColumns={columns.length}
-                numRows={rowsPerPage}
-              />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={totalCount}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {isBusy ? (
+        <div className={classes.progress}>
+          <CircularProgress size={30} />
+        </div>
+      ) : rows.length > 0 ? (
+        <div className={classes.container}>
+          <TableContainer className={classes.container}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>{body}</TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={totalCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : (
+        <Typography align="center" variant="subtitle1" color="textSecondary">
+          No labels found
+        </Typography>
+      )}
     </div>
   );
 

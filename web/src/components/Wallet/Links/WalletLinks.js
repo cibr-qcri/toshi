@@ -10,6 +10,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  CircularProgress,
+  Typography,
 } from "@material-ui/core";
 
 // Styles
@@ -18,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "@material-ui/core";
 import { titleShortener } from "../../../utils/common";
 import { getWalletLinks } from "../../../store/actions/wallet/thunks";
-import TableBodySkeleton from "../../TableBodySkeleton";
 
 export const WalletLinks = (props) => {
   // Variables
@@ -38,18 +39,18 @@ export const WalletLinks = (props) => {
     if (currencyType) {
       let columnMap = [
         { id: "walletId", label: "Wallet", align: "left" },
-        { id: "numInTxes", label: "Num Receiving Txes", align: "left" },
-        { id: "numOutTxes", label: "Num Sending Txes", align: "left" },
+        { id: "numInTxes", label: "Num In Txes", align: "left" },
+        { id: "numOutTxes", label: "Num Out Txes", align: "left" },
       ];
       if (currencyType === "btc") {
         columnMap.push(
-          { id: "inBTCAmount", label: "Total Received (BTC)", align: "left" },
-          { id: "outBTCAmount", label: "Total Spent (BTC)", align: "left" }
+          { id: "inBTCAmount", label: "Total In", align: "left" },
+          { id: "outBTCAmount", label: "Total Out", align: "left" }
         );
       } else {
         columnMap.push(
-          { id: "inUSDAmount", label: "Total Received ($)", align: "left" },
-          { id: "outUSDAmount", label: "Total Spent ($)", align: "left" }
+          { id: "inUSDAmount", label: "Total In", align: "left" },
+          { id: "outUSDAmount", label: "Total Out", align: "left" }
         );
       }
       setTableColumns(columnMap);
@@ -76,7 +77,11 @@ export const WalletLinks = (props) => {
         <TableRow hover role="checkbox" tabIndex={-1} key={row.walletId}>
           {columns.map((column) => {
             return (
-              <TableCell key={column.id} align={column.align}>
+              <TableCell
+                key={column.id}
+                align={column.align}
+                className={classes.tableBodyText}
+              >
                 {column.id === "walletId" ? (
                   <Link
                     href={"/wallet/" + row[column.id]}
@@ -98,38 +103,46 @@ export const WalletLinks = (props) => {
 
   const view = (
     <div className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align}>
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!isBusy ? (
-              body
-            ) : (
-              <TableBodySkeleton
-                numColumns={columns.length}
-                numRows={rowsPerPage}
-              />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={totalCount}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {isBusy ? (
+        <div className={classes.centerElement}>
+          <CircularProgress size={30} />
+        </div>
+      ) : rows.length > 0 ? (
+        <div className={classes.container}>
+          <TableContainer className={classes.container}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>{body}</TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={totalCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : (
+        <Typography
+          align="center"
+          variant="subtitle1"
+          color="textSecondary"
+          className={classes.centerElement}
+        >
+          No wallets found
+        </Typography>
+      )}
     </div>
   );
 

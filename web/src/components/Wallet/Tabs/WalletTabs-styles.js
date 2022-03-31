@@ -10,7 +10,7 @@ export const stylesCreator = (theme) => ({
       marginRight: theme.spacing(4),
     },
     tabs: {
-      marginTop: theme.spacing(1),
+      paddingTop: theme.spacing(1.75),
       paddingRight: theme.spacing(2.5),
       paddingLeft: theme.spacing(2.5),
     },

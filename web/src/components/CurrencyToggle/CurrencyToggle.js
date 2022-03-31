@@ -1,18 +1,21 @@
 // React
 import React from "react";
+import { useLocation } from "react-router-dom";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
 
 // Styles
 import { useStyles } from "./CurrencyToggle-styles";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
-import { useDispatch, useSelector } from "react-redux";
 import { setWalletCurrencyType } from "../../store/actions/wallet/creators";
-import {useLocation} from "react-router-dom";
 
 const CurrencyToggle = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation()
+  const location = useLocation();
+
   const type = useSelector((state) => state.wallet.currency);
 
   const handleCurrencyType = (event, currencyType) => {
@@ -22,7 +25,7 @@ const CurrencyToggle = (props) => {
   };
 
   //JSX
-  return location.pathname.startsWith('/wallet/') ? (
+  return location.pathname.startsWith("/wallet/") ? (
     <div className={classes.root}>
       <ToggleButtonGroup
         id="currency-select"
@@ -36,7 +39,11 @@ const CurrencyToggle = (props) => {
         <ToggleButton value="btc" classes={{ selected: classes.selected }}>
           BTC
         </ToggleButton>
-        <ToggleButton value="usd" classes={{ selected: classes.selected }}>
+        <ToggleButton
+          color="error"
+          value="usd"
+          classes={{ selected: classes.selected }}
+        >
           USD
         </ToggleButton>
       </ToggleButtonGroup>

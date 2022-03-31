@@ -40,33 +40,36 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
       id: row.id,
       address: row.address,
       totalSpentBTC: row.total_spent_satoshi
-        ? numeral(wallet.satoshiToBTC(row.total_spent_satoshi)).format(
-            "0,0.0000"
+        ? "₿" +
+          numeral(wallet.satoshiToBTC(row.total_spent_satoshi)).format(
+            "0,0.000000"
           )
-        : "-",
+        : "N/A",
       totalSpentUSD: row.total_spent_usd
         ? numeral(row.total_spent_usd).format("$0,0.00")
-        : "-",
+        : "N/A",
       totalReceivedBTC: row.total_received_satoshi
-        ? numeral(wallet.satoshiToBTC(row.total_received_satoshi)).format(
-            "0,0.0000"
+        ? "₿" +
+          numeral(wallet.satoshiToBTC(row.total_received_satoshi)).format(
+            "0,0.000000"
           )
-        : "-",
+        : "N/A",
       totalReceivedUSD: row.total_received_usd
         ? numeral(row.total_received_usd).format("$0,0.00")
-        : "-",
+        : "N/A",
       btcBalance:
         row.total_received_satoshi && row.total_spent_satoshi
-          ? numeral(wallet.satoshiToBTC(row.total_received_satoshi))
+          ? "₿" +
+            numeral(wallet.satoshiToBTC(row.total_received_satoshi))
               .subtract(wallet.satoshiToBTC(row.total_spent_satoshi))
-              .format("0,0.00000")
-          : "-",
+              .format("0,0.000000")
+          : "N/A",
       usdBalance:
         row.total_received_usd && row.total_spent_usd
           ? numeral(row.total_received_usd)
               .subtract(row.total_spent_usd)
               .format("$0,0.00")
-          : "-",
+          : "N/A",
     };
   });
 

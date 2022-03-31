@@ -10,16 +10,18 @@ export const stylesCreator = (theme) => ({
     header: {
       fontSize: "1rem",
       fontWeight: theme.typography.fontWeightRegular,
-      paddingLeft: theme.spacing(2),
-      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(2.5),
+      paddingRight: theme.spacing(2.5),
+      paddingTop: theme.spacing(2.5),
     },
-    cloud: {
-      marginLeft: theme.spacing(-2),
-      marginRight: theme.spacing(-2),
-    },
-    empty: {
-      height: "100%",
-      paddingTop: "140px",
+    cardBody: {
+      paddingTop: theme.spacing(1.5),
+      paddingRight: theme.spacing(2.5),
+      paddingLeft: theme.spacing(2.5),
+      height: "325px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
   },
 });

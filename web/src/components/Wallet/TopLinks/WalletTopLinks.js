@@ -1,19 +1,24 @@
 // React
-import React from 'react';
+import React from "react";
 
 // GraphVis
-import Graph from 'react-graph-vis';
-import 'vis-network/styles/vis-network.css';
+import Graph from "react-graph-vis";
+import "vis-network/styles/vis-network.css";
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 // Material
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from "@material-ui/core/styles";
 
 // Styles
-import { useStyles } from './WalletTopLinks-styles';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { useStyles } from "./WalletTopLinks-styles";
+import {
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core";
 
 export const TopLinks = (props) => {
   // Variables
@@ -46,18 +51,18 @@ export const TopLinks = (props) => {
     },
     nodes: {
       borderWidth: 0,
-      shape: 'box',
+      shape: "box",
       margin: 10,
       color: {
-        background: '#707070',
+        background: "#707070",
         hover: {
-          background: '#a39e9e',
+          background: "#a39e9e",
         },
       },
       font: {
         size: 14,
-        face: 'roboto',
-        color: theme.palette.text.primary,
+        face: "roboto",
+        color: theme.palette.primary.contrastText,
       },
     },
     interaction: {
@@ -73,19 +78,23 @@ export const TopLinks = (props) => {
     select: ({ nodes, edges }) => {
       let selectedId = nodes[0];
       if (selectedId && selectedId !== walletId) {
-        window.open('/wallet/' + selectedId, '_blank');
+        window.open("/wallet/" + selectedId, "_blank");
       }
     },
   };
 
   const view = (
     <Card className={classes.root} variant="outlined">
-      <Typography className={classes.header}>Top Connected Wallets</Typography>
-      <CardContent>
-        {Object.keys(topLinks).length > 0 && topLinks.edges.length > 0 ? (
-          <div className={classes.graph}>
-            <Graph graph={topLinks} options={options} events={events} />
+      <Typography className={classes.header}>
+        Top-5 Connected Wallets
+      </Typography>
+      <CardContent className={classes.cardBody}>
+        {isBusy ? (
+          <div className={classes.centerElement}>
+            <CircularProgress size={30} />
           </div>
+        ) : Object.keys(topLinks).length > 0 && topLinks.edges.length > 0 ? (
+          <Graph graph={topLinks} options={options} events={events} />
         ) : (
           <Typography
             className={classes.empty}
@@ -93,7 +102,7 @@ export const TopLinks = (props) => {
             variant="subtitle1"
             color="textSecondary"
           >
-            {isBusy ? 'Loading...' : 'No connected wallets found'}
+            No wallets found
           </Typography>
         )}
       </CardContent>

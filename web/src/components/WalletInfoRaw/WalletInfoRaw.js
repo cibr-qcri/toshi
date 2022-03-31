@@ -1,28 +1,29 @@
 // React
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
 // Material
-import { Card } from '@material-ui/core';
+import { Card } from "@material-ui/core";
 
 // PropTypes
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Components
-import Title from './Title';
-import Actions from './Actions';
-import Info from './Body';
+import Title from "./Title";
+import Actions from "./Actions";
+import Info from "./Body";
+import { useLocation } from "react-router-dom";
 
 const WalletInfoRaw = (props) => {
   // Variables
+  const location = useLocation();
   const { classes, id, info, moneyFlow } = props;
-
-  // Handlers
+  const isClickableTitle = location.pathname.startsWith("/search");
 
   //JSX
   const view = (
     <div className={classes.root}>
       <Card variant="outlined">
-        <Title id={id} />
+        <Title id={id} isClickable={isClickableTitle} />
         <Fragment>
           <Info items={info} />
           <Actions id={id} moneyFlow={moneyFlow} />
@@ -42,6 +43,6 @@ WalletInfoRaw.propTypes = {
 };
 
 // Dynamic styling
-WalletInfoRaw.styledAs = 'WalletInfoRaw';
+WalletInfoRaw.styledAs = "WalletInfoRaw";
 
 export default WalletInfoRaw;
