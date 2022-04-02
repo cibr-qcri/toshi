@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // GraphVis
 import Graph from 'react-graph-vis';
@@ -18,17 +18,28 @@ import { useStyles, LazyProgress } from './WalletTopContentLinks-styles';
 // Constants
 import graphVizOptions from '../../../../constants/wallet/graphVizOptions';
 
-export const WalletTopContentLinks = (props) => {
+export const WalletTopContentLinks = () => {
   // Variables
   const classes = useStyles();
   const theme = useTheme();
   const walletId = useSelector((state) => state.wallet.id);
   const topLinks = useSelector((state) => state.wallet.topLinks.result);
   const isBusy = useSelector((state) => state.wallet.topLinks.isBusy);
+  const [options, setOptions] = useState(graphVizOptions);
 
-  const options = { ...graphVizOptions };
-  options.edges.color = theme.palette.text.primary;
-  options.nodes.font.color = theme.palette.primary.contrastText;
+  // Hooks
+  useEffect(() => {
+    const newOptions = { ...graphVizOptions };
+    newOptions.edges = {
+      ...graphVizOptions.edges,
+      color: theme.palette.text.primary,
+    };
+    newOptions.nodes.font = {
+      ...graphVizOptions.nodes.font,
+      color: theme.palette.primary.contrastText,
+    };
+    setOptions(newOptions);
+  }, [theme]);
 
   // Handlers
   const selectedHandler = ({ nodes, edges }) => {
