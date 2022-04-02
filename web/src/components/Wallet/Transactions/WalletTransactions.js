@@ -1,5 +1,5 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Material
 import {
@@ -12,14 +12,14 @@ import {
   TableBody,
   Typography,
   CircularProgress,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletTransactions-styles";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "@material-ui/core";
-import { getWalletTx } from "../../../store/actions/wallet/thunks";
-import { titleShortener } from "../../../utils/common";
+import { useStyles } from './WalletTransactions-styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from '@material-ui/core';
+import { getWalletTx } from '../../../store/actions/wallet/thunks';
+import { titleShortener } from '../../../utils/common';
 
 export const WalletTransactions = (props) => {
   // Variables
@@ -38,22 +38,22 @@ export const WalletTransactions = (props) => {
   useEffect(() => {
     if (currencyType) {
       let columnMap = [
-        { id: "txHash", label: "Transaction", align: "left" },
-        { id: "blockNumber", label: "Block", align: "left" },
-        { id: "isCoinbase", label: "Coinbase", align: "left" },
+        { id: 'txHash', label: 'Transaction', align: 'left' },
+        { id: 'isCoinbase', label: 'Coinbase', align: 'left' },
+        { id: 'type', label: 'Flow', align: 'left' },
+        { id: 'blockNumber', label: 'Block', align: 'right' },
       ];
-      if (currencyType === "btc") {
+      if (currencyType === 'btc') {
         columnMap.push(
-          { id: "inputBTCValue", label: "Total In", align: "left" },
-          { id: "outputBTCValue", label: "Total Out", align: "left" }
+          { id: 'inputBTCValue', label: 'Total In', align: 'right' },
+          { id: 'outputBTCValue', label: 'Total Out', align: 'right' }
         );
       } else {
         columnMap.push(
-          { id: "inputUSDValue", label: "Total In", align: "left" },
-          { id: "outputUSDValue", label: "Total Out", align: "left" }
+          { id: 'inputUSDValue', label: 'Total In', align: 'right' },
+          { id: 'outputUSDValue', label: 'Total Out', align: 'right' }
         );
       }
-      columnMap.push({ id: "type", label: "Flow", align: "left" });
       setTableColumns(columnMap);
     }
   }, [currencyType]);
@@ -83,13 +83,13 @@ export const WalletTransactions = (props) => {
                 align={column.align}
                 className={classes.tableBodyText}
               >
-                {column.id === "txHash" ? (
+                {column.id === 'txHash' ? (
                   <Link
-                    href={"/search?query=" + row[column.id]}
+                    href={'/search?query=' + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >
-                    {titleShortener("transaction", row[column.id])}
+                    {titleShortener('transaction', row[column.id])}
                   </Link>
                 ) : (
                   row[column.id]
@@ -115,7 +115,11 @@ export const WalletTransactions = (props) => {
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align}>
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      variant="body"
+                    >
                       {column.label}
                     </TableCell>
                   ))}

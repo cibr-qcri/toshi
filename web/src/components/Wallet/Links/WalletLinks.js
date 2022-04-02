@@ -1,5 +1,5 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Material
 import {
@@ -12,14 +12,14 @@ import {
   TableBody,
   CircularProgress,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletLinks-styles";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "@material-ui/core";
-import { titleShortener } from "../../../utils/common";
-import { getWalletLinks } from "../../../store/actions/wallet/thunks";
+import { useStyles } from './WalletLinks-styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from '@material-ui/core';
+import { titleShortener } from '../../../utils/common';
+import { getWalletLinks } from '../../../store/actions/wallet/thunks';
 
 export const WalletLinks = (props) => {
   // Variables
@@ -38,19 +38,19 @@ export const WalletLinks = (props) => {
   useEffect(() => {
     if (currencyType) {
       let columnMap = [
-        { id: "walletId", label: "Wallet", align: "left" },
-        { id: "numInTxes", label: "Num In Txes", align: "left" },
-        { id: "numOutTxes", label: "Num Out Txes", align: "left" },
+        { id: 'walletId', label: 'Wallet', align: 'left' },
+        { id: 'numInTxes', label: 'Num In Txes', align: 'left' },
+        { id: 'numOutTxes', label: 'Num Out Txes', align: 'left' },
       ];
-      if (currencyType === "btc") {
+      if (currencyType === 'btc') {
         columnMap.push(
-          { id: "inBTCAmount", label: "Total In", align: "left" },
-          { id: "outBTCAmount", label: "Total Out", align: "left" }
+          { id: 'inBTCAmount', label: 'Total In', align: 'left' },
+          { id: 'outBTCAmount', label: 'Total Out', align: 'left' }
         );
       } else {
         columnMap.push(
-          { id: "inUSDAmount", label: "Total In", align: "left" },
-          { id: "outUSDAmount", label: "Total Out", align: "left" }
+          { id: 'inUSDAmount', label: 'Total In', align: 'left' },
+          { id: 'outUSDAmount', label: 'Total Out', align: 'left' }
         );
       }
       setTableColumns(columnMap);
@@ -82,13 +82,13 @@ export const WalletLinks = (props) => {
                 align={column.align}
                 className={classes.tableBodyText}
               >
-                {column.id === "walletId" ? (
+                {column.id === 'walletId' ? (
                   <Link
-                    href={"/wallet/" + row[column.id]}
+                    href={'/wallet/' + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >
-                    {titleShortener("wallet", row[column.id])}
+                    {titleShortener('wallet', row[column.id])}
                   </Link>
                 ) : (
                   row[column.id]
@@ -114,7 +114,11 @@ export const WalletLinks = (props) => {
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align}>
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      variant="body"
+                    >
                       {column.label}
                     </TableCell>
                   ))}

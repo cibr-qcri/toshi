@@ -1,13 +1,13 @@
-const asyncHandler = require("../middleware/async");
-const ErrorResponse = require("../utils/errorResponse");
-const wallet = require("../utils/wallet");
-const gp = require("../services/gp");
-const numeral = require("numeral");
+const asyncHandler = require('../async');
+const ErrorResponse = require('../../utils/errorResponse');
+const wallet = require('../../utils/wallet');
+const gp = require('../../services/gp');
+const numeral = require('numeral');
 
 const walletTransactions = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
   if (!id) {
-    return next(new ErrorResponse("Please provide the wallet Id", 400));
+    return next(new ErrorResponse('Please provide the wallet Id', 400));
   }
 
   const page = parseInt(request.query.page) || 0;
@@ -39,17 +39,17 @@ const walletTransactions = asyncHandler(async (request, response, next) => {
     return {
       id: row.id,
       txHash: row.tx_hash,
-      blockNumber: numeral(row.block_number).format("0,0"),
+      blockNumber: numeral(row.block_number).format('0,0'),
       outputBTCValue:
-        "₿" +
-        numeral(wallet.satoshiToBTC(row.output_value)).format("0,0.000000"),
+        '₿' +
+        numeral(wallet.satoshiToBTC(row.output_value)).format('0,0.000000'),
       inputBTCValue:
-        "₿" +
-        numeral(wallet.satoshiToBTC(row.input_value)).format("0,0.000000"),
-      inputUSDValue: numeral(row.input_usd_value).format("$0,0.00"),
-      outputUSDValue: numeral(row.output_usd_value).format("$0,0.00"),
+        '₿' +
+        numeral(wallet.satoshiToBTC(row.input_value)).format('0,0.000000'),
+      inputUSDValue: numeral(row.input_usd_value).format('$0,0.00'),
+      outputUSDValue: numeral(row.output_usd_value).format('$0,0.00'),
       type: row.tx_type,
-      isCoinbase: row.is_coinbase ? "Yes" : "No",
+      isCoinbase: row.is_coinbase ? 'Yes' : 'No',
     };
   });
 

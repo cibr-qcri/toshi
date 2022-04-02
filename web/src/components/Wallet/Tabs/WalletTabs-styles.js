@@ -1,10 +1,10 @@
 // Utils
-import { makeStyles } from "../../../utils";
+import { makeStyles } from '../../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     tab: {
-      textTransform: "none",
+      textTransform: 'none',
       minWidth: 72,
       fontWeight: theme.typography.fontWeightRegular,
       marginRight: theme.spacing(4),
@@ -15,10 +15,10 @@ export const stylesCreator = (theme) => ({
       paddingLeft: theme.spacing(2.5),
     },
     paper: {
-      display: "block",
-      width: "100%",
-      transitionDuration: "0.3s",
-      height: "500px",
+      display: 'block',
+      width: '100%',
+      transitionDuration: '0.3s',
+      height: '500px',
     },
   },
 });

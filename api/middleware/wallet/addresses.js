@@ -1,13 +1,13 @@
-const asyncHandler = require("../middleware/async");
-const ErrorResponse = require("../utils/errorResponse");
-const gp = require("../services/gp");
-const wallet = require("../utils/wallet");
-const numeral = require("numeral");
+const asyncHandler = require('../../middleware/async');
+const ErrorResponse = require('../../utils/errorResponse');
+const gp = require('../../services/gp');
+const wallet = require('../../utils/wallet');
+const numeral = require('numeral');
 
 const walletAddresses = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
   if (!id) {
-    return next(new ErrorResponse("Please provide the wallet Id", 400));
+    return next(new ErrorResponse('Please provide the wallet Id', 400));
   }
 
   const page = parseInt(request.query.page) || 0;
@@ -40,36 +40,36 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
       id: row.id,
       address: row.address,
       totalSpentBTC: row.total_spent_satoshi
-        ? "₿" +
+        ? '₿' +
           numeral(wallet.satoshiToBTC(row.total_spent_satoshi)).format(
-            "0,0.000000"
+            '0,0.000000'
           )
-        : "N/A",
+        : 'N/A',
       totalSpentUSD: row.total_spent_usd
-        ? numeral(row.total_spent_usd).format("$0,0.00")
-        : "N/A",
+        ? numeral(row.total_spent_usd).format('$0,0.00')
+        : 'N/A',
       totalReceivedBTC: row.total_received_satoshi
-        ? "₿" +
+        ? '₿' +
           numeral(wallet.satoshiToBTC(row.total_received_satoshi)).format(
-            "0,0.000000"
+            '0,0.000000'
           )
-        : "N/A",
+        : 'N/A',
       totalReceivedUSD: row.total_received_usd
-        ? numeral(row.total_received_usd).format("$0,0.00")
-        : "N/A",
+        ? numeral(row.total_received_usd).format('$0,0.00')
+        : 'N/A',
       btcBalance:
         row.total_received_satoshi && row.total_spent_satoshi
-          ? "₿" +
+          ? '₿' +
             numeral(wallet.satoshiToBTC(row.total_received_satoshi))
               .subtract(wallet.satoshiToBTC(row.total_spent_satoshi))
-              .format("0,0.000000")
-          : "N/A",
+              .format('0,0.000000')
+          : 'N/A',
       usdBalance:
         row.total_received_usd && row.total_spent_usd
           ? numeral(row.total_received_usd)
               .subtract(row.total_spent_usd)
-              .format("$0,0.00")
-          : "N/A",
+              .format('$0,0.00')
+          : 'N/A',
     };
   });
 

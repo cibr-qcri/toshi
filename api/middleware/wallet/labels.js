@@ -1,12 +1,12 @@
-const asyncHandler = require("../middleware/async");
-const ErrorResponse = require("../utils/errorResponse");
-const gp = require("../services/gp");
-const wallet = require("../utils/wallet");
+const asyncHandler = require('../../middleware/async');
+const ErrorResponse = require('../../utils/errorResponse');
+const gp = require('../../services/gp');
+const wallet = require('../../utils/wallet');
 
 const walletLabels = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
   if (!id) {
-    return next(new ErrorResponse("Please provide the wallet Id", 400));
+    return next(new ErrorResponse('Please provide the wallet Id', 400));
   }
 
   const page = parseInt(request.query.page) || 0;
@@ -33,10 +33,10 @@ const walletLabels = asyncHandler(async (request, response, next) => {
   const addresses = walletLabelsRes.rows.map((row) => {
     return {
       id: row.id,
-      address: row.address,
       label: row.label,
       category: row.category,
       source: row.source,
+      address: row.address,
     };
   });
 

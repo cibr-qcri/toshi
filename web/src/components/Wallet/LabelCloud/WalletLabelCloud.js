@@ -1,14 +1,14 @@
 // React
-import React from "react";
+import React from 'react';
 
-import ReactWordcloud from "react-wordcloud";
+import ReactWordcloud from 'react-wordcloud';
 
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 // Styles
-import { useStyles } from "./WalletLabelCloud-styles";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { useStyles } from './WalletLabelCloud-styles';
+import { Card, CardContent, Typography } from '@material-ui/core';
 
 export const WalletLabelCloud = (props) => {
   // Variables
@@ -19,14 +19,14 @@ export const WalletLabelCloud = (props) => {
   const options = {
     enableTooltip: false,
     deterministic: false,
-    fontFamily: "roboto",
+    fontFamily: 'roboto',
     rotationAngles: [0],
     fontSizes: [20, 40],
-    fontWeight: "normal",
+    fontWeight: 'normal',
     padding: 1,
     rotations: 3,
-    scale: "sqrt",
-    spiral: "archimedean",
+    scale: 'sqrt',
+    spiral: 'archimedean',
     transitionDuration: 500,
   };
 
@@ -38,7 +38,7 @@ export const WalletLabelCloud = (props) => {
           <ReactWordcloud maxWords={5} options={options} words={labels} />
         ) : (
           <Typography align="center" variant="subtitle1" color="textSecondary">
-            {isBusy ? "Loading..." : "No labels found"}
+            {isBusy ? 'Loading...' : 'No labels found'}
           </Typography>
         )}
       </CardContent>

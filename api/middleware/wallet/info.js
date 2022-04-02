@@ -1,7 +1,7 @@
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const gp = require('../services/gp');
-const wallet = require('../utils/wallet');
+const asyncHandler = require('../async');
+const ErrorResponse = require('../../utils/errorResponse');
+const gp = require('../../services/gp');
+const wallet = require('../../utils/wallet');
 
 const walletInfo = asyncHandler(async (request, response, next) => {
   const id = request.params.id;

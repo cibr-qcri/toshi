@@ -1,21 +1,31 @@
-const asyncHandler = require("./async");
-const ErrorResponse = require("../utils/errorResponse");
-const gp = require("../services/gp");
-const wallet = require("../utils/wallet");
+const asyncHandler = require('../async');
+const ErrorResponse = require('../../utils/errorResponse');
+const gp = require('../../services/gp');
+const wallet = require('../../utils/wallet');
+const Search = require('../../models/Search');
 
 const MAX_RESULTS_IN_PAGE = 25;
 
 const searchResults = asyncHandler(async (request, response, next) => {
   const { query, type } = request.query;
-  const allowedTypes = ["label", "transaction", "address"];
+
+  if (!query) {
+    return next(new ErrorResponse('Please provide a search query', 400));
+  }
 
   if (!type) {
-    return next(new ErrorResponse("Please provide a search type", 400));
+    return next(new ErrorResponse('Please provide a search type', 400));
   }
 
-  if (!allowedTypes.includes(type)) {
-    return next(new ErrorResponse("Invalid search type", 400));
+  if (!Search.schema.path('type').enumValues.includes(type)) {
+    return next(new ErrorResponse('Invalid search type', 400));
   }
+
+  Search.create({
+    user: request.user.id,
+    query,
+    type,
+  });
 
   let requestPage = request.query.page;
   let offset;
@@ -29,10 +39,10 @@ const searchResults = asyncHandler(async (request, response, next) => {
 
   let getWalletsQuery;
   let queryValues;
-  if (type === "address") {
+  if (type === 'address') {
     getWalletsQuery = wallet.queries.getWalletsByAddress;
     queryValues = [query, offset, MAX_RESULTS_IN_PAGE];
-  } else if (type === "transaction") {
+  } else if (type === 'transaction') {
     getWalletsQuery = wallet.queries.getWalletByTx;
     queryValues = [query, query, offset, MAX_RESULTS_IN_PAGE];
   } else {
@@ -41,7 +51,7 @@ const searchResults = asyncHandler(async (request, response, next) => {
   }
 
   const results = await gp.query(getWalletsQuery, queryValues);
-  
+
   // set total result count of the query
   let total = 0;
   if (results && results.rows.length > 0) {
@@ -54,13 +64,13 @@ const searchResults = asyncHandler(async (request, response, next) => {
       info: wallet.getWalletInfo(row),
     };
 
-    if (type === "transaction") {
-      if (row.wallet_type === "in_wallet") {
-        walletData.moneyFlow = "RECEIVED";
-      } else if (row.wallet_type === "out_wallet") {
-        walletData.moneyFlow = "SPENT";
-      } else if (row.wallet_type === "in_wallet/out_wallet") {
-        walletData.moneyFlow = "RECEIVED/SPENT";
+    if (type === 'transaction') {
+      if (row.wallet_type === 'in_wallet') {
+        walletData.moneyFlow = 'RECEIVED';
+      } else if (row.wallet_type === 'out_wallet') {
+        walletData.moneyFlow = 'SPENT';
+      } else if (row.wallet_type === 'in_wallet/out_wallet') {
+        walletData.moneyFlow = 'RECEIVED/SPENT';
       }
     }
 

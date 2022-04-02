@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Material
 import {
@@ -12,14 +12,14 @@ import {
   TableBody,
   CircularProgress,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletLabels-styles";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "@material-ui/core";
-import { getWalletLabels } from "../../../store/actions/wallet/thunks";
-import { titleShortener } from "../../../utils/common";
+import { useStyles } from './WalletLabels-styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from '@material-ui/core';
+import { getWalletLabels } from '../../../store/actions/wallet/thunks';
+import { titleShortener } from '../../../utils/common';
 
 export const WalletLabels = (props) => {
   // Variables
@@ -45,11 +45,39 @@ export const WalletLabels = (props) => {
   };
 
   const columns = [
-    { id: "address", label: "Address", align: "left" },
-    { id: "category", label: "Category", align: "left" },
-    { id: "label", label: "Label", align: "left" },
-    { id: "source", label: "Source", align: "left" },
+    { id: 'label', label: 'Label', align: 'left' },
+    { id: 'category', label: 'Category', align: 'left' },
+    { id: 'source', label: 'Source', align: 'left' },
+    { id: 'address', label: 'Address', align: 'left' },
   ];
+
+  // Renderers
+  const renderCell = (column, row) => {
+    let cell = row[column.id];
+    if (column.id === 'label') {
+      cell = (
+        <Link
+          href={'/search?query=' + row[column.id]}
+          target="_blank"
+          rel="noopener"
+        >
+          {row[column.id]}
+        </Link>
+      );
+    }
+    if (column.id === 'address') {
+      cell = (
+        <Link
+          href={'/search?query=' + row[column.id]}
+          target="_blank"
+          rel="noopener"
+        >
+          {titleShortener('address', row[column.id])}
+        </Link>
+      );
+    }
+    return cell;
+  };
 
   // JSX
   let body = null;
@@ -64,17 +92,7 @@ export const WalletLabels = (props) => {
                 align={column.align}
                 className={classes.tableBodyText}
               >
-                {column.id === "address" ? (
-                  <Link
-                    href={"/search?query=" + row[column.id]}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    {titleShortener("address", row[column.id])}
-                  </Link>
-                ) : (
-                  row[column.id]
-                )}
+                {renderCell(column, row)}
               </TableCell>
             );
           })}
@@ -96,7 +114,11 @@ export const WalletLabels = (props) => {
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align}>
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      variant="body"
+                    >
                       {column.label}
                     </TableCell>
                   ))}

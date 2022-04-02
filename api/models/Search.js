@@ -11,10 +11,10 @@ const SearchSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    source: {
+    type: {
       type: String,
       required: true,
-      enum: ['web', 'images'],
+      enum: ['label', 'transaction', 'address'],
     },
   },
   {

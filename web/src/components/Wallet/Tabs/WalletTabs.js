@@ -1,26 +1,26 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Material
-import { Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab } from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletTabs-styles";
+import { useStyles } from './WalletTabs-styles';
 
 // Store
-import { getWalletTx } from "../../../store/actions";
+import { getWalletTx } from '../../../store/actions';
 import {
   getWalletAddress,
   getWalletLabels,
   getWalletLinks,
-} from "../../../store/actions/wallet/thunks";
-import Addresses from "../Addresses/WalletAddresses";
-import Transactions from "../Transactions/WalletTransactions";
-import Links from "../Links";
-import Labels from "../Labels";
+} from '../../../store/actions/wallet/thunks';
+import Addresses from '../Addresses/WalletAddresses';
+import Transactions from '../Transactions/WalletTransactions';
+import Links from '../Links';
+import Labels from '../Labels';
 
 const WalletTabs = (props) => {
   // Variables
@@ -56,9 +56,9 @@ const WalletTabs = (props) => {
   if (tabIndex === 1) {
     tabView = <Transactions />;
   } else if (tabIndex === 2) {
-    tabView = <Links />;
-  } else if (tabIndex === 3) {
     tabView = <Labels />;
+  } else if (tabIndex === 3) {
+    tabView = <Links />;
   }
 
   const view = (
@@ -72,8 +72,8 @@ const WalletTabs = (props) => {
       >
         <Tab className={classes.tab} disableRipple label="Addresses" />
         <Tab className={classes.tab} disableRipple label="Transactions" />
-        <Tab className={classes.tab} disableRipple label="Connected Wallets" />
         <Tab className={classes.tab} disableRipple label="Reported Labels" />
+        <Tab className={classes.tab} disableRipple label="Linked Wallets" />
       </Tabs>
       {tabView}
     </div>

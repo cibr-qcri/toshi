@@ -1,8 +1,8 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Material
 import {
@@ -16,12 +16,12 @@ import {
   TablePagination,
   TableRow,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletAddresses-styles";
-import { getWalletAddress } from "../../../store/actions/wallet/thunks";
-import { titleShortener } from "../../../utils/common";
+import { useStyles } from './WalletAddresses-styles';
+import { getWalletAddress } from '../../../store/actions/wallet/thunks';
+import { titleShortener } from '../../../utils/common';
 
 export const WalletAddresses = (props) => {
   // Variables
@@ -39,26 +39,26 @@ export const WalletAddresses = (props) => {
   // Hooks
   useEffect(() => {
     if (currencyType) {
-      let columnMap = [{ id: "address", label: "Address", align: "left" }];
-      if (currencyType === "btc") {
+      let columnMap = [{ id: 'address', label: 'Address', align: 'left' }];
+      if (currencyType === 'btc') {
         columnMap.push(
           {
-            id: "totalReceivedBTC",
-            label: "Total In",
-            align: "left",
+            id: 'totalReceivedBTC',
+            label: 'Total In',
+            align: 'right',
           },
-          { id: "totalSpentBTC", label: "Total Out", align: "left" },
-          { id: "btcBalance", label: "Balance", align: "left" }
+          { id: 'totalSpentBTC', label: 'Total Out', align: 'right' },
+          { id: 'btcBalance', label: 'Balance', align: 'right' }
         );
       } else {
         columnMap.push(
           {
-            id: "totalReceivedUSD",
-            label: "Total In",
-            align: "left",
+            id: 'totalReceivedUSD',
+            label: 'Total In',
+            align: 'right',
           },
-          { id: "totalSpentUSD", label: "Total Out", align: "left" },
-          { id: "usdBalance", label: "Balance", align: "left" }
+          { id: 'totalSpentUSD', label: 'Total Out', align: 'right' },
+          { id: 'usdBalance', label: 'Balance', align: 'right' }
         );
       }
       setTableColumns(columnMap);
@@ -90,13 +90,13 @@ export const WalletAddresses = (props) => {
                 align={column.align}
                 className={classes.tableBodyText}
               >
-                {column.id === "address" ? (
+                {column.id === 'address' ? (
                   <Link
-                    href={"/search?query=" + row[column.id]}
+                    href={'/search?query=' + row[column.id]}
                     target="_blank"
                     rel="noopener"
                   >
-                    {titleShortener("address", row[column.id])}
+                    {titleShortener('address', row[column.id])}
                   </Link>
                 ) : (
                   row[column.id]
@@ -122,7 +122,11 @@ export const WalletAddresses = (props) => {
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align}>
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      variant="body"
+                    >
                       {column.label}
                     </TableCell>
                   ))}
