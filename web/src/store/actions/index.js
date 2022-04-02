@@ -55,4 +55,9 @@ export {
 } from './user/thunks';
 
 // Wallet
-export { getWalletInfo, getWalletTx } from './wallet/thunks';
+export {
+  getWalletAddress,
+  getWalletInfo,
+  getWalletTopLinks,
+  getWalletTx,
+} from './wallet/thunks';

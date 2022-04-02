@@ -1,28 +1,35 @@
 // Components
-import LazyProgressRaw, { lazyProgressStyler } from "../LazyProgressRaw";
-import WalletInfoRaw, { walletStyler } from "../WalletInfoRaw";
-import NoResultsRaw, { noResultsStyler } from "../NoResultsRaw";
+import LazyProgressRaw, { lazyProgressStyler } from '../LazyProgressRaw';
+import WalletInfoRaw, { walletStyler } from '../WalletInfoRaw';
+import NoResultsRaw, { noResultsStyler } from '../NoResultsRaw';
 
 // Utils
-import { makeStyles, withStyles } from "../../utils";
+import { makeStyles, withStyles } from '../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
-      width: "100%",
+      width: '100%',
       padding: theme.spacing(1),
+      paddingTop: 0,
     },
-    grid: {
-      marginTop: theme.spacing(1.5),
+    content: {
+      marginBottom: theme.spacing(2),
     },
     paper: {
-      display: "block",
-      width: "100%",
-      marginTop: theme.spacing(2.5),
+      marginTop: theme.spacing(1),
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
   },
   LazyProgressRaw: lazyProgressStyler(theme).Default,
-  WalletInfoRaw: walletStyler(theme).Default,
+  WalletInfoRaw: {
+    ...walletStyler(theme).Default,
+    root: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    },
+  },
   NoResultsRaw: noResultsStyler(theme).Default,
 });
 

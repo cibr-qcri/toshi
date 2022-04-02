@@ -1,22 +1,25 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Router
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Material
-import { Grid, Paper } from "@material-ui/core";
+import { Paper } from '@material-ui/core';
 
 // Components
-import Tabs from "./Tabs";
-import LabelCloud from "./LabelCloud";
-import TopLinks from "./TopLinks";
+import Tabs from './Tabs';
+import TopContent from './TopContent';
 
 // Store
-import { getWalletInfo } from "../../store/actions";
+import {
+  getWalletAddress,
+  getWalletInfo,
+  getWalletTopLinks,
+} from '../../store/actions';
 
 // Styles
 import {
@@ -24,13 +27,9 @@ import {
   LazyProgress,
   WalletInfo,
   NoResults,
-} from "./Wallet-styles";
-import {
-  getWalletAddress,
-  getWalletTopLinks,
-} from "../../store/actions/wallet/thunks";
+} from './Wallet-styles';
 
-export const Wallet = (props) => {
+export const Wallet = () => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -43,26 +42,20 @@ export const Wallet = (props) => {
 
   // Hooks
   useEffect(() => {
-    const id = location.pathname.split("/")[2];
+    const id = location.pathname.split('/')[2];
     if (!id || id.length === 0) {
-      history.push("/main");
+      history.push('/main');
     }
     dispatch(getWalletInfo(id));
     dispatch(getWalletAddress(id));
     dispatch(getWalletTopLinks(id));
   }, [dispatch, location, history]);
 
+  // JSX
   let content = (
-    <div className={classes.root}>
+    <div className={classes.content}>
       <WalletInfo id={id} info={info} />
-      <Grid container spacing={2} className={classes.grid}>
-        <Grid xs={12} sm={6} item className={classes.root}>
-          <LabelCloud />
-        </Grid>
-        <Grid xs={12} sm={6} item className={classes.root}>
-          <TopLinks />
-        </Grid>
-      </Grid>
+      <TopContent />
       <Paper className={classes.paper} variant="outlined">
         <Tabs />
       </Paper>
@@ -70,7 +63,7 @@ export const Wallet = (props) => {
   );
 
   if (noResults) {
-    content = <NoResults query={id} type={"wallet"} />;
+    content = <NoResults query={id} type="wallet" />;
   }
 
   const view = (
