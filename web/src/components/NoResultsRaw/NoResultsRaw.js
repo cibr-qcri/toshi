@@ -1,11 +1,11 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Components
-import Message from "../Search/Message";
+import Message from '../Search/Message';
 
 // Styles
-import { useStyles, Switcher } from "./NoResultsRaw-styles";
+import { useStyles, Switcher } from './NoResultsRaw-styles';
 
 const NoResultsRaw = (props) => {
   // Variables
@@ -18,7 +18,7 @@ const NoResultsRaw = (props) => {
       <Switcher
         question="Interesting search"
         action="Check this out"
-        path="/search?query=bit"
+        path="/search?query=mintpal"
       />
     </div>
   );
@@ -27,6 +27,6 @@ const NoResultsRaw = (props) => {
 };
 
 // Dynamic styling
-NoResultsRaw.styledAs = "NoResultsRaw";
+NoResultsRaw.styledAs = 'NoResultsRaw';
 
 export default NoResultsRaw;

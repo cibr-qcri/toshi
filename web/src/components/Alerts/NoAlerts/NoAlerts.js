@@ -1,18 +1,18 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Material
-import { Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./NoAlerts-styles";
+import { useStyles } from './NoAlerts-styles';
 
 const NoAlerts = () => {
   // Variables
   const classes = useStyles();
   const advantages = [
-    "Monitor the webs for interesting and new crypto content.",
-    "Personalized email notifications.",
+    'Monitor cryptocurrency wallets for interesting and new activities.',
+    'Personalized email notifications.',
   ];
 
   //JSX
