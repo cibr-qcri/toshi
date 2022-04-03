@@ -18,8 +18,8 @@ import {
 import { useStyles } from './WalletTransactions-styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from '@material-ui/core';
-import { getWalletTx } from '../../../store/actions/wallet/thunks';
-import { titleShortener } from '../../../utils/common';
+import { getWalletTx } from '../../../../store/actions/wallet/thunks';
+import { titleShortener } from '../../../../utils/common';
 
 export const WalletTransactions = (props) => {
   // Variables

@@ -21,8 +21,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
   let nodes = [
     {
       id: id,
-      label: util.format('[%s]', id.split('-')[0]),
-      title: 'Current Wallet',
+      label: 'Current',
       color: '#4791db',
     },
   ];
@@ -31,11 +30,6 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
     nodes.push({
       id: row.wallet_id,
       label: util.format('[%s]', row.wallet_id.split('-')[0]),
-      title: util.format(
-        'Inbound Txes - %s \n Outbound Txes - %s',
-        row.num_inbound_txes,
-        row.num_outbound_txes
-      ),
     });
     if (row.num_inbound_txes > 0) {
       edges.push({

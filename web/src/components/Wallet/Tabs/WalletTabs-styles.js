@@ -3,6 +3,11 @@ import { makeStyles } from '../../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
+    root: {
+      marginTop: theme.spacing(1),
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    },
     tab: {
       textTransform: 'none',
       minWidth: 72,
@@ -13,12 +18,6 @@ export const stylesCreator = (theme) => ({
       paddingTop: theme.spacing(1.75),
       paddingRight: theme.spacing(2.5),
       paddingLeft: theme.spacing(2.5),
-    },
-    paper: {
-      display: 'block',
-      width: '100%',
-      transitionDuration: '0.3s',
-      height: '500px',
     },
   },
 });

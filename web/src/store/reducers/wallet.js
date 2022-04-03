@@ -113,8 +113,8 @@ const reducer = (state = initialState, action) => {
       });
     }
 
-    // GetWalletAddress
-    case types.GET_WALLET_ADDRESS_START: {
+    // getWalletAddresses
+    case types.GET_WALLET_ADDRESSES_START: {
       return updateObject(state, {
         addresses: updateObject(state.addresses, {
           result: state.addresses.result,
@@ -122,7 +122,7 @@ const reducer = (state = initialState, action) => {
         }),
       });
     }
-    case types.GET_WALLET_ADDRESS_SUCCESS: {
+    case types.GET_WALLET_ADDRESSES_SUCCESS: {
       return updateObject(state, {
         addresses: updateObject(state.addresses, {
           result: action.payload.data,
@@ -132,7 +132,7 @@ const reducer = (state = initialState, action) => {
         }),
       });
     }
-    case types.GET_WALLET_ADDRESS_FAILURE: {
+    case types.GET_WALLET_ADDRESSES_FAILURE: {
       return updateObject(state, {
         addresses: updateObject(state.addresses, {
           error: action.payload,

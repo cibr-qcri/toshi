@@ -1,14 +1,14 @@
 // Utils
-import { makeStyles } from '../../../utils';
+import { makeStyles } from '../../../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
       width: '100%',
-      paddingLeft: theme.spacing(2.5),
-      paddingRight: theme.spacing(2.5),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
       paddingTop: theme.spacing(1.5),
-      paddingBottom: theme.spacing(1),
+      paddingBottom: theme.spacing(3),
       height: '440px',
     },
     container: {
@@ -17,7 +17,7 @@ export const stylesCreator = (theme) => ({
     tableBodyText: {
       color: theme.palette.text.secondary,
     },
-    progress: {
+    centerElement: {
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',

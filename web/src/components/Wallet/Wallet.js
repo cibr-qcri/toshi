@@ -7,16 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 // Router
 import { useHistory, useLocation } from 'react-router-dom';
 
-// Material
-import { Paper } from '@material-ui/core';
-
 // Components
 import Tabs from './Tabs';
 import TopContent from './TopContent';
 
 // Store
 import {
-  getWalletAddress,
+  getWalletAddresses,
   getWalletInfo,
   getWalletTopLinks,
 } from '../../store/actions';
@@ -47,7 +44,7 @@ export const Wallet = () => {
       history.push('/main');
     }
     dispatch(getWalletInfo(id));
-    dispatch(getWalletAddress(id));
+    dispatch(getWalletAddresses(id));
     dispatch(getWalletTopLinks(id));
   }, [dispatch, location, history]);
 
@@ -56,9 +53,7 @@ export const Wallet = () => {
     <div className={classes.content}>
       <WalletInfo id={id} info={info} />
       <TopContent />
-      <Paper className={classes.paper} variant="outlined">
-        <Tabs />
-      </Paper>
+      <Tabs />
     </div>
   );
 

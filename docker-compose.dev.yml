@@ -59,7 +59,7 @@ services:
       ACCOUNT_ACTIVIATION_URL: 'http://localhost:8180/activate'
       ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
       SEARCH_ALERTS_URL: 'http://localhost:8180/alerts'
-      SEARCH_WEB_URL: 'http://localhost:8180/search/wallet'
+      SEARCH_WEB_URL: 'http://localhost:8180/search'
       SMTP_HOST: 'smtp.mailtrap.io'
       SMTP_PORT: 2525
       SMTP_EMAIL: '571098c753e080'

@@ -20,11 +20,10 @@ const walletAddresses = asyncHandler(async (request, response, next) => {
     offset = 0;
   }
 
-  const walletAddressRes = await gp.query(wallet.queries.getWalletAddressById, [
-    id,
-    offset,
-    count,
-  ]);
+  const walletAddressRes = await gp.query(
+    wallet.queries.getWalletAddressesById,
+    [id, offset, count]
+  );
 
   let totalCount = 0;
   if (walletAddressRes && walletAddressRes.rows.length > 0) {

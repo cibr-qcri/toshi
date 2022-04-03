@@ -34,6 +34,7 @@ export const stylesCreator = (theme) => ({
     root: {
       marginTop: theme.spacing(4),
       padding: theme.spacing(2),
+      paddingBottom: theme.spacing(4),
     },
     link: {
       '&:hover': {

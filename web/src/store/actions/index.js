@@ -56,8 +56,10 @@ export {
 
 // Wallet
 export {
-  getWalletAddress,
+  getWalletAddresses,
   getWalletInfo,
+  getWalletLabels,
+  getWalletLinks,
   getWalletTopLinks,
   getWalletTx,
 } from './wallet/thunks';

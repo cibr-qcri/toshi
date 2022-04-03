@@ -19,15 +19,25 @@ export const WalletTopContentLabels = () => {
   const classes = useStyles();
   const labels = useSelector((state) => state.wallet.data.labels); // Loaded in the parent container
 
+  // Handlers
+  const onWordClick = ({ text }) => {
+    window.open('/search?query=' + text);
+  };
+
   // JSX
   let content = (
-    <Typography align="center" variant="subtitle1" color="textSecondary">
+    <Typography align="center" variant="body2" color="textSecondary">
       No labels found
     </Typography>
   );
   if (labels.length > 0) {
     content = (
-      <ReactWordcloud maxWords={5} options={wordCloudOptions} words={labels} />
+      <ReactWordcloud
+        maxWords={5}
+        options={wordCloudOptions}
+        words={labels}
+        callbacks={{ onWordClick }}
+      />
     );
   }
 

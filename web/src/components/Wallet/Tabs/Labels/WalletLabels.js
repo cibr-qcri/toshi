@@ -18,8 +18,8 @@ import {
 import { useStyles } from './WalletLabels-styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from '@material-ui/core';
-import { getWalletLabels } from '../../../store/actions/wallet/thunks';
-import { titleShortener } from '../../../utils/common';
+import { getWalletLabels } from '../../../../store/actions/wallet/thunks';
+import { titleShortener } from '../../../..//utils/common';
 
 export const WalletLabels = (props) => {
   // Variables
@@ -138,7 +138,7 @@ export const WalletLabels = (props) => {
           />
         </div>
       ) : (
-        <Typography align="center" variant="subtitle1" color="textSecondary">
+        <Typography align="center" variant="body2" color="textSecondary">
           No labels found
         </Typography>
       )}

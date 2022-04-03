@@ -1,7 +1,15 @@
 const GRAPH_VIS_OPTIONS = {
-  physics: false,
+  physics: {
+    enabled: true,
+    stabilization: {
+      enabled: true,
+    },
+  },
   autoResize: true,
+  width: '100%',
+  height: '100%',
   layout: {
+    improvedLayout: true,
     hierarchical: {
       enabled: false,
     },
@@ -34,11 +42,11 @@ const GRAPH_VIS_OPTIONS = {
     },
   },
   interaction: {
-    zoomView: false,
     dragNodes: false,
     dragView: false,
     hover: true,
     selectable: true,
+    zoomView: false,
   },
 };
 

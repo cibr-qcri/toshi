@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 // GraphVis
 import Graph from 'react-graph-vis';
-import 'vis-network/styles/vis-network.css';
+import 'vis-network/styles/vis-network.min.css';
 
 // Redux
 import { useSelector } from 'react-redux';
@@ -32,11 +32,11 @@ export const WalletTopContentLinks = () => {
     const newOptions = { ...graphVizOptions };
     newOptions.edges = {
       ...graphVizOptions.edges,
-      color: theme.palette.text.primary,
+      color: theme.palette.text.secondary,
     };
     newOptions.nodes.font = {
       ...graphVizOptions.nodes.font,
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.info.contrastText,
     };
     setOptions(newOptions);
   }, [theme]);
@@ -54,7 +54,7 @@ export const WalletTopContentLinks = () => {
     <Typography
       className={classes.empty}
       align="center"
-      variant="subtitle1"
+      variant="body2"
       color="textSecondary"
     >
       No wallets found

@@ -16,11 +16,6 @@ export const stylesCreator = (theme) => ({
     content: {
       marginBottom: theme.spacing(2),
     },
-    paper: {
-      marginTop: theme.spacing(1),
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-    },
   },
   LazyProgressRaw: lazyProgressStyler(theme).Default,
   WalletInfoRaw: {

@@ -1,20 +1,20 @@
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 // Redux
-import { batch } from "react-redux";
+import { batch } from 'react-redux';
 
 // QueryString
-import qs from "qs";
+import qs from 'qs';
 
 // Creators
-import * as creators from "./creators";
-import { showAlert } from "../";
+import * as creators from './creators';
+import { showAlert } from '../';
 
 export const getWalletInfo = (id) => {
   return (dispatch, getState) => {
     dispatch(creators.getWalletInfoStart({ id }));
-    const walletUrl = "/wallet/" + id;
+    const walletUrl = '/wallet/' + id;
 
     axios
       .get(walletUrl)
@@ -74,9 +74,9 @@ export const getWalletTx = (id, page = 0, count = 10) => {
   };
 };
 
-export const getWalletAddress = (id, page = 0, count = 10) => {
+export const getWalletAddresses = (id, page = 0, count = 10) => {
   return (dispatch, getState) => {
-    dispatch(creators.getWalletAddressStart());
+    dispatch(creators.getWalletAddressesStart());
     let queryParams = {
       page: page,
       count: count,
@@ -88,11 +88,11 @@ export const getWalletAddress = (id, page = 0, count = 10) => {
     axios
       .get(walletAddressUrl)
       .then((response) => {
-        dispatch(creators.getWalletAddressSuccess(response.data));
+        dispatch(creators.getWalletAddressesSuccess(response.data));
       })
       .catch((error) => {
         batch(() => {
-          dispatch(creators.getWalletAddressFailure(error));
+          dispatch(creators.getWalletAddressesFailure(error));
           dispatch(showAlert());
         });
       });
