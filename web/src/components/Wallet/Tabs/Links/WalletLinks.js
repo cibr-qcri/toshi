@@ -1,152 +1,59 @@
 // React
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-// Material
-import {
-  TablePagination,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  CircularProgress,
-  Typography,
-} from '@material-ui/core';
+// Redux
+import { useSelector } from 'react-redux';
+
+// Store
+import { getWalletLinks } from '../../../../store/actions';
 
 // Styles
-import { useStyles } from './WalletLinks-styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from '@material-ui/core';
-import { titleShortener } from '../../../../utils/common';
-import { getWalletLinks } from '../../../../store/actions/wallet/thunks';
+import { useStyles, DataTable } from './WalletLinks-styles';
 
-export const WalletLinks = (props) => {
+export const WalletLinks = () => {
   // Variables
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [columns, setTableColumns] = React.useState([]);
   const walletId = useSelector((state) => state.wallet.id);
   const rows = useSelector((state) => state.wallet.links.result);
   const totalCount = useSelector((state) => state.wallet.links.count);
   const isBusy = useSelector((state) => state.wallet.links.isBusy);
   const currencyType = useSelector((state) => state.wallet.currency);
+  const [columns, setTableColumns] = useState([]);
 
   // Hooks
   useEffect(() => {
     if (currencyType) {
-      let columnMap = [
-        { id: 'walletId', label: 'Wallet', align: 'left' },
-        { id: 'numInTxes', label: 'Num In Txes', align: 'left' },
-        { id: 'numOutTxes', label: 'Num Out Txes', align: 'left' },
-      ];
+      let columnMap = [{ id: 'wallet', label: 'Wallet', align: 'left' }];
       if (currencyType === 'btc') {
         columnMap.push(
-          { id: 'inBTCAmount', label: 'Total In', align: 'left' },
-          { id: 'outBTCAmount', label: 'Total Out', align: 'left' }
+          { id: 'inBTCAmount', label: 'Total In', align: 'right' },
+          { id: 'numInTxes', label: 'In Txes', align: 'right' },
+          { id: 'outBTCAmount', label: 'Total Out', align: 'right' },
+          { id: 'numOutTxes', label: 'Out Txes', align: 'right' }
         );
       } else {
         columnMap.push(
-          { id: 'inUSDAmount', label: 'Total In', align: 'left' },
-          { id: 'outUSDAmount', label: 'Total Out', align: 'left' }
+          { id: 'inUSDAmount', label: 'Total In', align: 'right' },
+          { id: 'numInTxes', label: 'In Txes', align: 'right' },
+          { id: 'outUSDAmount', label: 'Total Out', align: 'right' },
+          { id: 'numOutTxes', label: 'Out Txes', align: 'right' }
         );
       }
       setTableColumns(columnMap);
     }
   }, [currencyType]);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    dispatch(getWalletLinks(walletId, newPage, rowsPerPage));
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    const pageCount = event.target.value;
-    setRowsPerPage(event.target.value);
-    setPage(0);
-    dispatch(getWalletLinks(walletId, page, pageCount));
-  };
-
   // JSX
-  let body = null;
-  if (rows.length > 0) {
-    body = rows.map((row) => {
-      return (
-        <TableRow hover role="checkbox" tabIndex={-1} key={row.walletId}>
-          {columns.map((column) => {
-            return (
-              <TableCell
-                key={column.id}
-                align={column.align}
-                className={classes.tableBodyText}
-              >
-                {column.id === 'walletId' ? (
-                  <Link
-                    href={'/wallet/' + row[column.id]}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    {titleShortener('wallet', row[column.id])}
-                  </Link>
-                ) : (
-                  row[column.id]
-                )}
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      );
-    });
-  }
-
   const view = (
     <div className={classes.root}>
-      {isBusy ? (
-        <div className={classes.centerElement}>
-          <CircularProgress size={30} />
-        </div>
-      ) : rows.length > 0 ? (
-        <div className={classes.container}>
-          <TableContainer className={classes.container}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      variant="body"
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>{body}</TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={totalCount}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </div>
-      ) : (
-        <Typography
-          align="center"
-          variant="body2"
-          color="textSecondary"
-          className={classes.centerElement}
-        >
-          No wallets found
-        </Typography>
-      )}
+      <DataTable
+        rows={rows}
+        columns={columns}
+        totalCount={totalCount}
+        action={(page, count) => getWalletLinks(walletId, page, count)}
+        isBusy={isBusy}
+        type="wallet"
+      />
     </div>
   );
 

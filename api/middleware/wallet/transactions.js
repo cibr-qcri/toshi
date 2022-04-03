@@ -38,7 +38,7 @@ const walletTransactions = asyncHandler(async (request, response, next) => {
   const transactions = walletTransactionRes.rows.map((row) => {
     return {
       id: row.id,
-      txHash: row.tx_hash,
+      transaction: row.tx_hash,
       blockNumber: numeral(row.block_number).format('0,0'),
       outputBTCValue:
         '₿' +

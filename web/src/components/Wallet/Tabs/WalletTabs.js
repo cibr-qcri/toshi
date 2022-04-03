@@ -31,8 +31,8 @@ const WalletTabs = () => {
   const id = useSelector((state) => state.wallet.id);
   const walletTxes = useSelector((state) => state.wallet.transactions.result);
   const walletAddresses = useSelector((state) => state.wallet.addresses.result);
-  const walletLinks = useSelector((state) => state.wallet.links.result);
   const walletLabels = useSelector((state) => state.wallet.labels.result);
+  const walletLinks = useSelector((state) => state.wallet.links.result);
   const [tabIndex, setTabIndex] = React.useState(0);
 
   // Hooks
@@ -47,10 +47,10 @@ const WalletTabs = () => {
       dispatch(getWalletAddresses(id));
     } else if (index === 1 && walletTxes.length === 0) {
       dispatch(getWalletTx(id));
-    } else if (index === 2 && walletLinks.length === 0) {
-      dispatch(getWalletLinks(id));
-    } else if (index === 3 && walletLabels.length === 0) {
+    } else if (index === 2 && walletLabels.length === 0) {
       dispatch(getWalletLabels(id));
+    } else if (index === 3 && walletLinks.length === 0) {
+      dispatch(getWalletLinks(id));
     }
   };
 

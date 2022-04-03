@@ -129,7 +129,6 @@ export const getWalletLabels = (id, page = 0, count = 10) => {
       page: page,
       count: count,
     };
-
     const walletLinksUrl = `/wallet/${id}/labels?${qs.stringify(queryParams)}`;
     axios
       .get(walletLinksUrl)

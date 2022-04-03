@@ -37,21 +37,21 @@ const walletLinks = asyncHandler(async (request, response, next) => {
 
   const records = linkedWalletRes.map((currentWallet) => {
     return {
-      walletId: currentWallet.item.wallet_id,
-      numInTxes: numeral(currentWallet.item.num_inbound_txes).format('0,0'),
-      inUSDAmount: numeral(currentWallet.item.inbound_usd_amount).format(
+      wallet: currentWallet.item.wallet_id,
+      numOutTxes: numeral(currentWallet.item.num_inbound_txes).format('0,0'),
+      outUSDAmount: numeral(currentWallet.item.inbound_usd_amount).format(
         '$0,0.00'
       ),
-      inBTCAmount:
+      outBTCAmount:
         '₿' +
         numeral(
           wallet.satoshiToBTC(currentWallet.item.inbound_satoshi_amount)
         ).format('0,0.000000'),
-      numOutTxes: numeral(currentWallet.item.num_outbound_txes).format('0,0'),
-      outUSDAmount: numeral(currentWallet.item.outbound_usd_amount).format(
+      numInTxes: numeral(currentWallet.item.num_outbound_txes).format('0,0'),
+      inUSDAmount: numeral(currentWallet.item.outbound_usd_amount).format(
         '$0,0.00'
       ),
-      outBTCAmount:
+      inBTCAmount:
         '₿' +
         numeral(
           wallet.satoshiToBTC(currentWallet.item.outbound_satoshi_amount)

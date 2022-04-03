@@ -17,11 +17,11 @@ export const GET_WALLET_TOP_LINKS_FAILURE = 'wallet/getWalletTopLinksFailure';
 
 export const GET_WALLET_LINKS_START = 'wallet/getWalletLinksStart';
 export const GET_WALLET_LINKS_SUCCESS = 'wallet/getWalletLinksSuccess';
-export const GET_WALLET_LINKS_FAILURE = 'wallet/getWalletTopLinksFailure';
+export const GET_WALLET_LINKS_FAILURE = 'wallet/getWalletLinksFailure';
 
 export const GET_WALLET_LABELS_START = 'wallet/getWalletLabelsStart';
 export const GET_WALLET_LABELS_SUCCESS = 'wallet/getWalletLabelsSuccess';
-export const GET_WALLET_LABELS_FAILURE = 'wallet/getWalletTopLabelsFailure';
+export const GET_WALLET_LABELS_FAILURE = 'wallet/getWalletLabelsFailure';
 
 // Set
 export const SET_WALLET_CURRENCY_TYPE = 'wallet/setWalletCurrencyType';
