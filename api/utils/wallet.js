@@ -209,7 +209,7 @@ exports.queries = {
     SELECT btc_wallet.*, count(*) OVER() AS total_count
     FROM btc_wallet
     WHERE label ~* $1
-    ORDER BY id OFFSET $2
+    ORDER BY risk_score DESC OFFSET $2
     LIMIT $3;
     `,
   getWalletByTx: `
