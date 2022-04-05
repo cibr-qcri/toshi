@@ -43,6 +43,10 @@ services:
       GP_DATABASE: 'btc_blockchain'
       GP_PORT: 5432
       GP_PASSWORD: ''
+      ARANGO_URL: 'http://10.4.8.131:8529'
+      ARANGO_DATABASE: 'btc_blockchain'
+      ARANGO_USER: 'root'
+      ARANGO_PASSWORD: ''
       JWT_SECRET: 'UJl5Y8nK7b7TNjz8'
       JWT_AUTH_EXPIRE_DAYS: '30d'
       JWT_ACTIVATION_EXPIRE_DAYS: '3d'
@@ -52,7 +56,7 @@ services:
       ACCOUNT_ACTIVIATION_URL: 'https://toshi.cibr.qcri.org/activate'
       ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
       SEARCH_ALERTS_URL: 'https://toshi.cibr.qcri.org/alerts'
-      SEARCH_WEB_URL: 'https://toshi.cibr.qcri.org/search/wallet'
+      SEARCH_WEB_URL: 'https://toshi.cibr.qcri.org/search'
       SMTP_HOST: 'smtp.office365.com'
       SMTP_PORT: 587
       SMTP_EMAIL: 'noreply@mail.cibr.qcri.org'

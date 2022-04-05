@@ -4,24 +4,21 @@ import React from 'react';
 // PropTypes
 import PropTypes from 'prop-types';
 
-// Assets
-import logo from '../../assets/images/toshi-logo.png';
-
 // Router
 import { NavLink } from 'react-router-dom';
 
 // Material
-import { Link } from '@material-ui/core';
+import { Link, Typography } from '@material-ui/core';
 
 const LogoRaw = (props) => {
   // Variables
-  const { classes, height = 100 } = props;
+  const { classes } = props;
 
   // JSX
   const view = (
     <div className={classes.root}>
       <Link className={classes.link} component={NavLink} to="/main">
-        <img src={logo} alt="Toshi" height={height} />
+        <Typography className={classes.logo}>Toshi</Typography>
       </Link>
     </div>
   );
@@ -34,7 +31,6 @@ LogoRaw.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string.isRequired,
   }),
-  height: PropTypes.number,
 };
 
 // Dynamic styling

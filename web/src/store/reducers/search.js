@@ -12,31 +12,30 @@ const initialState = {
     noResults: false,
     isPaged: false,
     pagination: {},
-    source: 'wallet',
-    type: 'empty',
+    type: '',
     count: 0,
   },
   error: null,
   isBusy: true,
+  isMoreLoading: true,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     // Get
     case types.GET_RESULTS_START: {
-      let sourceSwitched = state.data.source !== action.payload.source;
       return updateObject(state, {
         data: updateObject(state.data, {
-          results: sourceSwitched ? [] : state.data.results,
+          results: state.data.results,
           query: action.payload.query,
-          isPaged: sourceSwitched ? false : action.payload.isPaged,
-          pagination: sourceSwitched ? {} : state.data.pagination,
-          noResults: sourceSwitched ? false : state.data.noResults,
-          source: action.payload.source,
+          isPaged: action.payload.isPaged,
+          pagination: state.data.pagination,
+          noResults: state.data.noResults,
           type: action.payload.type,
           count: state.data.count,
         }),
         isBusy: true,
+        isMoreLoading: action.payload.isMoreLoading,
       });
     }
     case types.GET_RESULTS_SUCCESS: {
@@ -50,6 +49,7 @@ const reducer = (state = initialState, action) => {
           count: action.payload.count,
         }),
         isBusy: false,
+        isMoreLoading: false,
       });
     }
     case types.GET_RESULTS_FAILURE: {
@@ -58,6 +58,7 @@ const reducer = (state = initialState, action) => {
           error: action.payload,
         }),
         isBusy: false,
+        isMoreLoading: false,
       });
     }
     // Reset

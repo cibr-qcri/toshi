@@ -1,5 +1,5 @@
 // Common
-export { updateObject } from "./common";
+export { updateObject } from './common';
 
 // Styles
-export { makeStyles, withStyles } from "./styles";
+export { makeStyles, withStyles } from './styles';

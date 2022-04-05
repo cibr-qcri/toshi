@@ -1,5 +1,5 @@
 // Components
-import LogoRaw from '../LogoRaw';
+import LogoRaw, { logoStyler } from '../LogoRaw';
 import SearchBoxRaw, { searchBoxStyler } from '../SearchBoxRaw';
 import StatRaw, { statStyler } from '../StatRaw';
 
@@ -30,9 +30,11 @@ export const stylesCreator = (theme) => ({
     },
   },
   LogoRaw: {
+    ...logoStyler(theme).Default,
     root: {
       marginTop: theme.spacing(4),
       padding: theme.spacing(2),
+      paddingBottom: theme.spacing(4),
     },
     link: {
       '&:hover': {

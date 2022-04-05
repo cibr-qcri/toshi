@@ -46,6 +46,9 @@ const lazyComp = {
   SignUp: lazy(() => {
     return import('../SignUp');
   }),
+  Wallet: lazy(() => {
+    return import('../Wallet');
+  }),
 };
 
 const App = () => {
@@ -86,7 +89,8 @@ const App = () => {
       <Route path="/activate/:token" component={lazyComp.Activate} />
       <Route path="/signup" component={lazyComp.SignUp} />
       <Route path="/main" component={Main} />
-      <Route from="/search/wallet" component={AuthRedirect} />
+      <Route from="/search" component={AuthRedirect} />
+      <Route from="/wallet" component={AuthRedirect} />
       <Redirect from="/" to="/main" />
     </Switch>
   );
@@ -98,7 +102,8 @@ const App = () => {
         <Route path="/signin" component={lazyComp.SignIn} />
         <Route path="/signup" component={lazyComp.SignUp} />
         <Route path="/account" component={lazyComp.Account} />
-        <Route path="/search/wallet" component={lazyComp.Search} />
+        <Route path="/search" component={lazyComp.Search} />
+        <Route path="/wallet" component={lazyComp.Wallet} />
         <Route path="/main" component={Main} />
         <Redirect from="/" to="/main" />
       </Switch>

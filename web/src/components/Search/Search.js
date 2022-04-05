@@ -11,15 +11,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 
 // Components
-import WalletResults from './Wallet/Results/WalletResults';
+import Results from './Results';
 import MoreResults from './MoreResults';
-import NoResults from './NoResults';
 
 // Store
-import { getWalletResults, showAlertDialog } from '../../store/actions';
+import { getResults, showAlertDialog } from '../../store/actions';
 
 // Styles
-import { useStyles, LazyProgress, SearchBox, Switcher } from './Search-styles';
+import { useStyles, LazyProgress, SearchBox, Switcher, NoResults } from './Search-styles';
 
 export const Search = () => {
   // Variables
@@ -28,26 +27,21 @@ export const Search = () => {
   const location = useLocation();
   const history = useHistory();
   const isBusy = useSelector((state) => state.search.isBusy);
+  const isMoreLoading = useSelector((state) => state.search.isMoreLoading);
   const query = useSelector((state) => state.search.data.query);
   const type = useSelector((state) => state.search.data.type);
   const count = useSelector((state) => state.search.data.count);
   const results = useSelector((state) => state.search.data.results);
   const noResults = useSelector((state) => state.search.data.noResults);
   const pagination = useSelector((state) => state.search.data.pagination);
-  const source = location.pathname.split('/')[2];
 
   // Hooks
   useEffect(() => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true }).query;
-    const source = location.pathname.split('/')[2];
-
     if (!query || query.length === 0) {
       history.push('/main');
     }
-
-    if (source === 'wallet') {
-      dispatch(getWalletResults(query));
-    }
+    dispatch(getResults(query));
   }, [dispatch, location, history]);
 
   // Handlers
@@ -58,15 +52,10 @@ export const Search = () => {
   // JSX
   let moreResults = null;
   if (pagination.next) {
-    moreResults = <MoreResults query={query} source={source} />;
+    moreResults = <MoreResults query={query} />;
   }
 
-  let searchResults;
-  if (source === 'wallet') {
-    searchResults = <WalletResults items={results} count={count} type={type} />;
-  }
-
-  let alertSwitcher = null;
+  let alertSwitcher;
   alertSwitcher = (
     <Switcher
       question="Want to stay updated"
@@ -77,7 +66,7 @@ export const Search = () => {
 
   let content = (
     <Fragment>
-      {searchResults}
+      <Results items={results} count={count} type={type} />
       {moreResults}
       {alertSwitcher}
     </Fragment>
@@ -89,7 +78,7 @@ export const Search = () => {
   const view = (
     <div className={classes.root}>
       <SearchBox />
-      {isBusy ? <LazyProgress /> : content}
+      {isBusy && !isMoreLoading ? <LazyProgress /> : content}
     </div>
   );
 

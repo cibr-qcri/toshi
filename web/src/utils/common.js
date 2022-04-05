@@ -12,3 +12,15 @@ export const validateBitcoinTx = (value) => {
   const regExpStr = "^[a-fA-F0-9]{64}$"
   return new RegExp(regExpStr).test(value)
 }
+
+export const titleShortener = (type, value) => {
+  if (type === 'wallet') {
+    return 'Wallet [' + value.split('-')[0] + ']';
+  } else if (type === 'transaction') {
+    return 'Tx [' + value.substring(0, 8) + ']';
+  } else if (type === 'address') {
+    return 'Address [' + value.substring(0, 8) + ']';
+  } else {
+    return value
+  }
+}

@@ -50,7 +50,7 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          {showLogo ? <Logo height={25} /> : null}
+          {showLogo ? <Logo /> : null}
           <Action isAuth={isAuth} />
         </Toolbar>
       </AppBar>

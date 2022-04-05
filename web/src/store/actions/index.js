@@ -24,7 +24,7 @@ export {
 
 // Search
 export { reset as resetSearch } from './search/creators';
-export { getWalletResults } from './search/thunks';
+export { getResults } from './search/thunks';
 
 // Stats
 export { getStats } from './stats/thunks';
@@ -53,3 +53,14 @@ export {
   getAlerts as getUserAlerts,
   deleteAlert as deleteUserAlert,
 } from './user/thunks';
+
+// Wallet
+export { setWalletCurrencyType } from './wallet/creators';
+export {
+  getWalletAddresses,
+  getWalletInfo,
+  getWalletLabels,
+  getWalletLinks,
+  getWalletTopLinks,
+  getWalletTx,
+} from './wallet/thunks';

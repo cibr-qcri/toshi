@@ -25,7 +25,7 @@ const queryType = (query) => {
   }
 };
 
-export const getWalletResults = (query, isPaged = false) => {
+export const getResults = (query, isPaged = false, isMoreResult = false) => {
   return (dispatch, getState) => {
     let queryParams = {
       query,
@@ -45,12 +45,12 @@ export const getWalletResults = (query, isPaged = false) => {
       creators.getResultsStart({
         query,
         isPaged,
-        source: 'wallet',
         type: searchType,
+        isMoreLoading: isMoreResult,
       })
     );
 
-    const searchUrl = `/search/wallet?${qs.stringify(queryParams)}`;
+    const searchUrl = `/search?${qs.stringify(queryParams)}`;
 
     axios
       .get(searchUrl)
