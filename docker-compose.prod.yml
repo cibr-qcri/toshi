@@ -2,7 +2,7 @@
 #
 #   service         local -> host
 #   ------------------------------
-#   proxy            80    -> 8180
+#   proxy            80    -> 80
 
 version: '3.3'
 services:
@@ -12,7 +12,7 @@ services:
     links:
       - web
     ports:
-      - '8180:80'
+      - '80:80'
     restart: always
     stdin_open: true
     tty: true
