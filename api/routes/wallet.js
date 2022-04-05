@@ -7,22 +7,22 @@ const walletLabels = require('../middleware/wallet/labels');
 const express = require('express');
 const { protect } = require('../middleware/auth');
 const {
-  wallet,
-  walletTxes,
-  walletAddress,
-  walletTopConnectedLinks,
-  walletConnectedLinks,
-  walletReportedLabels,
+  getWallet,
+  getWalletTxes,
+  getWalletAddress,
+  getWalletTopConnectedLinks,
+  getWalletConnectedLinks,
+  getWalletReportedLabels,
 } = require('../controllers/wallets');
 
 const router = express.Router();
 
 router.use(protect);
-router.get('/:id', walletInfo, wallet);
-router.get('/:id/transactions', walletTransactions, walletTxes);
-router.get('/:id/addresses', walletAddresses, walletAddress);
-router.get('/:id/top-links', walletTopLinks, walletTopConnectedLinks);
-router.get('/:id/links', walletLinks, walletConnectedLinks);
-router.get('/:id/labels', walletLabels, walletReportedLabels);
+router.get('/:id', walletInfo, getWallet);
+router.get('/:id/transactions', walletTransactions, getWalletTxes);
+router.get('/:id/addresses', walletAddresses, getWalletAddress);
+router.get('/:id/top-links', walletTopLinks, getWalletTopConnectedLinks);
+router.get('/:id/links', walletLinks, getWalletConnectedLinks);
+router.get('/:id/labels', walletLabels, getWalletReportedLabels);
 
 module.exports = router;

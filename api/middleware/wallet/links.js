@@ -2,7 +2,7 @@ const asyncHandler = require('../async');
 const ErrorResponse = require('../../utils/errorResponse');
 const arango = require('../../services/arango');
 const wallet = require('../../utils/wallet');
-const numeral = require('numeral');
+const { getWalletLinks } = require('../../utils/wallet');
 
 const walletLinks = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -35,29 +35,7 @@ const walletLinks = asyncHandler(async (request, response, next) => {
     totalCount = linkedWalletRes[0].total_count;
   }
 
-  const records = linkedWalletRes.map((currentWallet) => {
-    return {
-      wallet: currentWallet.item.wallet_id,
-      numOutTxes: numeral(currentWallet.item.num_inbound_txes).format('0,0'),
-      outUSDAmount: numeral(currentWallet.item.inbound_usd_amount).format(
-        '$0,0.00'
-      ),
-      outBTCAmount:
-        '₿' +
-        numeral(
-          wallet.satoshiToBTC(currentWallet.item.inbound_satoshi_amount)
-        ).format('0,0.000000'),
-      numInTxes: numeral(currentWallet.item.num_outbound_txes).format('0,0'),
-      inUSDAmount: numeral(currentWallet.item.outbound_usd_amount).format(
-        '$0,0.00'
-      ),
-      inBTCAmount:
-        '₿' +
-        numeral(
-          wallet.satoshiToBTC(currentWallet.item.outbound_satoshi_amount)
-        ).format('0,0.000000'),
-    };
-  });
+  const records = linkedWalletRes.map((wallet) => getWalletLinks(wallet));
 
   const pagination = {};
   if (records.length > 0) {

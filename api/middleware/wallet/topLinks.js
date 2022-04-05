@@ -31,6 +31,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
       id: row.wallet_id,
       label: util.format('[%s]', row.wallet_id.split('-')[0]),
     });
+
     if (row.num_inbound_txes > 0) {
       edges.push({
         from: row.wallet_id,
@@ -39,6 +40,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
         smooth: { type: 'curvedCW', roundness: 0.2 },
       });
     }
+
     if (row.num_outbound_txes > 0) {
       edges.push({
         from: id,

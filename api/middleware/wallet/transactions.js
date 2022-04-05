@@ -2,7 +2,7 @@ const asyncHandler = require('../async');
 const ErrorResponse = require('../../utils/errorResponse');
 const wallet = require('../../utils/wallet');
 const gp = require('../../services/gp');
-const numeral = require('numeral');
+const { getWalletTxes } = require('../../utils/wallet');
 
 const walletTransactions = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -35,23 +35,9 @@ const walletTransactions = asyncHandler(async (request, response, next) => {
     totalCount = parseInt(walletTransactionCountRes.rows[0].num_tx);
   }
 
-  const transactions = walletTransactionRes.rows.map((row) => {
-    return {
-      id: row.id,
-      transaction: row.tx_hash,
-      blockNumber: numeral(row.block_number).format('0,0'),
-      outputBTCValue:
-        '₿' +
-        numeral(wallet.satoshiToBTC(row.output_value)).format('0,0.000000'),
-      inputBTCValue:
-        '₿' +
-        numeral(wallet.satoshiToBTC(row.input_value)).format('0,0.000000'),
-      inputUSDValue: numeral(row.input_usd_value).format('$0,0.00'),
-      outputUSDValue: numeral(row.output_usd_value).format('$0,0.00'),
-      type: row.tx_type,
-      isCoinbase: row.is_coinbase ? 'Yes' : 'No',
-    };
-  });
+  const transactions = walletTransactionRes.rows.map((row) =>
+    getWalletTxes(row)
+  );
 
   const pagination = {};
   if (transactions.length > 0) {

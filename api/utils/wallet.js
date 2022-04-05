@@ -70,6 +70,78 @@ exports.satoshiToBTC = (value) => {
   return value / 100000000;
 };
 
+exports.getWalletAddresses = (row) => {
+  return {
+    id: row.id,
+    address: row.address,
+    totalSpentBTC: row.total_spent_satoshi
+      ? '₿' +
+        numeral(this.satoshiToBTC(row.total_spent_satoshi)).format('0,0.000000')
+      : 'N/A',
+    totalSpentUSD: row.total_spent_usd
+      ? numeral(row.total_spent_usd).format('$0,0.00')
+      : 'N/A',
+    totalReceivedBTC: row.total_received_satoshi
+      ? '₿' +
+        numeral(this.satoshiToBTC(row.total_received_satoshi)).format(
+          '0,0.000000'
+        )
+      : 'N/A',
+    totalReceivedUSD: row.total_received_usd
+      ? numeral(row.total_received_usd).format('$0,0.00')
+      : 'N/A',
+    btcBalance:
+      row.total_received_satoshi && row.total_spent_satoshi
+        ? '₿' +
+          numeral(this.satoshiToBTC(row.total_received_satoshi))
+            .subtract(this.satoshiToBTC(row.total_spent_satoshi))
+            .format('0,0.000000')
+        : 'N/A',
+    usdBalance:
+      row.total_received_usd && row.total_spent_usd
+        ? numeral(row.total_received_usd)
+            .subtract(row.total_spent_usd)
+            .format('$0,0.00')
+        : 'N/A',
+  };
+};
+
+exports.getWalletTxes = (row) => {
+  return {
+    id: row.id,
+    transaction: row.tx_hash,
+    blockNumber: numeral(row.block_number).format('0,0'),
+    outputBTCValue:
+      '₿' + numeral(this.satoshiToBTC(row.output_value)).format('0,0.000000'),
+    inputBTCValue:
+      '₿' + numeral(this.satoshiToBTC(row.input_value)).format('0,0.000000'),
+    inputUSDValue: numeral(row.input_usd_value).format('$0,0.00'),
+    outputUSDValue: numeral(row.output_usd_value).format('$0,0.00'),
+    type: row.tx_type,
+    isCoinbase: row.is_coinbase ? 'Yes' : 'No',
+  };
+};
+
+exports.getWalletLinks = (wallet) => {
+  return {
+    wallet: wallet.item.wallet_id,
+    numOutTxes: numeral(wallet.item.num_inbound_txes).format('0,0'),
+    outUSDAmount: numeral(wallet.item.inbound_usd_amount).format('$0,0.00'),
+    outBTCAmount:
+      '₿' +
+      numeral(this.satoshiToBTC(wallet.item.inbound_satoshi_amount)).format(
+        '0,0.000000'
+      ),
+    numInTxes: numeral(wallet.item.num_outbound_txes).format('0,0'),
+    inUSDAmount: numeral(wallet.item.outbound_usd_amount).format('$0,0.00'),
+    inBTCAmount:
+      '₿' +
+      numeral(this.satoshiToBTC(wallet.item.outbound_satoshi_amount)).format(
+        '0,0.000000'
+      ),
+  };
+};
+
 exports.getWalletInfo = (result, isDetailed = false) => {
   let walletInfo = {
     topCategory: {
