@@ -55,6 +55,7 @@ export {
 } from './user/thunks';
 
 // Wallet
+export { setWalletCurrencyType } from './wallet/creators';
 export {
   getWalletAddresses,
   getWalletInfo,

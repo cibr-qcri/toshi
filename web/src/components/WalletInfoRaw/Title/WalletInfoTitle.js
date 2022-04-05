@@ -4,10 +4,14 @@ import React from 'react';
 // Material
 import { Link, Typography } from '@material-ui/core';
 
+// Utils
+import { titleShortener } from '../../../utils/common';
+
+// Components
+import CurrencyToggle from '../../CurrencyToggle';
+
 // Styles
 import { useStyles } from './WalletInfoTitle-styles';
-import { titleShortener } from '../../../utils/common';
-import CurrencyToggle from '../../CurrencyToggle';
 
 const WalletInfoTitle = (props) => {
   // Variables

@@ -1,20 +1,20 @@
 // Utils
-import { makeStyles } from "../../utils";
+import { makeStyles } from '../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
-      width: "fit-content",
+      width: 'fit-content',
     },
     toggle: {
-      height: "35px",
+      height: '35px',
     },
     selected: {
-      "&&": {
+      '&&': {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
       },
-      "&&:hover": {
+      '&&:hover': {
         backgroundColor: theme.palette.primary.dark,
         color: theme.palette.primary.contrastText,
       },

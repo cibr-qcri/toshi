@@ -1,5 +1,2 @@
 // Component
-export { default } from "./CurrencyToggle";
-
-// Styles
-export { stylesCreator as noResultsStyler } from "./CurrencyToggle-styles";
+export { default } from './CurrencyToggle';
