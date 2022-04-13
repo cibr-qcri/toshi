@@ -28,14 +28,13 @@ const HeaderMenu = (props) => {
         onClose={onClose}
         ModalProps={{ keepMounted: true }}
       >
-        <Divider />
         <General onClose={onClose} />
+        <Divider />
+        <Settings onClose={onClose} isAuth={isAuth} />
         <Divider />
         <Info />
         <Divider />
         <Outreach onClose={onClose} isAuth={isAuth} />
-        <Divider />
-        <Settings onClose={onClose} isAuth={isAuth} />
       </Drawer>
     </div>
   );
