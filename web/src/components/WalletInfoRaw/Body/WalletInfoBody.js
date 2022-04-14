@@ -1,25 +1,28 @@
 // React
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 
 // Material
-import { Divider, Grid, Typography } from "@material-ui/core";
+import { Info as InfoIcon } from '@material-ui/icons';
+import { Divider, Grid, Tooltip, Typography } from '@material-ui/core';
 
 // Styles
-import { useStyles } from "./WalletInfoBody-styles";
-import { useSelector } from "react-redux";
+import { useStyles } from './WalletInfoBody-styles';
+import { useSelector } from 'react-redux';
 
 const WalletInfoBody = (props) => {
   // Variables
   const classes = useStyles();
   const { items } = props;
-  const [walletInfoItems, setWalletInfoItems] = React.useState(items);
+  const [walletInfoItems, setWalletInfoItems] = useState(items);
   const currencyType = useSelector((state) => state.wallet.currency);
+  const tooltipTitle =
+    'Negative balance is due to fluctuations in the exchange rate at transaction time';
 
   // Hooks
   useEffect(() => {
     if (currencyType) {
       const itemMap = { ...items };
-      if (currencyType === "btc") {
+      if (currencyType === 'btc') {
         delete itemMap.totalUSDIn;
         delete itemMap.totalUSDOut;
         delete itemMap.usdBalance;
@@ -32,11 +35,27 @@ const WalletInfoBody = (props) => {
     }
   }, [currencyType, items]);
 
+  // Renderers
+  const renderWalletInfoName = (info) => {
+    let name = <Typography variant="body2">{info.name}</Typography>;
+    if (info.name === 'Balance' && parseInt(info.value.replace('$', '')) < 0) {
+      name = (
+        <Typography variant="body2">
+          {info.name}
+          <Tooltip title={tooltipTitle}>
+            <InfoIcon className={classes.infoIcon} color="action" />
+          </Tooltip>
+        </Typography>
+      );
+    }
+    return name;
+  };
+
   //JSX
   const infoItems = Object.values(walletInfoItems).map((info, index) => {
     return (
       <Grid className={classes.item} key={index} item xs={12} sm={6}>
-        <Typography variant="body2">{info.name}</Typography>
+        {renderWalletInfoName(info)}
         <Typography variant="body2" color="textSecondary">
           {info.value}
         </Typography>
