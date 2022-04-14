@@ -3,16 +3,37 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 // Material
-import { Home } from '@material-ui/icons';
+import { Home as MainIcon, Input as LoginIcon } from '@material-ui/icons';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 // Styles
 import { useStyles } from './MenuGeneral-styles';
+import { useSelector } from 'react-redux';
 
 const MenuGeneral = (props) => {
   // Variables
   const classes = useStyles();
   const { onClose } = props;
+  const isAuth = useSelector((state) => state.auth.data.token !== null);
+
+  let loginItem = null;
+
+  if (!isAuth) {
+    loginItem = (
+      <ListItem
+        button
+        component={NavLink}
+        to="/signin"
+        rel="noopener"
+        onClick={onClose}
+      >
+        <ListItemIcon>
+          <LoginIcon />
+        </ListItemIcon>
+        <ListItemText primary="Sign In" />
+      </ListItem>
+    );
+  }
 
   const view = (
     <div className={classes.root}>
@@ -25,10 +46,11 @@ const MenuGeneral = (props) => {
           onClick={onClose}
         >
           <ListItemIcon>
-            <Home />
+            <MainIcon />
           </ListItemIcon>
-          <ListItemText primary="Home" />
+          <ListItemText primary="Main" />
         </ListItem>
+        {loginItem}
       </List>
     </div>
   );

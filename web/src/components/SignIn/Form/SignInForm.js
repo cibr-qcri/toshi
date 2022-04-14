@@ -11,13 +11,13 @@ import { useForm } from 'react-hook-form';
 import { signInFormSchema } from './SignInForm-schema';
 
 // Material
-import { Button, Paper, TextField } from '@material-ui/core';
+import { Paper, TextField } from '@material-ui/core';
 
 // Store
 import { createToken } from '../../../store/actions';
 
 // Styles
-import { useStyles } from './SignInForm-styles';
+import { useStyles, Button } from './SignInForm-styles';
 
 const Form = () => {
   // Variables
@@ -62,16 +62,7 @@ const Form = () => {
           name="password"
           type="password"
         />
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
-          disabled={isBusy}
-        >
-          Sign in
-        </Button>
+        <Button title={'Sign in'} loading={isBusy} />
       </Paper>
     </div>
   );
