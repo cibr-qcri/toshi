@@ -122,8 +122,9 @@ exports.getWalletTxes = (row) => {
   };
 };
 
-exports.getWalletLinks = (wallet) => {
+exports.getWalletLinks = (wallet, index) => {
   return {
+    id: index,
     wallet: wallet.item.wallet_id,
     numOutTxes: numeral(wallet.item.num_inbound_txes).format('0,0'),
     outUSDAmount: numeral(wallet.item.inbound_usd_amount).format('$0,0.00'),

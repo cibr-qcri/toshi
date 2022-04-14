@@ -35,7 +35,9 @@ const walletLinks = asyncHandler(async (request, response, next) => {
     totalCount = linkedWalletRes[0].total_count;
   }
 
-  const records = linkedWalletRes.map((wallet) => getWalletLinks(wallet));
+  const records = linkedWalletRes.map((wallet, index) =>
+    getWalletLinks(wallet, index)
+  );
 
   const pagination = {};
   if (records.length > 0) {

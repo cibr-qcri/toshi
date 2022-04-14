@@ -82,7 +82,7 @@ export const DataTableRaw = (props) => {
   if (rows.length > 0) {
     body = rows.map((row) => {
       return (
-        <TableRow hover key={row[type]}>
+        <TableRow hover key={row.id}>
           {columns.map((column) => renderCell(column, row))}
         </TableRow>
       );
