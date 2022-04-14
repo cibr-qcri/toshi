@@ -12,6 +12,7 @@ export const stylesCreator = (theme) => ({
       maxWidth: 460,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      marginTop: theme.spacing(1),
     },
     button: {
       width: '100%',

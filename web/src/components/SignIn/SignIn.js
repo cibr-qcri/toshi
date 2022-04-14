@@ -46,7 +46,7 @@ export const SignIn = () => {
 
   let view = (
     <div className={classes.root}>
-      <Logo />
+      {/* <Logo /> */}
       <Typography className={classes.typography}>
         Sign in with your account
       </Typography>

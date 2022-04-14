@@ -24,7 +24,7 @@ export const SignUp = () => {
   // JSX
   let view = (
     <div className={classes.root}>
-      <Logo />
+      {/* <Logo /> */}
       <Typography className={classes.typography}>
         Sign up for a new account
       </Typography>

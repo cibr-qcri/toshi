@@ -23,7 +23,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const isAuth = useSelector((state) => state.auth.data.token !== null);
-  const showLogo = isAuth && location.pathname !== '/main';
+  const showLogo = location.pathname !== '/main';
 
   // Handlers
   const toggleMenuHandler = () => {
@@ -49,8 +49,8 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          {showLogo ? <Logo /> : null}
         </Toolbar>
+        {showLogo ? <Logo /> : null}
       </AppBar>
     </Fragment>
   );

@@ -1,26 +1,32 @@
 // Components
-import LogoRaw, { logoStyler } from "../LogoRaw";
+import LogoRaw, { logoStyler } from '../LogoRaw';
 
 // Utils
-import { makeStyles, withStyles } from "../../utils";
+import { makeStyles, withStyles } from '../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {},
     toolbar: {
-      justifyContent: "space-between",
+      justifyContent: 'space-between',
     },
     link: {
-      textDecoration: "none",
+      textDecoration: 'none',
     },
   },
   LogoRaw: {
     ...logoStyler(theme).Default,
     logo: {
       ...logoStyler(theme).Default.logo,
-      fontSize: 26
-    }
-  }
+      fontSize: 26,
+      // textAlign: 'center',
+      // position: 'absolute',
+      position: 'absolute',
+      top: '40%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  },
 });
 
 // Local
