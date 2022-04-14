@@ -16,7 +16,7 @@ const WalletInfoBody = (props) => {
   const [walletInfoItems, setWalletInfoItems] = useState(items);
   const currencyType = useSelector((state) => state.wallet.currency);
   const tooltipTitle =
-    "Negative value means the exchange rate wasn't favorable";
+    'Negative balance is due to fluctuations in the exchange rate at transaction time';
 
   // Hooks
   useEffect(() => {
