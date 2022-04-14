@@ -12,7 +12,6 @@ import { Menu as MenuIcon } from '@material-ui/icons';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 
 // Components
-import Action from './Action';
 import Menu from './Menu';
 
 // Styles
@@ -51,7 +50,6 @@ const Header = () => {
             <MenuIcon />
           </IconButton>
           {showLogo ? <Logo /> : null}
-          <Action isAuth={isAuth} />
         </Toolbar>
       </AppBar>
     </Fragment>
