@@ -12,7 +12,7 @@ exports.activationEmailTemplate = ({ to, firstName, url, token }) => {
       <body>
         <p>Hi ${firstName},</p>
         <p>Your user account has been created. To activate it, click <a href=${url}/${token}>here</a>.
-        <p>The Dizzy team</p>
+        <p>The Toshi team</p>
       </body>
       </html>
     `,
@@ -39,7 +39,7 @@ exports.searchAlertEmailTemplate = ({
         <p>We have new search results for the query "${query}".</p>
         <p>To see the results, click <a href=${searchUrl}>here</a>. 
         To manage your alerts, click <a href=${alertsUrl}>here</a>.</p>
-        <p>The Dizzy team</p>
+        <p>The Toshi team</p>
       </body>
       </html>
     `,
