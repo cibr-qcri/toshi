@@ -1,15 +1,15 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Material
-import { Card } from "@material-ui/core";
+import { Card } from '@material-ui/core';
 
 // Components
-import Header from "./Header";
-import Body from "./Body";
+import Header from './Header';
+import Body from './Body';
 
 // Styles
-import { useStyles } from "./NoResultsMessage-styles";
+import { useStyles } from './NoResultsMessage-styles';
 
 const NoResultsMessage = (props) => {
   // Variables
@@ -21,7 +21,7 @@ const NoResultsMessage = (props) => {
       <Card variant="outlined" className={classes.card}>
         <div className={classes.content}>
           <Header query={props.query} type={props.type}></Header>
-          <Body />
+          <Body type={props.type} />
         </div>
       </Card>
     </div>

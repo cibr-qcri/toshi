@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import Message from '../Search/Message';
+import Message from './Message';
 
 // Styles
 import { useStyles, Switcher } from './NoResultsRaw-styles';
