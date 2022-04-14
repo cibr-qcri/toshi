@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Hook Form
 import { useForm } from 'react-hook-form';
@@ -26,6 +26,7 @@ const SignUpForm = () => {
   const { register, handleSubmit, errors } = useForm({
     validationSchema: signUpFormSchema,
   });
+  const isBusy = useSelector((state) => state.user.isBusy);
 
   // Handlers
   const signUpHandler = (data) => {
@@ -91,6 +92,7 @@ const SignUpForm = () => {
           color="primary"
           size="large"
           type="submit"
+          disabled={isBusy}
         >
           Sign up
         </Button>

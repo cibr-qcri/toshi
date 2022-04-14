@@ -1,23 +1,23 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // Hook Form
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
 // Schema
-import { signInFormSchema } from "./SignInForm-schema";
+import { signInFormSchema } from './SignInForm-schema';
 
 // Material
-import { Button, Paper, TextField } from "@material-ui/core";
+import { Button, Paper, TextField } from '@material-ui/core';
 
 // Store
-import { createToken } from "../../../store/actions";
+import { createToken } from '../../../store/actions';
 
 // Styles
-import { useStyles } from "./SignInForm-styles";
+import { useStyles } from './SignInForm-styles';
 
 const Form = () => {
   // Variables
@@ -26,6 +26,7 @@ const Form = () => {
   const { register, handleSubmit, errors } = useForm({
     validationSchema: signInFormSchema,
   });
+  const isBusy = useSelector((state) => state.auth.isBusy);
 
   // Handlers
   const signInHandler = (credentials) => {
@@ -67,6 +68,7 @@ const Form = () => {
           color="primary"
           size="large"
           type="submit"
+          disabled={isBusy}
         >
           Sign in
         </Button>
