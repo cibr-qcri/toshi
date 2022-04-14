@@ -16,7 +16,7 @@ const WalletInfoBody = (props) => {
   const [walletInfoItems, setWalletInfoItems] = useState(items);
   const currencyType = useSelector((state) => state.wallet.currency);
   const tooltipTitle =
-    'Negative balance is due to fluctuations in the exchange rate at transaction time';
+    'Negative value is due to different exchange rates at different transaction times';
 
   // Hooks
   useEffect(() => {
