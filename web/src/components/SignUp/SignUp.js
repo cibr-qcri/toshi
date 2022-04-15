@@ -14,7 +14,7 @@ import { Typography } from '@material-ui/core';
 import Form from './Form';
 
 // Styles
-import { useStyles, Logo, Switcher } from './SignUp-styles';
+import { useStyles, Switcher } from './SignUp-styles';
 
 export const SignUp = () => {
   // Variables

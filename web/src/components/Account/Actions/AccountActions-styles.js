@@ -10,8 +10,8 @@ export const stylesCreator = (theme) => ({
     root: {
       width: '100%',
       maxWidth: 460,
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
       marginTop: theme.spacing(1),
     },
     button: {
