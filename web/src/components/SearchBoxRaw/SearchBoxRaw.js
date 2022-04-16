@@ -70,6 +70,7 @@ const SearchBoxRaw = (props) => {
           value={query ?? ''}
           placeholder={placeholder}
           onChange={queryChangeHandler}
+          spellCheck={false}
         />
       </Paper>
     </div>
