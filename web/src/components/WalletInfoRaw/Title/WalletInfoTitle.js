@@ -22,12 +22,7 @@ const WalletInfoTitle = (props) => {
   let title = titleShortener('wallet', id);
   if (isClickable) {
     title = (
-      <Link
-        className={classes.link}
-        href={'/wallet/' + id}
-        target="_blank"
-        rel="noopener"
-      >
+      <Link className={classes.link} href={'/wallet/' + id}>
         {title}
       </Link>
     );

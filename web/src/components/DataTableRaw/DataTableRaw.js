@@ -57,7 +57,7 @@ export const DataTableRaw = (props) => {
         className={classes.tableBodyText}
       >
         {types.includes(column.id) ? (
-          <Link href={basePath + row[column.id]} target="_blank" rel="noopener">
+          <Link href={basePath + row[column.id]}>
             {titleShortener(column.id, row[column.id])}
           </Link>
         ) : (
