@@ -6,9 +6,15 @@ import { makeStyles, withStyles } from '../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
-    root: {},
+    root: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: theme.spacing(7),
+    },
     toolbar: {
-      justifyContent: 'space-between',
+      position: 'absolute',
+      left: 0,
     },
     link: {
       textDecoration: 'none',
@@ -19,12 +25,6 @@ export const stylesCreator = (theme) => ({
     logo: {
       ...logoStyler(theme).Default.logo,
       fontSize: 26,
-      // textAlign: 'center',
-      // position: 'absolute',
-      position: 'absolute',
-      top: '40%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
     },
   },
 });
