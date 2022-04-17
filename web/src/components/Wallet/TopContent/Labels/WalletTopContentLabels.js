@@ -1,6 +1,7 @@
 // React
 import React from 'react';
 import ReactWordcloud from 'react-wordcloud';
+import { useHistory } from 'react-router';
 
 // Redux
 import { useSelector } from 'react-redux';
@@ -18,10 +19,11 @@ export const WalletTopContentLabels = () => {
   // Variables
   const classes = useStyles();
   const labels = useSelector((state) => state.wallet.data.labels); // Loaded in the parent container
+  const history = useHistory();
 
   // Handlers
   const onWordClick = ({ text }) => {
-    window.open('/search?query=' + text);
+    history.push('/search?query=' + text);
   };
 
   // JSX

@@ -1,5 +1,6 @@
 // React
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // GraphVis
 import Graph from 'react-graph-vis';
@@ -26,6 +27,7 @@ export const WalletTopContentLinks = () => {
   const topLinks = useSelector((state) => state.wallet.topLinks.result);
   const isBusy = useSelector((state) => state.wallet.topLinks.isBusy);
   const [options, setOptions] = useState(graphVizOptions);
+  const history = useHistory();
 
   // Hooks
   useEffect(() => {
@@ -45,7 +47,7 @@ export const WalletTopContentLinks = () => {
   const selectedHandler = ({ nodes, edges }) => {
     let selectedId = nodes[0];
     if (selectedId && selectedId !== walletId) {
-      window.open('/wallet/' + selectedId, '_blank');
+      history.push('/wallet/' + selectedId);
     }
   };
 
