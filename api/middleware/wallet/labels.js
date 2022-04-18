@@ -33,7 +33,7 @@ const walletLabels = asyncHandler(async (request, response, next) => {
   const addresses = walletLabelsRes.rows.map((row) => {
     return {
       id: row.id,
-      label: row.label,
+      label: wallet.stringShortener(row.label),
       category: row.category,
       source: row.source,
       address: row.address,
