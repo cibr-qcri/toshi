@@ -144,6 +144,13 @@ exports.getWalletLinks = (wallet, index) => {
 };
 
 exports.getWalletInfo = (result, isDetailed = false) => {
+  let riskScore = 'N/A';
+  if (result.risk_score > -1) {
+    riskScore = numeral(result.risk_score).format('0.00') +
+      ' (' +
+      this.getRiskLevel(result.risk_score) +
+      ')';
+  }
   let walletInfo = {
     topCategory: {
       name: 'Top Category',
@@ -161,11 +168,7 @@ exports.getWalletInfo = (result, isDetailed = false) => {
     },
     riskScore: {
       name: 'Risk Score',
-      value:
-        numeral(result.risk_score).format('0.00') +
-        ' (' +
-        this.getRiskLevel(result.risk_score) +
-        ')',
+      value: riskScore,
     },
     size: {
       name: 'Size',
