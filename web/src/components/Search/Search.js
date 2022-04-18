@@ -18,7 +18,13 @@ import MoreResults from './MoreResults';
 import { getResults, showAlertDialog } from '../../store/actions';
 
 // Styles
-import { useStyles, LazyProgress, SearchBox, Switcher, NoResults } from './Search-styles';
+import {
+  useStyles,
+  LazyProgress,
+  SearchBox,
+  Switcher,
+  NoResults,
+} from './Search-styles';
 
 export const Search = () => {
   // Variables
@@ -43,6 +49,12 @@ export const Search = () => {
     }
     dispatch(getResults(query));
   }, [dispatch, location, history]);
+
+  useEffect(() => {
+    if (results.length === 1) {
+      history.push('/wallet/' + results[0]._id);
+    }
+  }, [history, results]);
 
   // Handlers
   const alertHandler = () => {
