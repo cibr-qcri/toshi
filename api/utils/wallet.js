@@ -1,6 +1,6 @@
 const numeral = require('numeral');
 
-const stringShortener = (value) => {
+exports.stringShortener = (value) => {
   if (value.endsWith('.onion')) {
     value = '[' + value.substring(0, 7) + '].onion';
   }
@@ -15,10 +15,10 @@ const findMostFrequentItem = (object) => {
   };
   Object.entries(object).map(([key, value]) => {
     if (value > result.count) {
-      result.topValue = stringShortener(key);
+      result.topValue = this.stringShortener(key);
       result.count = value;
     }
-    result.values.push({ text: stringShortener(key), value: value });
+    result.values.push({ text: this.stringShortener(key), value: value });
   }, {});
   return result;
 };
@@ -38,7 +38,7 @@ exports.getLabels = (labels, isTopLabel = false) => {
   }
   const labelObject = JSON.parse(labels);
   if (Object.keys(labelObject).length < 2 && isTopLabel) {
-    return stringShortener(Object.keys(labelObject)[0]);
+    return this.stringShortener(Object.keys(labelObject)[0]);
   } else if (isTopLabel) {
     return findMostFrequentItem(labelObject).topValue;
   } else {
