@@ -7,7 +7,7 @@ const stringShortener = (value) => {
   return value;
 };
 
-const findMostFrequentItem = (object, isTopLabel = false) => {
+const findMostFrequentItem = (object) => {
   let result = {
     topValue: '',
     count: 0,
@@ -17,7 +17,7 @@ const findMostFrequentItem = (object, isTopLabel = false) => {
     if (value > result.count) {
       result.topValue = stringShortener(key);
       result.count = value;
-    } else if (isTopLabel && value === result.count) {
+    } else if (value === result.count) {
       result.topValue = 'Multiple';
     }
     result.values.push({ text: stringShortener(key), value: value });
@@ -42,7 +42,7 @@ exports.getLabels = (labels, isTopLabel = false) => {
   if (Object.keys(labelObject).length < 2 && isTopLabel) {
     return stringShortener(Object.keys(labelObject)[0]);
   } else if (isTopLabel) {
-    return findMostFrequentItem(labelObject, isTopLabel).topValue;
+    return findMostFrequentItem(labelObject).topValue;
   } else {
     return findMostFrequentItem(labelObject).values;
   }
