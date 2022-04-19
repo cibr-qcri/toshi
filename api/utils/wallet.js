@@ -1,4 +1,5 @@
 const numeral = require('numeral');
+const { timestampToDateString } = require('./common');
 
 exports.stringShortener = (value) => {
   if (value.endsWith('.onion')) {
@@ -119,7 +120,7 @@ exports.getWalletTxes = (row) => {
     outputUSDValue: numeral(row.output_usd_value).format('$0,0.00'),
     type: row.tx_type,
     isCoinbase: row.is_coinbase ? 'Yes' : 'No',
-    timestamp: new Date(row.timestamp * 1000).toDateString(),
+    timestamp: timestampToDateString(row.timestamp),
   };
 };
 

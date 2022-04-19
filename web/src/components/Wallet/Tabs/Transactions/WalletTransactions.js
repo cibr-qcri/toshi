@@ -31,17 +31,17 @@ export const WalletTransactions = () => {
         },
         {
           id: 'timestamp',
-          label: 'Date',
-          align: 'left',
-        },
-        {
-          id: 'isCoinbase',
-          label: 'Coinbase',
+          label: 'Timestamp',
           align: 'left',
         },
         {
           id: 'type',
           label: 'Flow',
+          align: 'left',
+        },
+        {
+          id: 'isCoinbase',
+          label: 'Coinbase',
           align: 'left',
         },
         {
