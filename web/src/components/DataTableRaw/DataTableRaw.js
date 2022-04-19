@@ -90,7 +90,7 @@ export const DataTableRaw = (props) => {
   }
 
   let table = (
-    <Typography align="center" variant="subtitle1" color="textSecondary">
+    <Typography align="center" variant="body2" color="textSecondary">
       No {type === 'address' ? `${type}es` : `${type}s`} found
     </Typography>
   );
