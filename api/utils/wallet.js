@@ -1,4 +1,5 @@
 const numeral = require('numeral');
+const { timestampToDateString } = require('./common');
 
 exports.stringShortener = (value) => {
   if (value.endsWith('.onion')) {
@@ -119,6 +120,7 @@ exports.getWalletTxes = (row) => {
     outputUSDValue: numeral(row.output_usd_value).format('$0,0.00'),
     type: row.tx_type,
     isCoinbase: row.is_coinbase ? 'Yes' : 'No',
+    timestamp: timestampToDateString(row.timestamp),
   };
 };
 
@@ -146,7 +148,8 @@ exports.getWalletLinks = (wallet, index) => {
 exports.getWalletInfo = (result, isDetailed = false) => {
   let riskScore = 'N/A';
   if (result.risk_score > -1) {
-    riskScore = numeral(result.risk_score).format('0.00') +
+    riskScore =
+      numeral(result.risk_score).format('0.00') +
       ' (' +
       this.getRiskLevel(result.risk_score) +
       ')';
