@@ -30,6 +30,11 @@ export const WalletTransactions = () => {
           align: 'left',
         },
         {
+          id: 'timestamp',
+          label: 'Date',
+          align: 'left',
+        },
+        {
           id: 'isCoinbase',
           label: 'Coinbase',
           align: 'left',
