@@ -15,8 +15,6 @@ const WalletInfoBody = (props) => {
   const { items } = props;
   const [walletInfoItems, setWalletInfoItems] = useState(items);
   const currencyType = useSelector((state) => state.wallet.currency);
-  const tooltipTitle =
-    'Negative value is due to different exchange rates at different transaction times';
 
   // Hooks
   useEffect(() => {
@@ -42,7 +40,22 @@ const WalletInfoBody = (props) => {
       name = (
         <Typography variant="body2">
           {info.name}
-          <Tooltip title={tooltipTitle}>
+          <Tooltip title="Negative value is due to different exchange rates at different transaction times">
+            <InfoIcon className={classes.infoIcon} color="action" />
+          </Tooltip>
+        </Typography>
+      );
+    } else if (
+      (info.name === 'Top Label' || info.name === 'Top Category') &&
+      !info.value
+    ) {
+      const type = info.name === 'Top Category' ? 'categories' : 'labels';
+      name = (
+        <Typography variant="body2">
+          {info.name}
+          <Tooltip
+            title={`Multiple ${type} with the same number of occurances are associated with this wallet`}
+          >
             <InfoIcon className={classes.infoIcon} color="action" />
           </Tooltip>
         </Typography>
@@ -53,11 +66,18 @@ const WalletInfoBody = (props) => {
 
   //JSX
   const infoItems = Object.values(walletInfoItems).map((info, index) => {
+    let value = info.value;
+    if (
+      (info.name === 'Top Label' || info.name === 'Top Category') &&
+      !info.value
+    ) {
+      value = 'Multiple';
+    }
     return (
       <Grid className={classes.item} key={index} item xs={12} sm={6}>
         {renderWalletInfoName(info)}
         <Typography variant="body2" color="textSecondary">
-          {info.value}
+          {value}
         </Typography>
         <Divider className={classes.divider} />
       </Grid>

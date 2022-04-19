@@ -18,6 +18,8 @@ const findMostFrequentItem = (object) => {
     if (value > result.count) {
       result.topValue = this.stringShortener(key);
       result.count = value;
+    } else if (value === result.count) {
+      result.topValue = '';
     }
     result.values.push({ text: this.stringShortener(key), value: value });
   }, {});
