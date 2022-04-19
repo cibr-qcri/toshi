@@ -66,7 +66,7 @@ const SearchBoxRaw = (props) => {
         </IconButton>
         <InputBase
           className={classes.input}
-          type="search"
+          type="text"
           value={query ?? ''}
           placeholder={placeholder}
           onChange={queryChangeHandler}
