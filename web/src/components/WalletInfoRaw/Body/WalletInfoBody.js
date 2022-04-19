@@ -15,10 +15,6 @@ const WalletInfoBody = (props) => {
   const { items } = props;
   const [walletInfoItems, setWalletInfoItems] = useState(items);
   const currencyType = useSelector((state) => state.wallet.currency);
-  const balanceTooltipTitle =
-    'Negative value is due to different exchange rates at different transaction times';
-  const topItemTooltipTitle =
-    'Multiple {0} with the same number of occurrences are available for the wallet';
 
   // Hooks
   useEffect(() => {
@@ -44,17 +40,22 @@ const WalletInfoBody = (props) => {
       name = (
         <Typography variant="body2">
           {info.name}
-          <Tooltip title={balanceTooltipTitle}>
+          <Tooltip title="Negative value is due to different exchange rates at different transaction times">
             <InfoIcon className={classes.infoIcon} color="action" />
           </Tooltip>
         </Typography>
       );
-    } else if ((info.name === 'Top Label' || info.name === 'Top Category') && !info.value) {
-      const items = info.name === 'Top Category'? 'categories' : 'labels';
+    } else if (
+      (info.name === 'Top Label' || info.name === 'Top Category') &&
+      !info.value
+    ) {
+      const type = info.name === 'Top Category' ? 'categories' : 'labels';
       name = (
         <Typography variant="body2">
           {info.name}
-          <Tooltip title={topItemTooltipTitle.format(items)}>
+          <Tooltip
+            title={`Multiple ${type} with the same number of occurances are associated with this wallet`}
+          >
             <InfoIcon className={classes.infoIcon} color="action" />
           </Tooltip>
         </Typography>
@@ -66,7 +67,10 @@ const WalletInfoBody = (props) => {
   //JSX
   const infoItems = Object.values(walletInfoItems).map((info, index) => {
     let value = info.value;
-    if ((info.name === 'Top Label' || info.name === 'Top Category') && !info.value) {
+    if (
+      (info.name === 'Top Label' || info.name === 'Top Category') &&
+      !info.value
+    ) {
       value = 'Multiple';
     }
     return (
