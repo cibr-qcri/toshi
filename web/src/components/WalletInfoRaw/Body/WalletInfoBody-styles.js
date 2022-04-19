@@ -13,8 +13,12 @@ export const stylesCreator = (theme) => ({
     item: {
       paddingTop: theme.spacing(0.5),
     },
+    infoItem: {
+      display: 'flex',
+      alignItems: 'center',
+    },
     infoIcon: {
-      marginLeft: theme.spacing(0.25),
+      marginLeft: theme.spacing(0.5),
       fontSize: '0.875rem',
     },
     divider: {

@@ -38,7 +38,7 @@ const WalletInfoBody = (props) => {
     let name = <Typography variant="body2">{info.name}</Typography>;
     if (info.name === 'Balance' && parseInt(info.value.replace('$', '')) < 0) {
       name = (
-        <Typography variant="body2">
+        <Typography className={classes.infoItem} variant="body2">
           {info.name}
           <Tooltip title="Negative value is due to different exchange rates at different transaction times">
             <InfoIcon className={classes.infoIcon} color="action" />
@@ -51,7 +51,7 @@ const WalletInfoBody = (props) => {
     ) {
       const type = info.name === 'Top Category' ? 'categories' : 'labels';
       name = (
-        <Typography variant="body2">
+        <Typography className={classes.infoItem} variant="body2">
           {info.name}
           <Tooltip
             title={`Multiple ${type} with the same number of occurances are associated with this wallet`}
