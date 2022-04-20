@@ -1,6 +1,9 @@
 // React
 import React from 'react';
 
+// CLSX
+import clsx from 'clsx';
+
 // PropTypes
 import PropTypes from 'prop-types';
 
@@ -22,7 +25,9 @@ const ButtonRaw = (props) => {
     <div className={classes.root}>
       <Button
         onClick={onClick}
-        className={classes.button}
+        className={clsx(classes.buttonPrimary, {
+          [classes.buttonSecondary]: color === 'secondary',
+        })}
         variant="contained"
         color={color || 'primary'}
         size="large"
