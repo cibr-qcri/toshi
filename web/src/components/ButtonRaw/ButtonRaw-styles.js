@@ -1,7 +1,7 @@
 export const stylesCreator = (theme) => ({
   Default: {
     root: {},
-    button: {
+    buttonPrimary: {
       width: '100%',
       boxShadow: '0px 0px 0px',
       '&:disabled': {
@@ -12,5 +12,16 @@ export const stylesCreator = (theme) => ({
         boxShadow: '0px 0px 0px',
       },
     },
+    buttonSecondary: {
+      width: '100%',
+      boxShadow: '0px 0px 0px',
+      '&:disabled': {
+        backgroundColor: theme.palette.secondary.dark,
+        color: theme.palette.info.contrastText,
+      },
+      '&:hover': {
+        boxShadow: '0px 0px 0px',
+      },
+    },  
   },
 });
