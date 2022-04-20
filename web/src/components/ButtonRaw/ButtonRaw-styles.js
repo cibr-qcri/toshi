@@ -5,7 +5,7 @@ export const stylesCreator = (theme) => ({
       width: '100%',
       boxShadow: '0px 0px 0px',
       '&:disabled': {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.dark,
         color: theme.palette.info.contrastText,
       },
       '&:hover': {
