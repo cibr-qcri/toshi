@@ -70,13 +70,7 @@ const MenuOutreach = (props) => {
           </ListItemIcon>
           <ListItemText primary="Twitter" />
         </ListItem>
-        <ListItem
-          button
-          component="a"
-          href={contactLink}
-          target="_blank"
-          onClick={onClose}
-        >
+         <ListItem button component="a" href={contactLink} onClick={onClose}>
           <ListItemIcon>
             <ContactUsIcon />
           </ListItemIcon>
