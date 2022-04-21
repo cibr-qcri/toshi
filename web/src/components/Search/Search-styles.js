@@ -2,7 +2,7 @@
 import LazyProgressRaw, { lazyProgressStyler } from '../LazyProgressRaw';
 import SearchBoxRaw, { searchBoxStyler } from '../SearchBoxRaw';
 import SwitcherRaw, { switcherStyler } from '../SwitcherRaw';
-import NoResultsRaw , { noResultsStyler } from '../NoResultsRaw';
+import NoResultsRaw, { noResultsStyler } from '../NoResultsRaw';
 
 // Utils
 import { makeStyles, withStyles } from '../../utils';
@@ -19,7 +19,13 @@ export const stylesCreator = (theme) => ({
     },
   },
   LazyProgressRaw: lazyProgressStyler(theme).Default,
-  SearchBoxRaw: searchBoxStyler(theme).Default,
+  SearchBoxRaw: {
+    ...searchBoxStyler(theme).Default,
+    root: {
+      ...searchBoxStyler(theme).Default.root,
+      maxWidth: 'none',
+    },
+  },
   SwitcherRaw: {
     ...switcherStyler(theme).Default,
     root: {
