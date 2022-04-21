@@ -4,11 +4,18 @@ import { makeStyles } from '../../utils';
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
-      marginTop: theme.spacing(2),
-      textAlign: 'justify',
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
     title: {
-      textAlign: 'center',
+      marginBottom: theme.spacing(2),
+    },
+    section: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    paper: {
+      padding: theme.spacing(2.5),
     },
   },
 });
