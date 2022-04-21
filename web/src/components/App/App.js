@@ -16,9 +16,9 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Components
-import Layout from '../Layout';
-import Main from '../Main';
 import AuthRedirect from '../AuthRedirect';
+import Main from '../Main';
+import Layout from '../Layout';
 
 // Store
 import { getThemeMode, getToken, setThemeMode } from '../../store/actions';
@@ -45,6 +45,9 @@ const lazyComp = {
   }),
   SignUp: lazy(() => {
     return import('../SignUp');
+  }),
+  Terms: lazy(() => {
+    return import('../Terms');
   }),
   Wallet: lazy(() => {
     return import('../Wallet');
@@ -89,6 +92,7 @@ const App = () => {
       <Route path="/activate/:token" component={lazyComp.Activate} />
       <Route path="/signup" component={lazyComp.SignUp} />
       <Route path="/main" component={Main} />
+      <Route from="/terms" component={lazyComp.Terms} />
       <Route from="/search" component={AuthRedirect} />
       <Route from="/wallet" component={AuthRedirect} />
       <Redirect from="/" to="/main" />
@@ -104,6 +108,7 @@ const App = () => {
         <Route path="/account" component={lazyComp.Account} />
         <Route path="/search" component={lazyComp.Search} />
         <Route path="/wallet" component={lazyComp.Wallet} />
+        <Route from="/terms" component={lazyComp.Terms} />
         <Route path="/main" component={Main} />
         <Redirect from="/" to="/main" />
       </Switch>
