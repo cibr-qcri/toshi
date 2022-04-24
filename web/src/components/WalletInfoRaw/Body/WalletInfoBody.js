@@ -40,7 +40,11 @@ const WalletInfoBody = (props) => {
       name = (
         <Typography className={classes.infoItem} variant="body2">
           {info.name}
-          <Tooltip title="Negative value is due to different exchange rates at different transaction times">
+          <Tooltip
+            title="Negative value is due to different exchange rates at different transaction times"
+            enterTouchDelay={0}
+            leaveTouchDelay={5000}
+          >
             <InfoIcon className={classes.infoIcon} color="action" />
           </Tooltip>
         </Typography>
@@ -55,6 +59,8 @@ const WalletInfoBody = (props) => {
           {info.name}
           <Tooltip
             title={`Multiple ${type} with the same number of occurances are associated with this wallet`}
+            enterTouchDelay={0}
+            leaveTouchDelay={5000}
           >
             <InfoIcon className={classes.infoIcon} color="action" />
           </Tooltip>
