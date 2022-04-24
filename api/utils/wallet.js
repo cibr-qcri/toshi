@@ -147,6 +147,10 @@ exports.getWalletLinks = (wallet, index) => {
   };
 };
 
+exports.escapeCharacters = (value) => {
+  return value.replace(/(?=[() ])/g, '\\')
+};
+
 exports.getWalletInfo = (result, isDetailed = false) => {
   let riskScore = 'N/A';
   if (result.risk_score > -1) {

@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 // Router
 import { useHistory } from 'react-router-dom';
 
+// QueryString
+import qs from 'qs';
+
 // Material
 import { Search as SearchIcon } from '@material-ui/icons';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
@@ -42,7 +45,7 @@ const SearchBoxRaw = (props) => {
     if (query.trim() !== '') {
       const location = {
         pathname: '/search',
-        search: '?query=' + query,
+        search: qs.stringify({ 'query' : query }),
       };
       if (isAuth) {
         history.push(location);
