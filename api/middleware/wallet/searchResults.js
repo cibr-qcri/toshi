@@ -45,6 +45,9 @@ const searchResults = asyncHandler(async (request, response, next) => {
   } else if (type === 'transaction') {
     getWalletsQuery = wallet.queries.getWalletByTx;
     queryValues = [query, query, offset, MAX_RESULTS_IN_PAGE];
+  } else if (type === 'wallet') {
+    getWalletsQuery = wallet.queries.getWalletById;
+    queryValues = [query];
   } else {
     getWalletsQuery = wallet.queries.getWalletByLabel;
     queryValues = [query, offset, MAX_RESULTS_IN_PAGE];

@@ -280,6 +280,12 @@ exports.queries = {
       ORDER BY id OFFSET $2
       LIMIT $3;
     `,
+  getWalletById: `
+      SELECT *,
+      1 AS total_count
+      FROM btc_wallet
+      WHERE cluster_id = $1
+    `,
   getWalletMoneyFlowById: `
     SELECT category, SUM(total_usd_amount) as total_usd_amount, flow_type
     FROM btc_wallet_money_flow

@@ -14,7 +14,7 @@ const SearchSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ['label', 'transaction', 'address'],
+      enum: ['label', 'transaction', 'address', 'wallet'],
     },
   },
   {
