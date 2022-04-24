@@ -14,6 +14,11 @@ export const validateBitcoinTx = (value) => {
   return new RegExp(regExpStr).test(value);
 };
 
+export const checkValidUUID = (value)  => {
+  const regexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+  return regexExp.test(value);
+};
+
 export const titleShortener = (type, value) => {
   if (type === 'wallet') {
     return 'Wallet [' + value.split('-')[0] + ']';

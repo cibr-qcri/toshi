@@ -11,6 +11,7 @@ import { batch } from 'react-redux';
 import * as creators from './creators';
 import { showAlert } from '../';
 import {
+  checkValidUUID,
   validateBitcoinAddress,
   validateBitcoinTx,
 } from '../../../utils/common';
@@ -20,6 +21,8 @@ const queryType = (query) => {
     return 'address';
   } else if (validateBitcoinTx(query)) {
     return 'transaction';
+  } else if (checkValidUUID(query)) {
+    return 'wallet';
   } else {
     return 'label';
   }
