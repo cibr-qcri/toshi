@@ -55,7 +55,12 @@ const searchResults = asyncHandler(async (request, response, next) => {
     queryValues = [query];
   } else {
     getWalletsQuery = wallet.queries.getWalletByLabel;
-    queryValues = [query, sortByString, offset, MAX_RESULTS_IN_PAGE];
+    queryValues = [
+      wallet.escapeCharacters(query),
+      sortByString,
+      offset,
+      MAX_RESULTS_IN_PAGE,
+    ];
   }
 
   const results = await gp.query(getWalletsQuery, queryValues);
