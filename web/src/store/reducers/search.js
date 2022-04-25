@@ -14,6 +14,7 @@ const initialState = {
     pagination: {},
     type: '',
     count: 0,
+    sortBy: 'size',
   },
   error: null,
   isBusy: true,
@@ -59,6 +60,14 @@ const reducer = (state = initialState, action) => {
         }),
         isBusy: false,
         isMoreLoading: false,
+      });
+    }
+    case types.SET_SORT_BY: {
+      return updateObject(state, {
+        data: updateObject(state.data, {
+          sortBy: action.payload,
+          results: [],
+        }),
       });
     }
     // Reset
