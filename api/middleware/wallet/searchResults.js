@@ -7,7 +7,7 @@ const Search = require('../../models/Search');
 const MAX_RESULTS_IN_PAGE = 25;
 
 const searchResults = asyncHandler(async (request, response, next) => {
-  const { query, type } = request.query;
+  const { query, type, sortBy } = request.query;
 
   if (!query) {
     return next(new ErrorResponse('Please provide a search query', 400));
@@ -15,6 +15,11 @@ const searchResults = asyncHandler(async (request, response, next) => {
 
   if (!type) {
     return next(new ErrorResponse('Please provide a search type', 400));
+  }
+
+  const sortByString = wallet.getSortByString(sortBy);
+  if (sortByString === '') {
+    return next(new ErrorResponse('Please provide a valid sortBy param', 400));
   }
 
   if (!Search.schema.path('type').enumValues.includes(type)) {
@@ -44,13 +49,18 @@ const searchResults = asyncHandler(async (request, response, next) => {
     queryValues = [query, offset, MAX_RESULTS_IN_PAGE];
   } else if (type === 'transaction') {
     getWalletsQuery = wallet.queries.getWalletByTx;
-    queryValues = [query, query, offset, MAX_RESULTS_IN_PAGE];
+    queryValues = [query, query, sortByString, offset, MAX_RESULTS_IN_PAGE];
   } else if (type === 'wallet') {
     getWalletsQuery = wallet.queries.getWalletById;
     queryValues = [query];
   } else {
     getWalletsQuery = wallet.queries.getWalletByLabel;
-    queryValues = [wallet.escapeCharacters(query), offset, MAX_RESULTS_IN_PAGE];
+    queryValues = [
+      wallet.escapeCharacters(query),
+      sortByString,
+      offset,
+      MAX_RESULTS_IN_PAGE,
+    ];
   }
 
   const results = await gp.query(getWalletsQuery, queryValues);

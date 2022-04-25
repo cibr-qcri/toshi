@@ -183,6 +183,10 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       name: 'Size',
       value: numeral(result.num_address).format('0,0'),
     },
+    volume: {
+      name: 'Volume',
+      value: numeral(result.num_tx).format('0,0'),
+    },
   };
 
   if (isDetailed) {
@@ -232,6 +236,16 @@ exports.getWalletInfo = (result, isDetailed = false) => {
   }
 
   return walletInfo;
+};
+
+exports.getSortByString = (sortBy) => {
+  if (sortBy === 'size' || sortBy === '') {
+    return 'num_address';
+  } else if (sortBy === 'riskScore') {
+    return 'risk_score';
+  } else if (sortBy === 'volume') {
+    return 'num_tx';
+  } else '';
 };
 
 exports.queries = {
@@ -300,8 +314,13 @@ exports.queries = {
     SELECT btc_wallet.*, count(*) OVER() AS total_count
     FROM btc_wallet
     WHERE label ~* $1
-    ORDER BY risk_score DESC OFFSET $2
-    LIMIT $3;
+    ORDER BY (CASE 
+    WHEN $2='num_address' THEN num_address 
+    WHEN $2='num_tx' THEN num_tx 
+    WHEN $2='risk_score' THEN risk_score 
+    END) DESC 
+    OFFSET $3
+    LIMIT $4;
     `,
   getWalletByTx: `
     SELECT id,
@@ -351,8 +370,13 @@ exports.queries = {
         risk_score,
         label,
         category
-    OFFSET $3
-    LIMIT $4;
+    ORDER BY (CASE 
+      WHEN $3='num_address' THEN num_address 
+      WHEN $3='num_tx' THEN num_tx 
+      WHEN $3='risk_score' THEN risk_score 
+      END) DESC 
+    OFFSET $4
+    LIMIT $5;
     `,
   getTopLinkedWalletsById: `
     WITH btc_addresses,

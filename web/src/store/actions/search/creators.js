@@ -17,6 +17,12 @@ export const getResultsFailure = (error) => ({
   payload: error,
 });
 
+// Sort
+export const setSortBy = (sortBy) => ({
+  type: types.SET_SORT_BY,
+  payload: sortBy,
+});
+
 // Reset
 export const reset = () => ({
   type: types.RESET,

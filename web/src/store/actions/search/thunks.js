@@ -30,8 +30,11 @@ const queryType = (query) => {
 
 export const getResults = (query, isPaged = false, isMoreResult = false) => {
   return (dispatch, getState) => {
+    const { sortBy } = getState().search.data;
+
     let queryParams = {
       query,
+      sortBy,
     };
 
     if (isPaged) {
