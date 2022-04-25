@@ -35,11 +35,6 @@ const WalletTabs = () => {
   const walletLinks = useSelector((state) => state.wallet.links.result);
   const [tabIndex, setTabIndex] = React.useState(0);
 
-  // Hooks
-  useEffect(() => {
-    dispatch(getWalletAddresses(id));
-  }, [dispatch, id]);
-
   // Handlers
   const handleChange = (event, index) => {
     setTabIndex(index);
