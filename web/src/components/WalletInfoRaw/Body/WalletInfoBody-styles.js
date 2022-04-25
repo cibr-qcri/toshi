@@ -12,6 +12,7 @@ export const stylesCreator = (theme) => ({
     },
     item: {
       paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
     },
     infoItem: {
       display: 'flex',
