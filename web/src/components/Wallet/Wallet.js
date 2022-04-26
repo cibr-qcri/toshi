@@ -16,6 +16,7 @@ import {
   getWalletAddresses,
   getWalletInfo,
   getWalletTopLinks,
+  resetWallet,
 } from '../../store/actions';
 
 // Styles
@@ -43,6 +44,7 @@ export const Wallet = () => {
     if (!id || id.length === 0) {
       history.push('/main');
     }
+    dispatch(resetWallet());
     dispatch(getWalletInfo(id));
     dispatch(getWalletAddresses(id));
     dispatch(getWalletTopLinks(id));

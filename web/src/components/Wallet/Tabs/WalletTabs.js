@@ -1,5 +1,5 @@
 // React
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,11 +34,6 @@ const WalletTabs = () => {
   const walletLabels = useSelector((state) => state.wallet.labels.result);
   const walletLinks = useSelector((state) => state.wallet.links.result);
   const [tabIndex, setTabIndex] = React.useState(0);
-
-  // Hooks
-  useEffect(() => {
-    dispatch(getWalletAddresses(id));
-  }, [dispatch, id]);
 
   // Handlers
   const handleChange = (event, index) => {
