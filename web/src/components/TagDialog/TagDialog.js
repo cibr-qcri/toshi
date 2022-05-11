@@ -29,6 +29,7 @@ const TagDialog = () => {
   const dispatch = useDispatch();
   const formRef = useRef();
   const open = useSelector((state) => state.dialog.tag.open);
+  const [scroll] = React.useState('paper');
 
   // Handlers
   const toggleTagHandler = () => {
@@ -47,10 +48,10 @@ const TagDialog = () => {
 
   //JSX
   const view = (
-    <Dialog open={open} onClose={toggleTagHandler} fullWidth>
+    <Dialog open={open} scroll={scroll} onClose={toggleTagHandler} fullWidth>
       <Title onClose={toggleTagHandler}>Suggest New Tags</Title>
-      <DialogContent dividers>
-        <DialogContentText>Which tags describe this webpage?</DialogContentText>
+      <DialogContent dividers={scroll === 'paper'}>
+        <DialogContentText>Which tags describe this wallet?</DialogContentText>
         <Form formRef={formRef} onClose={toggleTagHandler} />
       </DialogContent>
       <DialogActions className={classes.actions}>
