@@ -7,6 +7,11 @@ export const stylesCreator = (theme) => ({
       display: "flex",
       flexDirection: "column",
     },
+    scrollable: {
+      display: "flex",
+      flexDirection: "column",
+      overflow: 'auto',
+    },
     select: {
       marginBottom: theme.spacing(1),
     },
