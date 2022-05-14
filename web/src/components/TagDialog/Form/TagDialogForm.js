@@ -39,7 +39,6 @@ const TagDialogForm = (props) => {
     validationSchema: tagDialogFormSchema,
   });
   const initialState = {
-    userTypeEnabled: false,
     serviceTypeEnabled: false,
     darkwebServiceEnabled: false,
     otherInputEnabled: false,
@@ -57,23 +56,20 @@ const TagDialogForm = (props) => {
     { type: 'service', label: 'Service'},
   ];
 
-  const userTypes = [
-    { type: 'socialMedia', label: 'Social Media'},
-    { type: 'other', label: 'Other' }
-  ]
-
   const serviceTypes = [
-    { type: 'wallet', label: 'Cryptocurrency wallet'},
+    { type: 'wallet', label: 'Cryptocurrency Wallet'},
     { type: 'scam', label: 'Scam'},
-    { type: 'pool', label: 'Mining pool'},
+    { type: 'pool', label: 'Mining Pool'},
     { type: 'marketplace', label: 'Marketplace'},
     { type: 'gambling', label: 'Gambling'},
-    { type: 'exchange', label: 'Cryptocurrency exchange'},
+    { type: 'exchange', label: 'Cryptocurrency Exchange'},
     { type: 'darkweb', label: 'Darkweb'},
     { type: 'finance', label: 'Finance'},
     { type: 'utility', label: 'Utility'},
     { type: 'tumbler', label: 'Tumbler'},
     { type: 'gateway', label: 'Payment Gateway'},
+    { type: 'blacklist', label: 'Blacklist'},
+    { type: 'socialMedia', label: 'Social Media'},
     { type: 'darkwebOther', label: 'Other' }
   ];
 
@@ -96,11 +92,8 @@ const TagDialogForm = (props) => {
   const handleChange = (event) => {
     const eventName = event.target.name;
     const eventValue = event.target.value
-    console.log(eventName);
-    console.log(eventValue);
     if (eventValue === "user") {
       setState(updateObject(state, {
-        userTypeEnabled: true,
         serviceTypeEnabled: false,
         darkwebServiceEnabled: false,
         otherInputEnabled: false,
@@ -108,7 +101,6 @@ const TagDialogForm = (props) => {
       }));
     } else if (eventValue === "service") {
       setState(updateObject(state, {
-        userTypeEnabled: false,
         serviceTypeEnabled: true,
         darkwebServiceEnabled: false,
         otherInputEnabled: false,
@@ -185,7 +177,6 @@ const TagDialogForm = (props) => {
           {errors.safety && errors.safety.message}
         </FormHelperText>
       </FormControl>
-
       <FormControl className={classes.select} error={!!errors.category}>
         <InputLabel>Type</InputLabel>
         <Controller
@@ -198,23 +189,6 @@ const TagDialogForm = (props) => {
           {errors.category && errors.category.message}
         </FormHelperText>
       </FormControl>
-
-      {
-        state.userTypeEnabled &&
-      <FormControl className={classes.select} error={!!errors.category}>
-        <InputLabel>User Category</InputLabel>
-        <Controller
-          as={getSelection(userTypes)}
-          name="userType"
-          control={control}
-          defaultValue=""
-        />
-        <FormHelperText>
-          {errors.category && errors.category.message}
-        </FormHelperText>
-      </FormControl>
-      }
-
       {
         state.serviceTypeEnabled &&
         <FormControl className={classes.select} error={!!errors.category}>
@@ -230,7 +204,6 @@ const TagDialogForm = (props) => {
           </FormHelperText>
         </FormControl>
       }
-
       {
         state.otherInputEnabled &&
         <TextField
@@ -242,7 +215,6 @@ const TagDialogForm = (props) => {
           defaultValue=""
         />
       }
-
       {
         state.darkwebServiceEnabled &&
         <FormControl className={classes.select} error={!!errors.category}>
@@ -258,7 +230,6 @@ const TagDialogForm = (props) => {
           </FormHelperText>
         </FormControl>
       }
-
       {
         state.darkwebOtherInputEnabled &&
         <TextField
@@ -270,7 +241,6 @@ const TagDialogForm = (props) => {
           defaultValue=""
         />
       }
-
       <TextField
         className={classes.text}
         inputRef={register}
