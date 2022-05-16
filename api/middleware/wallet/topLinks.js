@@ -13,7 +13,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
 
   let topLinkedWalletCursor = await arango.query({
     query: wallet.queries.getTopLinkedWalletsById,
-    bindVars: { start_wallet: 'btc_wallets/' + id },
+    bindVars: { start_wallet: 'btc_wallets_update/' + id },
   });
   const topLinkedWalletRes = await topLinkedWalletCursor.all();
 
