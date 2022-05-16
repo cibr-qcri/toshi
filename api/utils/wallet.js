@@ -380,8 +380,8 @@ exports.queries = {
     `,
   getTopLinkedWalletsById: `
     WITH btc_addresses,
-    btc_wallets LET start_vertex = @start_wallet FOR v,
-    e in 1..1 any start_vertex btc_wallet_edges FILTER not (
+    btc_wallets_update LET start_vertex = @start_wallet FOR v,
+    e in 1..1 any start_vertex btc_wallet_edges_update FILTER not (
         e._to == start_vertex
         and e._from == start_vertex
     ) LET c_wallet = SPLIT((e._from == start_vertex ? e._to: e._from), '/') [1] COLLECT wallet = c_wallet INTO wallets_group_by_id LET in_wallet_tx_hashes = (
@@ -398,9 +398,9 @@ exports.queries = {
   `,
   getLinkedWalletsById: `
     WITH btc_addresses,
-    btc_wallets let start_vertex = @start_wallet LET wallets = (
+    btc_wallets_update let start_vertex = @start_wallet LET wallets = (
         FOR v,
-        e in 1..1 any start_vertex btc_wallet_edges FILTER not (
+        e in 1..1 any start_vertex btc_wallet_edges_update FILTER not (
             e._to == start_vertex
             and e._from == start_vertex
         ) LET c_wallet = SPLIT((e._from == start_vertex ? e._to: e._from), '/') [1] COLLECT wallet = c_wallet INTO wallets_group_by_id LET in_wallet_satoshi_amount = (
