@@ -1,16 +1,16 @@
-const numeral = require('numeral');
-const { timestampToDateString } = require('./common');
+const numeral = require("numeral");
+const { timestampToDateString } = require("./common");
 
 exports.stringShortener = (value) => {
-  if (value.endsWith('.onion')) {
-    value = '[' + value.substring(0, 7) + '].onion';
+  if (value.endsWith(".onion")) {
+    value = "[" + value.substring(0, 7) + "].onion";
   }
   return value;
 };
 
 const findMostFrequentItem = (object) => {
   let result = {
-    topValue: '',
+    topValue: "",
     count: 0,
     values: [],
   };
@@ -19,7 +19,7 @@ const findMostFrequentItem = (object) => {
       result.topValue = this.stringShortener(key);
       result.count = value;
     } else if (value === result.count) {
-      result.topValue = '';
+      result.topValue = "";
     }
     result.values.push({ text: this.stringShortener(key), value: value });
   }, {});
@@ -60,11 +60,11 @@ exports.getEdgeWidth = (value) => {
 };
 
 exports.getRiskLevel = (score) => {
-  let riskLevel = 'Low';
+  let riskLevel = "Low";
   if (score >= 0.7) {
-    riskLevel = 'High';
+    riskLevel = "High";
   } else if (score >= 0.5 && score < 0.7) {
-    riskLevel = 'Medium';
+    riskLevel = "Medium";
   }
   return riskLevel;
 };
@@ -78,34 +78,34 @@ exports.getWalletAddresses = (row) => {
     id: row.id,
     address: row.address,
     totalSpentBTC: row.total_spent_satoshi
-      ? '₿' +
-        numeral(this.satoshiToBTC(row.total_spent_satoshi)).format('0,0.000000')
-      : 'N/A',
+      ? "₿" +
+        numeral(this.satoshiToBTC(row.total_spent_satoshi)).format("0,0.000000")
+      : "N/A",
     totalSpentUSD: row.total_spent_usd
-      ? numeral(row.total_spent_usd).format('$0,0.00')
-      : 'N/A',
+      ? numeral(row.total_spent_usd).format("$0,0.00")
+      : "N/A",
     totalReceivedBTC: row.total_received_satoshi
-      ? '₿' +
+      ? "₿" +
         numeral(this.satoshiToBTC(row.total_received_satoshi)).format(
-          '0,0.000000'
+          "0,0.000000"
         )
-      : 'N/A',
+      : "N/A",
     totalReceivedUSD: row.total_received_usd
-      ? numeral(row.total_received_usd).format('$0,0.00')
-      : 'N/A',
+      ? numeral(row.total_received_usd).format("$0,0.00")
+      : "N/A",
     btcBalance:
       row.total_received_satoshi && row.total_spent_satoshi
-        ? '₿' +
+        ? "₿" +
           numeral(this.satoshiToBTC(row.total_received_satoshi))
             .subtract(this.satoshiToBTC(row.total_spent_satoshi))
-            .format('0,0.000000')
-        : 'N/A',
+            .format("0,0.000000")
+        : "N/A",
     usdBalance:
       row.total_received_usd && row.total_spent_usd
         ? numeral(row.total_received_usd)
             .subtract(row.total_spent_usd)
-            .format('$0,0.00')
-        : 'N/A',
+            .format("$0,0.00")
+        : "N/A",
   };
 };
 
@@ -113,15 +113,15 @@ exports.getWalletTxes = (row) => {
   return {
     id: row.id,
     transaction: row.tx_hash,
-    blockNumber: numeral(row.block_number).format('0,0'),
+    blockNumber: numeral(row.block_number).format("0,0"),
     outputBTCValue:
-      '₿' + numeral(this.satoshiToBTC(row.output_value)).format('0,0.000000'),
+      "₿" + numeral(this.satoshiToBTC(row.output_value)).format("0,0.000000"),
     inputBTCValue:
-      '₿' + numeral(this.satoshiToBTC(row.input_value)).format('0,0.000000'),
-    inputUSDValue: numeral(row.input_usd_value).format('$0,0.00'),
-    outputUSDValue: numeral(row.output_usd_value).format('$0,0.00'),
+      "₿" + numeral(this.satoshiToBTC(row.input_value)).format("0,0.000000"),
+    inputUSDValue: numeral(row.input_usd_value).format("$0,0.00"),
+    outputUSDValue: numeral(row.output_usd_value).format("$0,0.00"),
     type: row.tx_type,
-    isCoinbase: row.is_coinbase ? 'Yes' : 'No',
+    isCoinbase: row.is_coinbase ? "Yes" : "No",
     timestamp: timestampToDateString(row.timestamp),
   };
 };
@@ -130,62 +130,62 @@ exports.getWalletLinks = (wallet, index) => {
   return {
     id: index,
     wallet: wallet.item.wallet_id,
-    numOutTxes: numeral(wallet.item.num_inbound_txes).format('0,0'),
-    outUSDAmount: numeral(wallet.item.inbound_usd_amount).format('$0,0.00'),
+    numOutTxes: numeral(wallet.item.num_inbound_txes).format("0,0"),
+    outUSDAmount: numeral(wallet.item.inbound_usd_amount).format("$0,0.00"),
     outBTCAmount:
-      '₿' +
+      "₿" +
       numeral(this.satoshiToBTC(wallet.item.inbound_satoshi_amount)).format(
-        '0,0.000000'
+        "0,0.000000"
       ),
-    numInTxes: numeral(wallet.item.num_outbound_txes).format('0,0'),
-    inUSDAmount: numeral(wallet.item.outbound_usd_amount).format('$0,0.00'),
+    numInTxes: numeral(wallet.item.num_outbound_txes).format("0,0"),
+    inUSDAmount: numeral(wallet.item.outbound_usd_amount).format("$0,0.00"),
     inBTCAmount:
-      '₿' +
+      "₿" +
       numeral(this.satoshiToBTC(wallet.item.outbound_satoshi_amount)).format(
-        '0,0.000000'
+        "0,0.000000"
       ),
   };
 };
 
 exports.escapeCharacters = (value) => {
-  return value.replace(/(?=[() ])/g, '\\')
+  return value.replace(/(?=[() ])/g, "\\");
 };
 
 exports.getWalletInfo = (result, isDetailed = false) => {
-  let riskScore = 'N/A';
+  let riskScore = "N/A";
   if (result.risk_score > -1) {
     riskScore =
-      numeral(result.risk_score).format('0.00') +
-      ' (' +
+      numeral(result.risk_score).format("0.00") +
+      " (" +
       this.getRiskLevel(result.risk_score) +
-      ')';
+      ")";
   }
   let walletInfo = {
     topCategory: {
-      name: 'Top Category',
+      name: "Top Category",
       value:
         result.category && result.category.length > 0
           ? this.getTopCategory(result.category)
-          : 'N/A',
+          : "N/A",
     },
     topLabel: {
-      name: 'Top Label',
+      name: "Top Label",
       value:
         result.label && result.label.length > 0
           ? this.getLabels(result.label, (isTopLabel = true))
-          : 'N/A',
+          : "N/A",
     },
     riskScore: {
-      name: 'Risk Score',
+      name: "Risk Score",
       value: riskScore,
     },
     size: {
-      name: 'Size',
-      value: numeral(result.num_address).format('0,0'),
+      name: "Size",
+      value: numeral(result.num_address).format("0,0"),
     },
     volume: {
-      name: 'Volume',
-      value: numeral(result.num_tx).format('0,0'),
+      name: "Volume",
+      value: numeral(result.num_tx).format("0,0"),
     },
   };
 
@@ -193,44 +193,44 @@ exports.getWalletInfo = (result, isDetailed = false) => {
     walletInfo = {
       ...walletInfo,
       volume: {
-        name: 'Volume',
-        value: numeral(result.num_tx).format('0,0'),
+        name: "Volume",
+        value: numeral(result.num_tx).format("0,0"),
       },
       usdBalance: {
-        name: 'Balance',
+        name: "Balance",
         value: numeral(result.total_received_usd)
           .subtract(result.total_spent_usd)
-          .format('$0,0.00'),
+          .format("$0,0.00"),
       },
       btcBalance: {
-        name: 'Balance',
+        name: "Balance",
         value:
-          '₿' +
+          "₿" +
           numeral(this.satoshiToBTC(result.total_received))
             .subtract(this.satoshiToBTC(result.total_spent))
-            .format('0,0.000000'),
+            .format("0,0.000000"),
       },
       totalUSDIn: {
-        name: 'Total In',
-        value: numeral(result.total_received_usd).format('$0,0.00'),
+        name: "Total In",
+        value: numeral(result.total_received_usd).format("$0,0.00"),
       },
       totalUSDOut: {
-        name: 'Total Out',
-        value: numeral(result.total_spent_usd).format('$0,0.00'),
+        name: "Total Out",
+        value: numeral(result.total_spent_usd).format("$0,0.00"),
       },
       totalBTCIn: {
-        name: 'Total In',
+        name: "Total In",
         value:
-          '₿' +
+          "₿" +
           numeral(this.satoshiToBTC(result.total_received)).format(
-            '0,0.000000'
+            "0,0.000000"
           ),
       },
       totalBTCOut: {
-        name: 'Total Out',
+        name: "Total Out",
         value:
-          '₿' +
-          numeral(this.satoshiToBTC(result.total_spent)).format('0,0.000000'),
+          "₿" +
+          numeral(this.satoshiToBTC(result.total_spent)).format("0,0.000000"),
       },
     };
   }
@@ -239,13 +239,13 @@ exports.getWalletInfo = (result, isDetailed = false) => {
 };
 
 exports.getSortByString = (sortBy) => {
-  if (sortBy === 'size' || sortBy === '') {
-    return 'num_address';
-  } else if (sortBy === 'riskScore') {
-    return 'risk_score';
-  } else if (sortBy === 'volume') {
-    return 'num_tx';
-  } else '';
+  if (sortBy === "size" || sortBy === "") {
+    return "num_address";
+  } else if (sortBy === "riskScore") {
+    return "risk_score";
+  } else if (sortBy === "volume") {
+    return "num_tx";
+  } else "";
 };
 
 exports.queries = {
@@ -380,8 +380,8 @@ exports.queries = {
     `,
   getTopLinkedWalletsById: `
     WITH btc_addresses,
-    btc_wallets_update LET start_vertex = @start_wallet FOR v,
-    e in 1..1 any start_vertex btc_wallet_edges_update FILTER not (
+    btc_wallets LET start_vertex = @start_wallet FOR v,
+    e in 1..1 any start_vertex btc_wallet_edges FILTER not (
         e._to == start_vertex
         and e._from == start_vertex
     ) LET c_wallet = SPLIT((e._from == start_vertex ? e._to: e._from), '/') [1] COLLECT wallet = c_wallet INTO wallets_group_by_id LET in_wallet_tx_hashes = (
@@ -398,9 +398,9 @@ exports.queries = {
   `,
   getLinkedWalletsById: `
     WITH btc_addresses,
-    btc_wallets_update let start_vertex = @start_wallet LET wallets = (
+    btc_wallets let start_vertex = @start_wallet LET wallets = (
         FOR v,
-        e in 1..1 any start_vertex btc_wallet_edges_update FILTER not (
+        e in 1..1 any start_vertex btc_wallet_edges FILTER not (
             e._to == start_vertex
             and e._from == start_vertex
         ) LET c_wallet = SPLIT((e._from == start_vertex ? e._to: e._from), '/') [1] COLLECT wallet = c_wallet INTO wallets_group_by_id LET in_wallet_satoshi_amount = (
