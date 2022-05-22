@@ -23,7 +23,7 @@ const walletLinks = asyncHandler(async (request, response, next) => {
   const linkedWalletCursor = await arango.query({
     query: wallet.queries.getLinkedWalletsById,
     bindVars: {
-      start_wallet: 'btc_wallets_update/' + id,
+      start_wallet: 'btc_wallets/' + id,
       offset: offset,
       limit: count,
     },
