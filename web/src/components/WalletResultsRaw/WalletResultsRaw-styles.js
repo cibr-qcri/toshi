@@ -1,8 +1,8 @@
 // Components
-import WalletInfoRaw, { walletStyler } from '../../WalletInfoRaw';
+import WalletInfoRaw, { walletStyler } from '../WalletInfoRaw';
 
 // Utils
-import { makeStyles, withStyles } from '../../../utils';
+import { makeStyles, withStyles } from '../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {

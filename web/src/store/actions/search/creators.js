@@ -17,6 +17,21 @@ export const getResultsFailure = (error) => ({
   payload: error,
 });
 
+export const getTopWalletResultsStart = (query) => ({
+  type: types.GET_TOP_WALLET_RESULTS_START,
+  payload: query,
+});
+
+export const getTopWalletResultsSuccess = (data) => ({
+  type: types.GET_TOP_WALLET_RESULTS_SUCCESS,
+  payload: data,
+});
+
+export const getTopWalletResultsFailure = (error) => ({
+  type: types.GET_TOP_WALLET_RESULTS_FAILURE,
+  payload: error,
+});
+
 // Sort
 export const setSortBy = (sortBy) => ({
   type: types.SET_SORT_BY,

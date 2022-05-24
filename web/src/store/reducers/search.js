@@ -14,7 +14,7 @@ const initialState = {
     pagination: {},
     type: '',
     count: 0,
-    sortBy: 'size',
+    sortBy: 'riskScore',
   },
   error: null,
   isBusy: true,
@@ -39,6 +39,15 @@ const reducer = (state = initialState, action) => {
         isMoreLoading: action.payload.isMoreLoading,
       });
     }
+    case types.GET_TOP_WALLET_RESULTS_START: {
+      return updateObject(state, {
+        data: updateObject(state.data, {
+          results: state.data.results,
+          count: state.data.count,
+        }),
+        isBusy: true,
+      });
+    }
     case types.GET_RESULTS_SUCCESS: {
       return updateObject(state, {
         data: updateObject(state.data, {
@@ -53,7 +62,26 @@ const reducer = (state = initialState, action) => {
         isMoreLoading: false,
       });
     }
+    case types.GET_TOP_WALLET_RESULTS_SUCCESS: {
+      return updateObject(state, {
+        data: updateObject(state.data, {
+          results: action.payload.data,
+          noResults: action.payload.data.length === 0,
+          count: action.payload.count,
+        }),
+        isBusy: false,
+      });
+    }
     case types.GET_RESULTS_FAILURE: {
+      return updateObject(state, {
+        data: updateObject(state.data, {
+          error: action.payload,
+        }),
+        isBusy: false,
+        isMoreLoading: false,
+      });
+    }
+    case types.GET_TOP_WALLET_RESULTS_FAILURE: {
       return updateObject(state, {
         data: updateObject(state.data, {
           error: action.payload,

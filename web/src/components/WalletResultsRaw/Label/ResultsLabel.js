@@ -16,7 +16,9 @@ import { useStyles } from './ResultsLabel-styles';
 export const ResultsLabel = (props) => {
   // Variables
   const classes = useStyles();
+  const { isTopWalletSearch = false } = props;
   const pagination = useSelector((state) => state.search.data.pagination);
+  const sortBy = useSelector((state) => state.search.data.sortBy);
 
   let pageCount = 1;
   if (pagination.next) {
@@ -31,15 +33,31 @@ export const ResultsLabel = (props) => {
       : totalCount;
 
   // JSX
-  const final = (
-    <div className={classes.root}>
-      <Typography className={classes.label}>
-        Showing {numeral(loadedCount).format('0,0')} out of{' '}
-        {numeral(totalCount).format('0,0')} results for the given{' '}
-        <b>{props.type}</b>
-      </Typography>
-    </div>
+  let topWalletLabel = (
+    <Typography>
+      Showing {numeral(loadedCount).format('0,0')} out of{' '}
+      {numeral(totalCount).format('0,0')} results for the given{' '}
+      <b>{props.type}</b>
+    </Typography>
   );
+
+  if (isTopWalletSearch) {
+    let label = '';
+    if (sortBy === 'riskScore') {
+      label = 'wallets with riskiest addresses';
+    } else if (sortBy === 'size') {
+      label = 'wallets with most addresses';
+    } else {
+      label = 'wallets with most transactions';
+    }
+    topWalletLabel = (
+      <Typography className={classes.label}>
+        Showing top {numeral(loadedCount).format('0,0')} {label}
+      </Typography>
+    );
+  }
+
+  const final = <div className={classes.root}>{topWalletLabel}</div>;
 
   return final;
 };

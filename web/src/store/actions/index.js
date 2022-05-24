@@ -24,7 +24,7 @@ export {
 
 // Search
 export { reset as resetSearch } from './search/creators';
-export { getResults } from './search/thunks';
+export { getTopWalletResults, getResults } from './search/thunks';
 
 // Stats
 export { getStats } from './stats/thunks';

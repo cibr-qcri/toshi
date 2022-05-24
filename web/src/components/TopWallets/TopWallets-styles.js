@@ -1,6 +1,5 @@
 // Components
 import LazyProgressRaw, { lazyProgressStyler } from '../LazyProgressRaw';
-import SearchBoxRaw, { searchBoxStyler } from '../SearchBoxRaw';
 import SwitcherRaw, { switcherStyler } from '../SwitcherRaw';
 import NoResultsRaw, { noResultsStyler } from '../NoResultsRaw';
 import WalletResultsRaw, { walletResultsStyler } from '../WalletResultsRaw';
@@ -20,13 +19,6 @@ export const stylesCreator = (theme) => ({
     },
   },
   LazyProgressRaw: lazyProgressStyler(theme).Default,
-  SearchBoxRaw: {
-    ...searchBoxStyler(theme).Default,
-    root: {
-      ...searchBoxStyler(theme).Default.root,
-      maxWidth: 'none',
-    },
-  },
   SwitcherRaw: {
     ...switcherStyler(theme).Default,
     root: {
@@ -45,7 +37,6 @@ export const useStyles = makeStyles(stylesCreator);
 
 // HOCs
 export const LazyProgress = withStyles(stylesCreator, LazyProgressRaw);
-export const SearchBox = withStyles(stylesCreator, SearchBoxRaw);
 export const Switcher = withStyles(stylesCreator, SwitcherRaw);
 export const NoResults = withStyles(stylesCreator, NoResultsRaw);
 export const WalletResults = withStyles(stylesCreator, WalletResultsRaw);

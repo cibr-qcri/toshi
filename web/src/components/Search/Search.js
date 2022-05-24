@@ -11,7 +11,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 
 // Components
-import Results from './Results';
 import MoreResults from './MoreResults';
 
 // Store
@@ -24,6 +23,7 @@ import {
   SearchBox,
   Switcher,
   NoResults,
+  WalletResults,
 } from './Search-styles';
 
 export const Search = () => {
@@ -78,7 +78,12 @@ export const Search = () => {
 
   let content = (
     <Fragment>
-      <Results items={results} count={count} type={type} />
+      <WalletResults
+        items={results}
+        count={count}
+        type={type}
+        isTopWalletSearch={false}
+      />
       {moreResults}
       {alertSwitcher}
     </Fragment>
