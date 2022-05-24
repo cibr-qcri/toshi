@@ -183,10 +183,10 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       name: 'Size',
       value: numeral(result.num_address).format('0,0'),
     },
-    volume: {
-      name: 'Volume',
-      value: numeral(result.num_tx).format('0,0'),
-    },
+    // volume: {
+    //   name: 'Volume',
+    //   value: numeral(result.num_tx).format('0,0'),
+    // },
   };
 
   if (isDetailed) {
