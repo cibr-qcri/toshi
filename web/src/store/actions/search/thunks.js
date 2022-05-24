@@ -71,3 +71,27 @@ export const getResults = (query, isPaged = false, isMoreResult = false) => {
       });
   };
 };
+
+export const getTopWalletResults = () => {
+  return (dispatch, getState) => {
+    const { sortBy } = getState().search.data;
+    let queryParams = {
+      sortBy,
+    };
+
+    dispatch(creators.getTopWalletResultsStart({}));
+
+    const searchUrl = `/top-wallets?${qs.stringify(queryParams)}`;
+    axios
+      .get(searchUrl)
+      .then((response) => {
+        dispatch(creators.getTopWalletResultsSuccess(response.data));
+      })
+      .catch((error) => {
+        batch(() => {
+          dispatch(creators.getTopWalletResultsFailure(error));
+          dispatch(showAlert());
+        });
+      });
+  };
+};

@@ -17,7 +17,7 @@ const WalletInfoRaw = (props) => {
   // Variables
   const location = useLocation();
   const { classes, id, info, moneyFlow } = props;
-  const isClickableTitle = location.pathname.startsWith('/search');
+  const isClickableTitle = location.pathname.startsWith('/search') || location.pathname.startsWith('/top-wallets');
 
   //JSX
   const view = (

@@ -7,6 +7,7 @@ import {
   Home as MainIcon,
   Input as LoginIcon,
   LibraryBooks as TermsIcon,
+  TrendingUp as TrendingUpIcon,
 } from '@material-ui/icons';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
@@ -53,6 +54,18 @@ const MenuGeneral = (props) => {
             <MainIcon />
           </ListItemIcon>
           <ListItemText primary="Main" />
+        </ListItem>
+        <ListItem
+          button
+          component={NavLink}
+          to="/top-wallets"
+          rel="noopener"
+          onClick={onClose}
+        >
+          <ListItemIcon>
+            <TrendingUpIcon />
+          </ListItemIcon>
+          <ListItemText primary="Top Wallets" />
         </ListItem>
         <ListItem
           button

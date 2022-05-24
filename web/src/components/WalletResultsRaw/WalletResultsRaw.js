@@ -16,36 +16,42 @@ import {
 import Label from './Label';
 
 // Styles
-import { useStyles, WalletInfo } from './Results-styles';
+import { useStyles, WalletInfo } from './WalletResultsRaw-styles';
 
 // Actions
-import { setSortBy } from '../../../store/actions/search/creators';
-import { getResults } from '../../../store/actions';
+import { setSortBy } from '../../store/actions/search/creators';
+import { getResults } from '../../store/actions';
+import { getTopWalletResults } from '../../store/actions/search/thunks';
 
-export const Results = (props) => {
+export const WalletResults = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
   const sortBy = useSelector((state) => state.search.data.sortBy);
   const query = useSelector((state) => state.search.data.query);
+  const { isTopWalletSearch = false } = props;
 
   const handleChange = (event) => {
     dispatch(setSortBy(event.target.value));
-    dispatch(getResults(query));
+    if (isTopWalletSearch) {
+      dispatch(getTopWalletResults());
+    } else {
+      dispatch(getResults(query));
+    }
   };
 
   const sortByComponent = (
     <FormControl className={classes.formControl}>
-      <InputLabel id="sort-by">Sort by</InputLabel>
+      <InputLabel id="sort-by">{ isTopWalletSearch ? "Rank by" : "Sort by" }</InputLabel>
       <Select
         labelId="sort-by"
         value={sortBy}
         onChange={handleChange}
         displayEmpty
       >
-        <MenuItem value="size">Size</MenuItem>
+        <MenuItem value="riskScore">Risk Score</MenuItem>
         <MenuItem value="volume">Volume</MenuItem>
-        <MenuItem value="riskScore">Risk score</MenuItem>
+        <MenuItem value="size">Size</MenuItem>
       </Select>
     </FormControl>
   );
@@ -54,7 +60,11 @@ export const Results = (props) => {
   const final = (
     <div className={classes.root}>
       <div className={classes.labelContainer}>
-        <Label count={props.count} type={props.type} />
+        <Label
+          count={props.count}
+          type={props.type}
+          isTopWalletSearch={isTopWalletSearch}
+        />
         {sortByComponent}
       </div>
 
@@ -77,4 +87,4 @@ export const Results = (props) => {
   return final;
 };
 
-export default Results;
+export default WalletResults;

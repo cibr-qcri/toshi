@@ -322,6 +322,16 @@ exports.queries = {
     OFFSET $3
     LIMIT $4;
     `,
+  getTopWallet: `
+    SELECT btc_wallet.*
+    FROM btc_wallet
+    ORDER BY (CASE 
+    WHEN $1='num_address' THEN num_address 
+    WHEN $1='num_tx' THEN num_tx 
+    WHEN $1='risk_score' THEN risk_score 
+    END) DESC 
+    LIMIT $2;
+    `,
   getWalletByTx: `
     SELECT id,
     cluster_id,
