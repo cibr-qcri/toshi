@@ -32,32 +32,32 @@ export const ResultsLabel = (props) => {
       ? perPageMaxCount
       : totalCount;
 
-  let topWalletLabel = null;
-  if (isTopWalletSearch) {
-    if (sortBy === 'riskScore') {
-      topWalletLabel = 'wallets with riskiest addresses';
-    } else if (sortBy === 'size') {
-      topWalletLabel = 'wallets with most addresses';
-    } else {
-      topWalletLabel = 'wallets with most transactions';
-    }
-  }
   // JSX
-  const final = (
-    <div className={classes.root}>
-      {isTopWalletSearch ? (
-        <Typography className={classes.label}>
-          Showing top {numeral(loadedCount).format('0,0')} {topWalletLabel}
-        </Typography>
-      ) : (
-        <Typography>
-          Showing {numeral(loadedCount).format('0,0')} out of{' '}
-          {numeral(totalCount).format('0,0')} results for the given{' '}
-          <b>{props.type}</b>
-        </Typography>
-      )}
-    </div>
+  let topWalletLabel = (
+    <Typography>
+      Showing {numeral(loadedCount).format('0,0')} out of{' '}
+      {numeral(totalCount).format('0,0')} results for the given{' '}
+      <b>{props.type}</b>
+    </Typography>
   );
+
+  if (isTopWalletSearch) {
+    let label = '';
+    if (sortBy === 'riskScore') {
+      label = 'wallets with riskiest addresses';
+    } else if (sortBy === 'size') {
+      label = 'wallets with most addresses';
+    } else {
+      label = 'wallets with most transactions';
+    }
+    topWalletLabel = (
+      <Typography className={classes.label}>
+        Showing top {numeral(loadedCount).format('0,0')} {label}
+      </Typography>
+    );
+  }
+
+  const final = <div className={classes.root}>{topWalletLabel}</div>;
 
   return final;
 };

@@ -20,8 +20,7 @@ import { useStyles, WalletInfo } from './WalletResultsRaw-styles';
 
 // Actions
 import { setSortBy } from '../../store/actions/search/creators';
-import { getResults } from '../../store/actions';
-import { getTopWalletResults } from '../../store/actions/search/thunks';
+import { getResults, getTopWalletResults } from '../../store/actions';
 
 export const WalletResults = (props) => {
   // Variables

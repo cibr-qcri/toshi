@@ -5,7 +5,7 @@ import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Store
-import { showAlertDialog } from '../../store/actions';
+import { showAlertDialog, getTopWalletResults } from '../../store/actions';
 
 // Styles
 import {
@@ -15,7 +15,6 @@ import {
   NoResults,
   WalletResults,
 } from './TopWallets-styles';
-import { getTopWalletResults } from '../../store/actions/search/thunks';
 
 export const Search = () => {
   // Variables

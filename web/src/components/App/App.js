@@ -95,7 +95,7 @@ const App = () => {
       <Route path="/activate/:token" component={lazyComp.Activate} />
       <Route path="/signup" component={lazyComp.SignUp} />
       <Route path="/main" component={Main} />
-      <Route path="/top-wallets" component={lazyComp.TopWallets} />
+      <Route path="/top-wallets" component={AuthRedirect} />
       <Route from="/terms" component={lazyComp.Terms} />
       <Route from="/search" component={AuthRedirect} />
       <Route from="/wallet" component={AuthRedirect} />
