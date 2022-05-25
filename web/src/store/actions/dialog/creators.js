@@ -6,9 +6,9 @@ export const showFeedbackDialog = () => ({
   type: types.SHOW_FEEDBACK_DIALOG,
 });
 
-export const showTagDialog = (pageId) => ({
+export const showTagDialog = (walletId) => ({
   type: types.SHOW_TAG_DIALOG,
-  payload: pageId,
+  payload: walletId,
 });
 
 export const showAlertDialog = (query = '') => ({

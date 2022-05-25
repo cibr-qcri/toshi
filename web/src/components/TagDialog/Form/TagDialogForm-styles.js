@@ -15,6 +15,9 @@ export const stylesCreator = (theme) => ({
     select: {
       marginBottom: theme.spacing(1),
     },
+    checkbox: {
+      marginBottom: theme.spacing(1),
+    },
     text: {
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),

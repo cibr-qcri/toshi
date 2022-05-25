@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 // Hook Form
 import { useForm, Controller } from 'react-hook-form';
@@ -18,6 +18,8 @@ import {
   MenuItem,
   Select,
   TextField,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 
 // Store
@@ -33,23 +35,17 @@ const TagDialogForm = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  const pageId = useSelector((state) => state.dialog.tag.pageId);
   const { formRef, onClose } = props;
+  const walletId = useSelector((state) => state.dialog.tag.walletId);
+  const [abuseChecked, setAbuseChecked] = React.useState(false);
   const { register, handleSubmit, errors, control } = useForm({
     validationSchema: tagDialogFormSchema,
   });
   const initialState = {
     serviceTypeEnabled: false,
     darkwebServiceEnabled: false,
-    otherInputEnabled: false,
-    darkwebOtherInputEnabled: false,
   };
   const [state, setState] = React.useState(initialState);
-
-  const safety = [
-    { type: 'benign', label: 'Benign' },
-    { type: 'malicious', label: 'Malicious' },
-  ];
 
   const types = [
     { type: 'user', label: 'User'},
@@ -68,14 +64,13 @@ const TagDialogForm = (props) => {
     { type: 'utility', label: 'Utility'},
     { type: 'tumbler', label: 'Tumbler'},
     { type: 'gateway', label: 'Payment Gateway'},
-    { type: 'blacklist', label: 'Blacklist'},
     { type: 'socialMedia', label: 'Social Media'},
     { type: 'darkwebOther', label: 'Other' }
   ];
 
   const darkwebCategories = [
-    { type: 'crypto-service', label: 'Cryptocurrency service' },
-    { type: 'index', label: 'Index, link list, or similar' },
+    { type: 'crypto-service', label: 'Cryptocurrency Service' },
+    { type: 'index', label: 'Index, Link list, or similar' },
     { type: 'marketplace', label: 'Marketplace' },
     { type: 'pornography', label: 'Pornography' },
     { type: 'forum', label: 'Forum' },
@@ -84,7 +79,7 @@ const TagDialogForm = (props) => {
 
   // Handlers
   const tagHandler = (tag) => {
-    const tagData = { ...tag, page: pageId };
+    const tagData = { ...tag, walletId: walletId };
     dispatch(createTag(tagData));
     onClose();
   };
@@ -92,50 +87,35 @@ const TagDialogForm = (props) => {
   const handleChange = (event) => {
     const eventName = event.target.name;
     const eventValue = event.target.value
+
+    if (state.serviceTypeEnabled && eventName === "serviceType" && eventValue === "scam") {
+      setAbuseChecked(true);
+    } else {
+      setAbuseChecked(false);
+    }
+
     if (eventValue === "user") {
       setState(updateObject(state, {
         serviceTypeEnabled: false,
         darkwebServiceEnabled: false,
-        otherInputEnabled: false,
-        darkwebOtherInputEnabled: false,
       }));
     } else if (eventValue === "service") {
       setState(updateObject(state, {
         serviceTypeEnabled: true,
         darkwebServiceEnabled: false,
-        otherInputEnabled: false,
-        darkwebOtherInputEnabled: false,
       }));
     } else if (state.serviceTypeEnabled && eventValue === "darkweb") {
       setState(updateObject(state, {
         darkwebServiceEnabled: true,
-        otherInputEnabled: false,
-        darkwebOtherInputEnabled: false,
-      }));
-    } else if (eventValue === "other") {
-      setState(updateObject(state, {
-        otherInputEnabled: true,
-        darkwebServiceEnabled: false,
-        darkwebOtherInputEnabled: false,
-      }));
-    } else if (state.otherInputEnabled && eventValue !== "other") {
-      setState(updateObject(state, {
-        otherInputEnabled: false,
-      }));
-    } else if (eventValue === "darkwebOther") {
-      setState(updateObject(state, {
-        darkwebOtherInputEnabled: true,
-        otherInputEnabled: false,
       }));
     } else if (state.serviceTypeEnabled && eventName === "serviceType" && eventValue !== "darkweb") {
       setState(updateObject(state, {
         darkwebServiceEnabled: false,
-        darkwebOtherInputEnabled: false,
       }));
     }
   };
 
-  //JSX
+  //JSX1
   const getSelection = (data) => {
     return (
       <Select onClick={handleChange}>
@@ -159,24 +139,11 @@ const TagDialogForm = (props) => {
       <TextField
         className={classes.text}
         inputRef={register}
-        label="Name"
-        name="name"
-        placeholder="Wallet Name"
+        label="Label"
+        name="label"
         variant="standard"
         defaultValue=""
       />
-      <FormControl className={classes.select} error={!!errors.safety}>
-        <InputLabel>Safety</InputLabel>
-        <Controller
-          as={getSelection(safety)}
-          name="safety"
-          control={control}
-          defaultValue=""
-        />
-        <FormHelperText>
-          {errors.safety && errors.safety.message}
-        </FormHelperText>
-      </FormControl>
       <FormControl className={classes.select} error={!!errors.category}>
         <InputLabel>Type</InputLabel>
         <Controller
@@ -192,7 +159,7 @@ const TagDialogForm = (props) => {
       {
         state.serviceTypeEnabled &&
         <FormControl className={classes.select} error={!!errors.category}>
-          <InputLabel>Service Category</InputLabel>
+          <InputLabel>Category</InputLabel>
           <Controller
             as={getSelection(serviceTypes)}
             name="serviceType"
@@ -205,20 +172,9 @@ const TagDialogForm = (props) => {
         </FormControl>
       }
       {
-        state.otherInputEnabled &&
-        <TextField
-          className={classes.text}
-          inputRef={register}
-          label="Please Specify"
-          name="other"
-          variant="standard"
-          defaultValue=""
-        />
-      }
-      {
         state.darkwebServiceEnabled &&
         <FormControl className={classes.select} error={!!errors.category}>
-          <InputLabel>Darkweb Category</InputLabel>
+          <InputLabel>Subcategory</InputLabel>
           <Controller
             as={getSelection(darkwebCategories)}
             name="darkwebCategory"
@@ -230,23 +186,24 @@ const TagDialogForm = (props) => {
           </FormHelperText>
         </FormControl>
       }
-      {
-        state.darkwebOtherInputEnabled &&
-        <TextField
-          className={classes.text}
-          inputRef={register}
-          label="Please Specify"
-          name="darkwebOther"
-          variant="standard"
-          defaultValue=""
-        />
-      }
+      <FormControlLabel
+        className={classes.checkbox}
+        control={
+          <Checkbox
+            name="isAbuse"
+            color="default"
+            inputRef={register}
+            checked={abuseChecked}
+          />
+        }
+        label="This wallet is associated with an abuse (e.g., ransomware)"
+      />
       <TextField
         className={classes.text}
         inputRef={register}
-        label="Comments"
-        name="comments"
-        placeholder="Optional"
+        label="Description"
+        name="description"
+        placeholder="(Optional) Provide additional info about the wallet, such as URLs, abuse details, etc."
         variant="outlined"
         defaultValue=""
         maxRows={3}
