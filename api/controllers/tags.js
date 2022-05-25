@@ -1,5 +1,6 @@
-const asyncHandler = require("../middleware/async");
-const Tag = require("../models/Tag");
+const asyncHandler = require('../middleware/async');
+const WalletTag = require('../models/WalletTag');
+const AddressTag = require('../models/AddressTag');
 
 // @desc      Get tags of signed in user
 // @route     GET /api/v1/me/tags
@@ -25,7 +26,16 @@ const getTags = asyncHandler(async (request, response, next) => {
 // @access    Private
 const addTag = asyncHandler(async (request, response, next) => {
   request.body.user = request.user.id;
-  const tag = await Tag.create(request.body);
+  const isWalletTagging = request.body.isWalletTagging;
+  delete request.body[isWalletTagging];
+
+  let tag;
+  if (isWalletTagging) {
+    tag = await WalletTag.create(request.body);
+  } else {
+    tag = await AddressTag.create(request.body);
+  }
+
   tag.user = undefined;
 
   response.status(201).json({

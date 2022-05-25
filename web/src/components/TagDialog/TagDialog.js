@@ -29,6 +29,9 @@ const TagDialog = () => {
   const dispatch = useDispatch();
   const formRef = useRef();
   const open = useSelector((state) => state.dialog.tag.open);
+  const isWalletTagging = useSelector(
+    (state) => state.dialog.tag.isWalletTagging
+  );
   const [scroll] = React.useState('paper');
 
   // Handlers
@@ -46,12 +49,23 @@ const TagDialog = () => {
     formRef.current.dispatchEvent(submitEvent);
   };
 
+  let dialogTitle;
+  let dialogDescription;
+  if (isWalletTagging) {
+    dialogTitle = 'Suggest a New Tag';
+    dialogDescription = 'What information best describes this wallet?';
+  } else {
+    dialogTitle = 'Report an Incident';
+    dialogDescription =
+      'Cryptocurrency abuse can take many forms. What information best describes this incident?';
+  }
+
   //JSX
   const view = (
     <Dialog open={open} scroll={scroll} onClose={toggleTagHandler} fullWidth>
-      <Title onClose={toggleTagHandler}>Suggest New Tags</Title>
+      <Title onClose={toggleTagHandler}>{dialogTitle}</Title>
       <DialogContent dividers={scroll === 'paper'}>
-        <DialogContentText>Which tags describe this wallet?</DialogContentText>
+        <DialogContentText>{dialogDescription}</DialogContentText>
         <Form formRef={formRef} onClose={toggleTagHandler} />
       </DialogContent>
       <DialogActions className={classes.actions}>

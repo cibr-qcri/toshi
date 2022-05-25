@@ -1,18 +1,19 @@
 // Utils
-import { makeStyles } from "../../../utils";
+import { makeStyles } from '../../../utils';
 
 export const stylesCreator = (theme) => ({
   Default: {
     root: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
     },
     scrollable: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
       overflow: 'auto',
     },
     select: {
+      marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
     },
     checkbox: {

@@ -1,29 +1,23 @@
 const mongoose = require('mongoose');
 
-const TagSchema = new mongoose.Schema(
+const WalletTagSchema = new mongoose.Schema(
   {
-    name: {
+    label: {
       type: String,
-      default: '',
+      required: true,
     },
-    safety: {
-      type: String,
-      required: [false, 'Please select a saftey class'],
-      enum: ['benign', 'malicious'],
+    isAbuse: {
+      type: Boolean,
+      default: false,
     },
     type: {
       type: String,
       required: [false, 'Please select the type'],
       enum: ['user', 'service'],
     },
-    userType: {
+    serviceCategory: {
       type: String,
-      required: [false, 'Please select the user type'],
-      enum: ['socialMedia', 'other'],
-    },
-    serviceType: {
-      type: String,
-      required: [false, 'Please select the service type'],
+      required: [false, 'Please select a service category'],
       enum: [
         'wallet',
         'pool',
@@ -41,9 +35,9 @@ const TagSchema = new mongoose.Schema(
         'darkwebOther',
       ],
     },
-    darkwebCategory: {
+    darkwebSubcategory: {
       type: String,
-      required: [false, 'Please select the Darkweb category'],
+      required: [false, 'Please select a darkweb service subcategory'],
       enum: [
         'crypto-service',
         'index',
@@ -53,15 +47,7 @@ const TagSchema = new mongoose.Schema(
         'other',
       ],
     },
-    comments: {
-      type: String,
-      default: '',
-    },
-    other: {
-      type: String,
-      default: '',
-    },
-    darkwebOther: {
+    description: {
       type: String,
       default: '',
     },
@@ -71,9 +57,9 @@ const TagSchema = new mongoose.Schema(
       required: true,
       select: false,
     },
-    page: {
+    walletId: {
       type: String,
-      required: [true, 'Please provide a page id'],
+      required: [true, 'Please provide a wallet id'],
     },
   },
   {
@@ -81,4 +67,4 @@ const TagSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Tag', TagSchema);
+module.exports = mongoose.model('WalletTag', WalletTagSchema, 'walletTags');
