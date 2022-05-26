@@ -3,10 +3,11 @@ export const updateObject = (oldObject, updatedProperties) => ({
   ...updatedProperties,
 });
 
+export const bitcoinAddressRegexStr =
+  '^((1[a-km-zA-HJ-NP-Z1-9]{25,34})|(3[a-km-zA-HJ-NP-Z1-9]{25,34})|(bc1[a-zA-HJ-NP-Z0-9]{25,39}))$';
+
 export const validateBitcoinAddress = (value) => {
-  const regExpStr =
-    '^((1[a-km-zA-HJ-NP-Z1-9]{25,34})|(3[a-km-zA-HJ-NP-Z1-9]{25,34})|(bc1[a-zA-HJ-NP-Z0-9]{25,39}))$';
-  return new RegExp(regExpStr).test(value);
+  return new RegExp(bitcoinAddressRegexStr).test(value);
 };
 
 export const validateBitcoinTx = (value) => {

@@ -11,7 +11,8 @@ const initialState = {
   },
   tag: {
     open: false,
-    pageId: null,
+    walletId: null,
+    isWalletTagging: true,
   },
   alert: {
     open: false,
@@ -36,7 +37,8 @@ const reducer = (state = initialState, action) => {
       return updateObject(state, {
         tag: updateObject(state.tag, {
           open: true,
-          pageId: action.payload,
+          walletId: action.payload,
+          isWalletTagging: action.isWalletTagging,
         }),
       });
     }

@@ -9,6 +9,7 @@ import {
   Twitter as TwitterIcon,
   ContactMail as ContactUsIcon,
   Feedback as FeedbackIcon,
+  Report as ReportIcon,
 } from '@material-ui/icons';
 import {
   List,
@@ -19,7 +20,7 @@ import {
 } from '@material-ui/core';
 
 // Store
-import { showFeedbackDialog } from '../../../../store/actions';
+import { showFeedbackDialog, showTagDialog } from '../../../../store/actions';
 
 // Styles
 import { useStyles } from './MenuOutreach-styles';
@@ -37,6 +38,10 @@ const MenuOutreach = (props) => {
     onClose();
     dispatch(showFeedbackDialog());
   };
+  const reportsHandler = () => {
+    onClose();
+    dispatch(showTagDialog('', false));
+  };
 
   //JSX
   const header = (
@@ -44,6 +49,7 @@ const MenuOutreach = (props) => {
   );
 
   let feedback = null;
+  let reports = null;
   if (isAuth) {
     feedback = (
       <ListItem button component="a" onClick={feedbackHandler}>
@@ -51,6 +57,14 @@ const MenuOutreach = (props) => {
           <FeedbackIcon />
         </ListItemIcon>
         <ListItemText primary="Send Feedback" />
+      </ListItem>
+    );
+    reports = (
+      <ListItem button component="a" onClick={reportsHandler}>
+        <ListItemIcon>
+          <ReportIcon />
+        </ListItemIcon>
+        <ListItemText primary="Report Incident" />
       </ListItem>
     );
   }
@@ -84,6 +98,7 @@ const MenuOutreach = (props) => {
           <ListItemText primary="Contact Us" />
         </ListItem>
         {feedback}
+        {reports}
       </List>
     </div>
   );

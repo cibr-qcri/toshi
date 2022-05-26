@@ -1,5 +1,5 @@
 const express = require("express");
-const Tag = require("../models/Tag");
+const Tag = require("../models/WalletTag");
 const { protect } = require("../middleware/auth");
 const mongoResults = require("../middleware/mongoResults");
 const { addTag, getTags } = require("../controllers/tags");
