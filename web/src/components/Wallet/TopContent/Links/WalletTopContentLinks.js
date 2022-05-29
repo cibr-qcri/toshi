@@ -38,8 +38,10 @@ export const WalletTopContentLinks = () => {
     };
     newOptions.nodes.font = {
       ...graphVizOptions.nodes.font,
-      color: theme.palette.info.contrastText,
+      color: theme.palette.text.primary,
+      strokeColor: theme.palette.primary.contrastText,
     };
+
     setOptions(newOptions);
   }, [theme]);
 

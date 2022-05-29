@@ -388,6 +388,10 @@ exports.queries = {
     OFFSET $4
     LIMIT $5;
     `,
+  getTopLinkedWalletsSize: `
+    SELECT cluster_id, num_address
+    FROM btc_wallet WHERE cluster_id = ANY ($1::text[]);
+  `,
   getTopLinkedWalletsById: `
     WITH btc_addresses,
     btc_wallets LET start_vertex = @start_wallet FOR v,

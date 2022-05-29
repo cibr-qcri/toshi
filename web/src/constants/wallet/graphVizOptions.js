@@ -27,8 +27,7 @@ const GRAPH_VIS_OPTIONS = {
   },
   nodes: {
     borderWidth: 0,
-    shape: 'box',
-    margin: 10,
+    shape: 'dot',
     color: {
       background: '#707070',
       hover: {
@@ -36,9 +35,9 @@ const GRAPH_VIS_OPTIONS = {
       },
     },
     font: {
-      size: 14,
+      size: 15,
       face: 'roboto',
-      color: 'white',
+      strokeWidth: 3,
     },
   },
   interaction: {
