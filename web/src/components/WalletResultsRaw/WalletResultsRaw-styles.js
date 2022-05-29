@@ -9,18 +9,11 @@ export const stylesCreator = (theme) => ({
     root: {
       width: '100%',
     },
-    list: {},
-    formControl: {
-      minWidth: 120,
-      marginLeft: theme.spacing(1),
-    },
     labelContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginLeft: theme.spacing(3),
-      marginRight: theme.spacing(3),
       marginTop: theme.spacing(2),
+      marginBottm: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
   },
   WalletInfoRaw: walletStyler(theme).Default,

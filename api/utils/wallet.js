@@ -314,23 +314,27 @@ exports.queries = {
     SELECT btc_wallet.*, count(*) OVER() AS total_count
     FROM btc_wallet
     WHERE label ~* $1
-    ORDER BY (CASE 
-    WHEN $2='num_address' THEN num_address 
-    WHEN $2='num_tx' THEN num_tx 
-    WHEN $2='risk_score' THEN risk_score 
-    END) DESC 
-    OFFSET $3
-    LIMIT $4;
+    ORDER BY
+    (CASE WHEN $2='num_address' and $3='ASC' THEN num_address END) ASC,
+    (CASE WHEN $2='num_address' and $3='DESC' THEN num_address END) DESC,
+    (CASE WHEN $2='num_tx' and $3='ASC' THEN num_tx END) ASC,
+    (CASE WHEN $2='num_tx' and $3='DESC' THEN num_tx END) DESC,
+    (CASE WHEN $2='risk_score' and $3='ASC' THEN risk_score END) ASC,
+    (CASE WHEN $2='risk_score' and $3='DESC' THEN risk_score END) DESC
+    OFFSET $4
+    LIMIT $5;
     `,
   getTopWallet: `
     SELECT btc_wallet.*
     FROM btc_wallet
-    ORDER BY (CASE 
-    WHEN $1='num_address' THEN num_address 
-    WHEN $1='num_tx' THEN num_tx 
-    WHEN $1='risk_score' THEN risk_score 
-    END) DESC 
-    LIMIT $2;
+    ORDER BY 
+    (CASE WHEN $1='num_address' and $2='ASC' THEN num_address END) ASC,
+    (CASE WHEN $1='num_address' and $2='DESC' THEN num_address END) DESC,
+    (CASE WHEN $1='num_tx' and $2='ASC' THEN num_tx END) ASC,
+    (CASE WHEN $1='num_tx' and $2='DESC' THEN num_tx END) DESC,
+    (CASE WHEN $1='risk_score' and $2='ASC' THEN risk_score END) ASC,
+    (CASE WHEN $1='risk_score' and $2='DESC' THEN risk_score END) DESC
+    LIMIT $3;
     `,
   getWalletByTx: `
     SELECT id,
@@ -384,9 +388,9 @@ exports.queries = {
       WHEN $3='num_address' THEN num_address 
       WHEN $3='num_tx' THEN num_tx 
       WHEN $3='risk_score' THEN risk_score 
-      END) DESC 
-    OFFSET $4
-    LIMIT $5;
+      END) $4 
+    OFFSET $5
+    LIMIT $6;
     `,
   getTopLinkedWalletsById: `
     WITH btc_addresses,

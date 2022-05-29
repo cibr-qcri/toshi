@@ -10,6 +10,7 @@ export const GET_TOP_WALLET_RESULTS_FAILURE =
 
 // Set sortBy
 export const SET_SORT_BY = 'search/setSortBy';
+export const SET_ORDER = 'search/setOrder';
 
 // Reset
 export const RESET = 'search/reset';

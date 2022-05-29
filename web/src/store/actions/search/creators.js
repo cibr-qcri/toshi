@@ -38,6 +38,12 @@ export const setSortBy = (sortBy) => ({
   payload: sortBy,
 });
 
+// Order
+export const setOrder = (order) => ({
+  type: types.SET_ORDER,
+  payload: order,
+});
+
 // Reset
 export const reset = () => ({
   type: types.RESET,
