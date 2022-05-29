@@ -18,11 +18,11 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
   });
   const topLinkedWalletRes = await topLinkedWalletCursor.all();
 
-  // get topLinkedWallet ids
   const topWalletIds = topLinkedWalletRes.map((row) => {
     return row.wallet_id;
   });
   topWalletIds.push(id);
+
   const topWalletSizeRes = await gp.query(
     wallet.queries.getTopLinkedWalletsSize,
     [topWalletIds]
