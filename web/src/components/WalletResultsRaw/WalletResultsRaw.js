@@ -108,6 +108,7 @@ export const WalletResults = (props) => {
         alignItems="flex-end"
         justifyContent="flex-end"
         sm={4}
+        spacing={2}
       >
         <Grid item xs={12} sm={6}>
           {sortByComponent}

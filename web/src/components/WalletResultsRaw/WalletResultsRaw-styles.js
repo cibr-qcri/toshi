@@ -10,7 +10,7 @@ export const stylesCreator = (theme) => ({
       width: '100%',
     },
     labelContainer: {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
