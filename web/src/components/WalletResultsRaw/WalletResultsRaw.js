@@ -79,6 +79,43 @@ export const WalletResults = (props) => {
     </FormControl>
   );
 
+  let rankingComponent = (
+    <Grid
+      className={classes.labelOptionsContainer}
+      container
+      item
+      direction="row"
+      justifyContent="space-between"
+      spacing={2}
+      sm={4}
+    >
+      <Grid item xs={12} sm={6}>
+        {sortByComponent}
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        {orderComponent}
+      </Grid>
+    </Grid>
+  );
+
+  if (isTopWalletSearch) {
+    rankingComponent = (
+      <Grid
+        className={classes.labelOptionsContainer}
+        container
+        item
+        direction="row"
+        alignItems="flex-end"
+        justifyContent="flex-end"
+        sm={4}
+      >
+        <Grid item xs={12} sm={6}>
+          {sortByComponent}
+        </Grid>
+      </Grid>
+    );
+  }
+
   // JSX
   const final = (
     <div className={classes.root}>
@@ -95,22 +132,7 @@ export const WalletResults = (props) => {
             isTopWalletSearch={isTopWalletSearch}
           />
         </Grid>
-        <Grid
-          className={classes.labelOptionsContainer}
-          container
-          item
-          direction="row"
-          justifyContent="space-between"
-          spacing={2}
-          sm={4}
-        >
-          <Grid item xs={12} sm={6}>
-            {sortByComponent}
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            {orderComponent}
-          </Grid>
-        </Grid>
+        {rankingComponent}
       </Grid>
 
       <List component="ul" aria-label="search results">

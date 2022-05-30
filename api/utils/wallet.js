@@ -324,7 +324,9 @@ exports.queries = {
     (CASE WHEN $2='num_tx' and $3='ASC' THEN num_tx END) ASC,
     (CASE WHEN $2='num_tx' and $3='DESC' THEN num_tx END) DESC,
     (CASE WHEN $2='risk_score' and $3='ASC' THEN risk_score END) ASC,
-    (CASE WHEN $2='risk_score' and $3='DESC' THEN risk_score END) DESC
+    (CASE WHEN $2='risk_score' and $3='DESC' THEN risk_score END) DESC,
+    (CASE WHEN $2='btc_balance' and $3='ASC' THEN btc_balance END) ASC,
+    (CASE WHEN $2='btc_balance' and $3='DESC' THEN btc_balance END) DESC
     OFFSET $4
     LIMIT $5;
     `,
@@ -332,13 +334,13 @@ exports.queries = {
     SELECT btc_wallet.*
     FROM btc_wallet
     ORDER BY 
-    (CASE WHEN $1='num_address' and $2='ASC' THEN num_address END) ASC,
-    (CASE WHEN $1='num_address' and $2='DESC' THEN num_address END) DESC,
-    (CASE WHEN $1='num_tx' and $2='ASC' THEN num_tx END) ASC,
-    (CASE WHEN $1='num_tx' and $2='DESC' THEN num_tx END) DESC,
-    (CASE WHEN $1='risk_score' and $2='ASC' THEN risk_score END) ASC,
-    (CASE WHEN $1='risk_score' and $2='DESC' THEN risk_score END) DESC
-    LIMIT $3;
+    (CASE 
+        WHEN $1='num_address' THEN num_address 
+        WHEN $1='num_tx' THEN num_tx 
+        WHEN $1='risk_score' THEN risk_score 
+        WHEN $1='btc_balance' THEN btc_balance 
+    END) DESC
+    LIMIT $2;
     `,
   getWalletByTx: `
     SELECT id,
@@ -388,11 +390,14 @@ exports.queries = {
         risk_score,
         label,
         category
-    ORDER BY (CASE 
-      WHEN $3='num_address' THEN num_address 
-      WHEN $3='num_tx' THEN num_tx 
-      WHEN $3='risk_score' THEN risk_score 
-      END) $4 
+    (CASE WHEN $3='num_address' and $4='ASC' THEN num_address END) ASC,
+    (CASE WHEN $3='num_address' and $4='DESC' THEN num_address END) DESC,
+    (CASE WHEN $3='num_tx' and $4='ASC' THEN num_tx END) ASC,
+    (CASE WHEN $3='num_tx' and $4='DESC' THEN num_tx END) DESC,
+    (CASE WHEN $3='risk_score' and $4='ASC' THEN risk_score END) ASC,
+    (CASE WHEN $3='risk_score' and $4='DESC' THEN risk_score END) DESC,
+    (CASE WHEN $3='btc_balance' and $4='ASC' THEN btc_balance END) ASC,
+    (CASE WHEN $3='btc_balance' and $4='DESC' THEN btc_balance END) DESC  
     OFFSET $5
     LIMIT $6;
     `,
