@@ -82,12 +82,12 @@ export const WalletResults = (props) => {
   const final = (
     <div className={classes.root}>
       <Grid
-        container
-        alignItems="center"
-        justifyContent="center"
         className={classes.labelContainer}
+        container
+        alignItems="flex-end"
+        justifyContent="flex-start"
       >
-        <Grid item sm={6}>
+        <Grid item sm={8}>
           <Label
             count={props.count}
             type={props.type}
@@ -95,12 +95,13 @@ export const WalletResults = (props) => {
           />
         </Grid>
         <Grid
+          className={classes.labelOptionsContainer}
           container
           item
           direction="row"
           justifyContent="space-between"
           spacing={2}
-          sm={6}
+          sm={4}
         >
           <Grid item xs={12} sm={6}>
             {sortByComponent}

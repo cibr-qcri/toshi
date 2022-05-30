@@ -11,9 +11,12 @@ export const stylesCreator = (theme) => ({
     },
     labelContainer: {
       marginTop: theme.spacing(2),
-      marginBottm: theme.spacing(2),
+      marginBottom: theme.spacing(1),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+    },
+    labelOptionsContainer: {
+      marginTop: 0,
     },
   },
   WalletInfoRaw: walletStyler(theme).Default,
