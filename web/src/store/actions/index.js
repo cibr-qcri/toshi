@@ -23,7 +23,7 @@ export {
 } from './dialog/creators';
 
 // Search
-export { reset as resetSearch } from './search/creators';
+export { setSortBy, reset as resetSearch } from './search/creators';
 export { getTopWalletResults, getResults } from './search/thunks';
 
 // Stats

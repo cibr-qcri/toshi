@@ -47,8 +47,10 @@ export const ResultsLabel = (props) => {
       label = 'wallets with riskiest addresses';
     } else if (sortBy === 'size') {
       label = 'wallets with most addresses';
-    } else {
+    } else if (sortBy === 'volume')  {
       label = 'wallets with most transactions';
+    } else {
+      label = 'wallets with most balance';
     }
     topWalletLabel = (
       <Typography className={classes.label}>

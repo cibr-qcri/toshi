@@ -62,8 +62,9 @@ export const WalletResults = (props) => {
         displayEmpty
       >
         <MenuItem value="riskScore">Risk Score</MenuItem>
-        {/*<MenuItem value="volume">Volume</MenuItem>*/}
         <MenuItem value="size">Size</MenuItem>
+        <MenuItem value="volume">Volume</MenuItem>
+        <MenuItem value="btcBalance">Balance</MenuItem>
       </Select>
     </FormControl>
   );
@@ -77,6 +78,43 @@ export const WalletResults = (props) => {
       </Select>
     </FormControl>
   );
+
+  let rankingComponent = (
+    <Grid
+      className={classes.labelOptionsContainer}
+      container
+      item
+      direction="row"
+      justifyContent="space-between"
+      spacing={2}
+      sm={4}
+    >
+      <Grid item xs={12} sm={6}>
+        {sortByComponent}
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        {orderComponent}
+      </Grid>
+    </Grid>
+  );
+
+  if (isTopWalletSearch) {
+    rankingComponent = (
+      <Grid
+        className={classes.labelOptionsContainer}
+        container
+        item
+        direction="row"
+        alignItems="flex-end"
+        justifyContent="flex-end"
+        sm={4}
+      >
+        <Grid item xs={12} sm={6}>
+          {sortByComponent}
+        </Grid>
+      </Grid>
+    );
+  }
 
   // JSX
   const final = (
@@ -94,22 +132,7 @@ export const WalletResults = (props) => {
             isTopWalletSearch={isTopWalletSearch}
           />
         </Grid>
-        <Grid
-          className={classes.labelOptionsContainer}
-          container
-          item
-          direction="row"
-          justifyContent="space-between"
-          spacing={2}
-          sm={4}
-        >
-          <Grid item xs={12} sm={6}>
-            {sortByComponent}
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            {orderComponent}
-          </Grid>
-        </Grid>
+        {rankingComponent}
       </Grid>
 
       <List component="ul" aria-label="search results">
