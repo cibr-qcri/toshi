@@ -5,6 +5,7 @@ export const stylesCreator = (theme) => ({
       maxWidth: 460,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      marginBottom: theme.spacing(1),
     },
     paper: {
       display: 'flex',
