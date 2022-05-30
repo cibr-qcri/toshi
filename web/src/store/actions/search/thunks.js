@@ -30,11 +30,12 @@ const queryType = (query) => {
 
 export const getResults = (query, isPaged = false, isMoreResult = false) => {
   return (dispatch, getState) => {
-    const { sortBy } = getState().search.data;
+    const { sortBy, order } = getState().search.data;
 
     let queryParams = {
       query,
       sortBy,
+      order,
     };
 
     if (isPaged) {
@@ -74,9 +75,10 @@ export const getResults = (query, isPaged = false, isMoreResult = false) => {
 
 export const getTopWalletResults = () => {
   return (dispatch, getState) => {
-    const { sortBy } = getState().search.data;
+    const { sortBy, order } = getState().search.data;
     let queryParams = {
       sortBy,
+      order,
     };
 
     dispatch(creators.getTopWalletResultsStart({}));

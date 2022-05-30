@@ -15,6 +15,7 @@ const initialState = {
     type: '',
     count: 0,
     sortBy: 'riskScore',
+    order: 'DESC',
   },
   error: null,
   isBusy: true,
@@ -94,6 +95,14 @@ const reducer = (state = initialState, action) => {
       return updateObject(state, {
         data: updateObject(state.data, {
           sortBy: action.payload,
+          results: [],
+        }),
+      });
+    }
+    case types.SET_ORDER: {
+      return updateObject(state, {
+        data: updateObject(state.data, {
+          order: action.payload,
           results: [],
         }),
       });
