@@ -62,8 +62,9 @@ export const WalletResults = (props) => {
         displayEmpty
       >
         <MenuItem value="riskScore">Risk Score</MenuItem>
-        {/*<MenuItem value="volume">Volume</MenuItem>*/}
         <MenuItem value="size">Size</MenuItem>
+        <MenuItem value="volume">Volume</MenuItem>
+        <MenuItem value="btcBalance">Balance</MenuItem>
       </Select>
     </FormControl>
   );

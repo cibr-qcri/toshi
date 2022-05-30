@@ -5,7 +5,12 @@ import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Store
-import { showAlertDialog, getTopWalletResults } from '../../store/actions';
+import {
+  showAlertDialog,
+  getTopWalletResults,
+  setWalletCurrencyType,
+  setSortBy,
+} from '../../store/actions';
 
 // Styles
 import {
@@ -29,6 +34,8 @@ export const Search = () => {
 
   // Hooks
   useEffect(() => {
+    dispatch(setWalletCurrencyType('btc'));
+    dispatch(setSortBy('riskScore'));
     dispatch(getTopWalletResults());
   }, [dispatch]);
 

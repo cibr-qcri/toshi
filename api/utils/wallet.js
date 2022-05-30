@@ -179,37 +179,39 @@ exports.getWalletInfo = (result, isDetailed = false) => {
       name: 'Risk Score',
       value: riskScore,
     },
-    size: {
-      name: 'Size',
-      value: numeral(result.num_address).format('0,0'),
+    btcBalance: {
+      name: 'Balance',
+      value:
+        '₿' +
+        numeral(this.satoshiToBTC(result.btc_balance)).format('0,0.000000'),
     },
-    // volume: {
-    //   name: 'Volume',
-    //   value: numeral(result.num_tx).format('0,0'),
-    // },
   };
 
   if (isDetailed) {
     walletInfo = {
       ...walletInfo,
-      volume: {
-        name: 'Volume',
-        value: numeral(result.num_tx).format('0,0'),
-      },
       usdBalance: {
         name: 'Balance',
-        value: numeral(result.total_received_usd)
-          .subtract(result.total_spent_usd)
-          .format('$0,0.00'),
+        value: numeral(result.usd_balance).format('$0,0.00'),
       },
-      btcBalance: {
-        name: 'Balance',
-        value:
-          '₿' +
-          numeral(this.satoshiToBTC(result.total_received))
-            .subtract(this.satoshiToBTC(result.total_spent))
-            .format('0,0.000000'),
-      },
+    };
+  }
+
+  walletInfo = {
+    ...walletInfo,
+    size: {
+      name: 'Size',
+      value: numeral(result.num_address).format('0,0'),
+    },
+    volume: {
+      name: 'Volume',
+      value: numeral(result.num_tx).format('0,0'),
+    },
+  };
+
+  if (isDetailed) {
+    walletInfo = {
+      ...walletInfo,
       totalUSDIn: {
         name: 'Total In',
         value: numeral(result.total_received_usd).format('$0,0.00'),
@@ -245,6 +247,8 @@ exports.getSortByString = (sortBy) => {
     return 'risk_score';
   } else if (sortBy === 'volume') {
     return 'num_tx';
+  } else if (sortBy === 'btcBalance') {
+    return 'btc_balance';
   } else '';
 };
 

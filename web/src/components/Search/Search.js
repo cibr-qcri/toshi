@@ -14,7 +14,11 @@ import qs from 'qs';
 import MoreResults from './MoreResults';
 
 // Store
-import { getResults, showAlertDialog } from '../../store/actions';
+import {
+  getResults,
+  setWalletCurrencyType,
+  showAlertDialog,
+} from '../../store/actions';
 
 // Styles
 import {
@@ -48,6 +52,7 @@ export const Search = () => {
       history.push('/main');
     }
     dispatch(getResults(query));
+    dispatch(setWalletCurrencyType('btc'));
   }, [dispatch, location, history]);
 
   useEffect(() => {
