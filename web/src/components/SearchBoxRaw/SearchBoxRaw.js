@@ -42,10 +42,11 @@ const SearchBoxRaw = (props) => {
 
   const querySubmitHandler = (event) => {
     event.preventDefault();
-    if (query.trim() !== '') {
+    const trimmedQuery = query.trim();
+    if (trimmedQuery !== '') {
       const location = {
         pathname: '/search',
-        search: qs.stringify({ 'query' : query }),
+        search: qs.stringify({ query: trimmedQuery }),
       };
       if (isAuth) {
         history.push(location);
@@ -53,6 +54,7 @@ const SearchBoxRaw = (props) => {
         dispatch(setRedirect(location));
         history.push('/signin');
       }
+      setQuery(trimmedQuery);
     }
   };
 
