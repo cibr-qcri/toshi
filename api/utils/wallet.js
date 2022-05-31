@@ -130,16 +130,16 @@ exports.getWalletLinks = (wallet, index) => {
   return {
     id: index,
     wallet: wallet.item.wallet_id,
-    numOutTxes: numeral(wallet.item.num_inbound_txes).format('0,0'),
-    outUSDAmount: numeral(wallet.item.inbound_usd_amount).format('$0,0.00'),
-    outBTCAmount:
+    numInTxes: numeral(wallet.item.num_inbound_txes).format('0,0'),
+    inUSDAmount: numeral(wallet.item.inbound_usd_amount).format('$0,0.00'),
+    inBTCAmount:
       '₿' +
       numeral(this.satoshiToBTC(wallet.item.inbound_satoshi_amount)).format(
         '0,0.000000'
       ),
-    numInTxes: numeral(wallet.item.num_outbound_txes).format('0,0'),
-    inUSDAmount: numeral(wallet.item.outbound_usd_amount).format('$0,0.00'),
-    inBTCAmount:
+    numOutTxes: numeral(wallet.item.num_outbound_txes).format('0,0'),
+    outUSDAmount: numeral(wallet.item.outbound_usd_amount).format('$0,0.00'),
+    outBTCAmount:
       '₿' +
       numeral(this.satoshiToBTC(wallet.item.outbound_satoshi_amount)).format(
         '0,0.000000'

@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 // GraphVis
 import Graph from 'react-graph-vis';
-// import 'vis-network/styles/vis-network.min.css';
 import './vis-tooltip.css';
 
 // Redux
