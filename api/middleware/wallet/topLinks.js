@@ -49,7 +49,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
       label: util.format('[%s]', row.wallet_id.split('-')[0]),
       value: topWalletSizeMap[row.wallet_id],
       title: util.format(
-        'Wallet Size: %s',
+        'Address count: %s',
         numeral(topWalletSizeMap[row.wallet_id]).format('0,0')
       ),
     });
@@ -61,7 +61,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
         width: wallet.getEdgeWidth(row.num_inbound_txes),
         smooth: { type: 'curvedCW', roundness: 0.2 },
         title: util.format(
-          'Tx Count: %s',
+          'Tx count: %s',
           numeral(row.num_inbound_txes).format('0,0')
         ),
       });
@@ -74,7 +74,7 @@ const walletTopLinks = asyncHandler(async (request, response, next) => {
         width: wallet.getEdgeWidth(row.num_outbound_txes),
         smooth: { type: 'curvedCW', roundness: 0.2 },
         title: util.format(
-          'Tx Count: %s',
+          'Tx count: %s',
           numeral(row.num_outbound_txes).format('0,0')
         ),
       });
