@@ -352,6 +352,7 @@ exports.queries = {
     risk_score,
     label,
     category,
+    btc_balance, 
     array_to_string(array_agg(wallet_type), '/') AS wallet_type,
     count(*) OVER() AS total_count
     FROM (
@@ -389,7 +390,9 @@ exports.queries = {
         total_received_usd,
         risk_score,
         label,
-        category
+        category,
+        btc_balance 
+    ORDER BY 
     (CASE WHEN $3='num_address' and $4='ASC' THEN num_address END) ASC,
     (CASE WHEN $3='num_address' and $4='DESC' THEN num_address END) DESC,
     (CASE WHEN $3='num_tx' and $4='ASC' THEN num_tx END) ASC,
