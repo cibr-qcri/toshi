@@ -36,6 +36,14 @@ export const stylesCreator = (theme) => ({
     tableBodyText: {
       color: theme.palette.text.secondary,
     },
+    infoItem: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    infoIcon: {
+      marginLeft: theme.spacing(0.5),
+      fontSize: '0.875rem',
+    },
     tablePagination: {
       marginTop: theme.spacing(1.5),
       marginRight: '-4px',

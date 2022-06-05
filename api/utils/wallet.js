@@ -283,11 +283,12 @@ exports.queries = {
       LIMIT $3;
   `,
   getWalletLabelsById: `
-      SELECT *,
+      SELECT label, category, source, address, count(label),
       count(*) OVER() AS total_count
       FROM btc_address_label
       WHERE cluster_id  = $1
-      ORDER BY id OFFSET $2
+      GROUP BY label, category, source, address
+      OFFSET $2
       LIMIT $3;
   `,
   getWalletsByAddress: `

@@ -17,6 +17,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 
@@ -25,6 +26,7 @@ import { titleShortener } from '../../utils/common';
 
 // Styles
 import { LazyProgress } from './DataTableRaw-styles';
+import { Info as InfoIcon } from '@material-ui/icons';
 
 export const DataTableRaw = (props) => {
   // Variables
@@ -50,19 +52,37 @@ export const DataTableRaw = (props) => {
 
   // Renderers
   const renderCell = (column, row) => {
+    let cellText;
+    if (column.id === 'source' && row.count > 1) {
+      cellText = (
+        <Typography className={classes.infoItem}>
+          {row[column.id]}
+          <Tooltip
+            title={`Found ${row.count} reports from different darkweb URLs`}
+            enterTouchDelay={0}
+            leaveTouchDelay={5000}
+          >
+            <InfoIcon className={classes.infoIcon} color="action" />
+          </Tooltip>
+        </Typography>
+      );
+    } else {
+      cellText = types.includes(column.id) ? (
+        <Link href={basePath + row[column.id]}>
+          {titleShortener(column.id, row[column.id])}
+        </Link>
+      ) : (
+        row[column.id]
+      );
+    }
+
     return (
       <TableCell
         key={column.id}
         align={column.align}
         className={classes.tableBodyText}
       >
-        {types.includes(column.id) ? (
-          <Link href={basePath + row[column.id]}>
-            {titleShortener(column.id, row[column.id])}
-          </Link>
-        ) : (
-          row[column.id]
-        )}
+        {cellText}
       </TableCell>
     );
   };

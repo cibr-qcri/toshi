@@ -30,13 +30,14 @@ const walletLabels = asyncHandler(async (request, response, next) => {
     totalCount = parseInt(walletLabelsRes.rows[0].total_count);
   }
 
-  const addresses = walletLabelsRes.rows.map((row) => {
+  const addresses = walletLabelsRes.rows.map((row, index) => {
     return {
-      id: row.id,
+      id: index,
       label: wallet.stringShortener(row.label),
       category: row.category,
       source: row.source,
       address: row.address,
+      count: parseInt(row.count),
     };
   });
 
