@@ -58,7 +58,7 @@ export const DataTableRaw = (props) => {
         <Typography className={classes.infoItem}>
           {row[column.id]}
           <Tooltip
-            title={`Found ${row.count} reported tags from different darkweb URLs`}
+            title={`Found ${row.count} reports from different darkweb URLs`}
             enterTouchDelay={0}
             leaveTouchDelay={5000}
           >
