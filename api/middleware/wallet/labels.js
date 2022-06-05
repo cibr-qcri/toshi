@@ -2,6 +2,7 @@ const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
 const gp = require('../../services/gp');
 const wallet = require('../../utils/wallet');
+const util = require('util');
 
 const walletLabels = asyncHandler(async (request, response, next) => {
   const id = request.params.id;
@@ -32,11 +33,12 @@ const walletLabels = asyncHandler(async (request, response, next) => {
 
   const addresses = walletLabelsRes.rows.map((row) => {
     return {
-      id: row.id,
+      id: util.format('%s-%s-%s', row.source, row.label, row.address),
       label: wallet.stringShortener(row.label),
       category: row.category,
       source: row.source,
       address: row.address,
+      count: parseInt(row.count),
     };
   });
 
