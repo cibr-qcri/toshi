@@ -47,7 +47,7 @@ export const DataTableRaw = (props) => {
     const pageCount = event.target.value;
     setRowsPerPage(pageCount);
     setPage(0);
-    dispatch(action(page, pageCount));
+    dispatch(action(0, pageCount));
   };
 
   // Renderers
