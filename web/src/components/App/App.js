@@ -21,7 +21,12 @@ import Main from '../Main';
 import Layout from '../Layout';
 
 // Store
-import { getThemeMode, getToken, setThemeMode } from '../../store/actions';
+import {
+  getThemeMode,
+  getToken,
+  setThemeMode,
+  getStats,
+} from '../../store/actions';
 
 // Styles
 import { LazyProgress } from './App-styles';
@@ -78,6 +83,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getToken());
     dispatch(getThemeMode());
+    dispatch(getStats());
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', handleThemeModeChange);
