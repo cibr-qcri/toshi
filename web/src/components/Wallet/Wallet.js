@@ -42,7 +42,7 @@ export const Wallet = () => {
   useEffect(() => {
     const id = location.pathname.split('/')[2];
     if (!id || id.length === 0) {
-      history.push('/main');
+      history.push('/');
     }
     dispatch(resetWallet());
     dispatch(getWalletInfo(id));

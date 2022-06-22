@@ -17,7 +17,7 @@ const LogoRaw = (props) => {
   // JSX
   const view = (
     <div className={classes.root}>
-      <Link className={classes.link} component={NavLink} to="/main">
+      <Link className={classes.link} component={NavLink} to="/">
         <Typography className={classes.logo}>Toshi</Typography>
       </Link>
     </div>

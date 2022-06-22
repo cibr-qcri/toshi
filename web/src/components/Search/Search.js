@@ -49,7 +49,7 @@ export const Search = () => {
   useEffect(() => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true }).query;
     if (!query || query.length === 0) {
-      history.push('/main');
+      history.push('/');
     }
     dispatch(getResults(query));
     dispatch(setWalletCurrencyType('btc'));

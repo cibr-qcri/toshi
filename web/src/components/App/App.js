@@ -100,12 +100,12 @@ const App = () => {
       <Route path="/signin" component={lazyComp.SignIn} />
       <Route path="/activate/:token" component={lazyComp.Activate} />
       <Route path="/signup" component={lazyComp.SignUp} />
-      <Route path="/main" component={Main} />
       <Route path="/top-wallets" component={AuthRedirect} />
-      <Route from="/terms" component={lazyComp.Terms} />
-      <Route from="/search" component={AuthRedirect} />
-      <Route from="/wallet" component={AuthRedirect} />
-      <Redirect from="/" to="/main" />
+      <Route path="/terms" component={lazyComp.Terms} />
+      <Route path="/search" component={AuthRedirect} />
+      <Route path="/wallet" component={AuthRedirect} />
+      <Route path="/" component={Main} exact />
+      <Redirect to="/" />
     </Switch>
   );
 
@@ -118,10 +118,10 @@ const App = () => {
         <Route path="/account" component={lazyComp.Account} />
         <Route path="/search" component={lazyComp.Search} />
         <Route path="/wallet" component={lazyComp.Wallet} />
-        <Route from="/terms" component={lazyComp.Terms} />
+        <Route path="/terms" component={lazyComp.Terms} />
         <Route path="/top-wallets" component={lazyComp.TopWallets} />
-        <Route path="/main" component={Main} />
-        <Redirect from="/" to="/main" />
+        <Route path="/" component={Main} exact />
+        <Redirect to="/" />
       </Switch>
     );
   }
