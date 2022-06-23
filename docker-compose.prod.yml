@@ -2,7 +2,7 @@
 #
 #   service         local -> host
 #   ------------------------------
-#   proxy           80  -> 8180
+#   proxy           80    -> 8180
 
 version: '3.3'
 services:
