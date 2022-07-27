@@ -2,6 +2,8 @@
 
 Toshi: A Cryptocurrency Wallet Explorer.
 
+[![Build Status](https://jenkins.cibr.qcri.org/job/toshi-build/badge/icon)](https://jenkins.cibr.qcri.org/job/toshi-build/)
+
 ## Starting
 
 ```zsh

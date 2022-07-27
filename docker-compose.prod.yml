@@ -39,10 +39,10 @@ services:
       RUN_JOBS_STARTUP: 'true'
       MONGO_URI: 'mongodb://mongo:27017/toshi'
       GP_HOST: '10.4.8.131'
-      GP_USER: 'gpadmin'
+      GP_USER: ${GP_USER}
       GP_DATABASE: 'btc_blockchain'
       GP_PORT: 5432
-      GP_PASSWORD: ''
+      GP_PASSWORD: ${GP_PASSWORD}
       ARANGO_URL: 'http://10.4.8.131:8529'
       ARANGO_DATABASE: 'btc_blockchain'
       ARANGO_USER: 'root'
